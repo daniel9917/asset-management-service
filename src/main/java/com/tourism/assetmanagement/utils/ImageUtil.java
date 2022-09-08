@@ -44,8 +44,10 @@ public class ImageUtil {
                 filter(image -> updateImages.stream()
                         .noneMatch(image1 -> image.getImageBlob().equals(image1.getImageBlob())))
                 .collect(Collectors.toList());
-        List<Image> imagesToAdd = updateImages.stream().filter(image ->
-            previousImages.stream().noneMatch(image1 -> image.getImageBlob().equals(image1.getImageBlob()))).collect(Collectors.toList());
+        List<Image> imagesToAdd = updateImages.stream()
+                .filter(image -> previousImages.stream()
+                        .noneMatch(image1 -> image.getImageBlob().equals(image1.getImageBlob())))
+                .collect(Collectors.toList());
         imageRepository.saveAll(imagesToAdd.stream().map(image -> {
             image.setFieldsOnCreation();
             image.setAssetId(assetId);

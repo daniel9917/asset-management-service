@@ -1,11 +1,14 @@
 package com.tourism.assetmanagement.service;
 
+import com.tourism.assetmanagement.domain.AssetClassification;
 import com.tourism.assetmanagement.domain.CulturalAsset;
 import com.tourism.assetmanagement.domain.Image;
 import com.tourism.assetmanagement.errors.NotFoundException;
 import com.tourism.assetmanagement.mapper.CulturalAssetMapper;
 import com.tourism.assetmanagement.model.CulturalAssetDTO;
+import com.tourism.assetmanagement.repository.AssetClassificationRepository;
 import com.tourism.assetmanagement.repository.CulturalAssetRepository;
+import com.tourism.assetmanagement.utils.AssetClassificationUtil;
 import com.tourism.assetmanagement.utils.ImageUtil;
 import com.tourism.service.BaseService;
 import com.tourism.model.PageData;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,11 +33,19 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     private final CulturalAssetMapper mapper;
 
     @Autowired
+    private final AssetClassificationUtil assetClassificationUtil;
+
+    @Autowired
     private ImageUtil imageUtil;
 
-    public CulturalAssetService(CulturalAssetRepository repository, CulturalAssetMapper mapper, BaseValidator validator){
+    public CulturalAssetService(CulturalAssetRepository repository,
+                                CulturalAssetMapper mapper,
+                                AssetClassificationRepository assetClassificationRepository,
+                                AssetClassificationUtil assetClassificationUtil,
+                                BaseValidator validator){
         super(repository, mapper, validator);
         this.repository = repository;
+        this.assetClassificationUtil = assetClassificationUtil;
         this.mapper = mapper;
     }
 
@@ -45,6 +57,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                             throw new NotFoundException(uuid);
                         });
         retrievedAssetDTO.setImageList(imageUtil.getImageList(uuid));
+        retrievedAssetDTO.setAssetClassification(assetClassificationUtil.getAssetClassificationByAssetId(uuid));
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -58,6 +71,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     @Override
     public CulturalAssetDTO update(UUID uuid, CulturalAssetDTO update) {
         CulturalAssetDTO updatedAsset = super.update(uuid, update);
+        updatedAsset.setAssetClassification(saveAssetClassification(mapper.map(updatedAsset), mapper.map(update)));
         updatedAsset.setImageList(imageUtil.updateImageList(uuid, update.getImageList()));
         return updatedAsset;
     }
@@ -74,13 +88,33 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private CulturalAssetDTO persistAsset(CulturalAsset culturalAsset){
         CulturalAsset savedEntity = repository.save(culturalAsset);
-        List<Image> addedIds = culturalAsset.getImageList().stream().map(image -> {
-            image.setAssetId(savedEntity.getId());
+        if(Objects.nonNull(culturalAsset.getAssetClassification())){
+            savedEntity.setAssetClassification(saveAssetClassification(savedEntity,culturalAsset));
+            savedEntity.setAssetClassificationId(savedEntity.getAssetClassification().getId());
+        }
+        savedEntity.setImageList(saveImages(savedEntity, culturalAsset));
+        savedEntity = repository.save(savedEntity);
+        return mapper.map(savedEntity);
+    }
+
+    private AssetClassification saveAssetClassification(CulturalAsset saved, CulturalAsset request){
+        AssetClassification assetClassification = AssetClassification.builder()
+                .assetGroupId(request.getAssetClassification().getAssetGroupId())
+                .assetId(saved.getId())
+                .categoryId(request.getAssetClassification().getCategoryId())
+                .subtypeId(request.getAssetClassification().getSubtypeId())
+                .patrimonyId(request.getAssetClassification().getPatrimonyId())
+                .typeId(request.getAssetClassification().getTypeId())
+                .build();
+        return assetClassificationUtil.save(assetClassification);
+    }
+
+    private List<Image> saveImages(CulturalAsset saved, CulturalAsset request){
+        List<Image> addedIds = request.getImageList().stream().map(image -> {
+            image.setAssetId(saved.getId());
             return image;
         }).collect(Collectors.toList());
-        List<Image> loadedImages = imageUtil.loadImage(addedIds);
-        savedEntity.setImageList(loadedImages);
-        return mapper.map(savedEntity);
+        return imageUtil.loadImage(addedIds);
     }
 
 

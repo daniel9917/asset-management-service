@@ -20,7 +20,7 @@ import java.util.UUID;
 public abstract class BaseEntity implements Serializable {
 
     @Id
-    @Column
+    @Column(name = "id")
     private UUID id;
     @Column
     private LocalDateTime createdAt;

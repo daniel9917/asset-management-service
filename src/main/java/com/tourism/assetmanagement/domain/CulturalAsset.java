@@ -20,6 +20,8 @@ import java.util.UUID;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode
 @EntityListeners(AuditTrailLog.class)
+@Getter
+@Setter
 public class CulturalAsset extends BaseEntity {
 
 //    @Id
@@ -74,6 +76,30 @@ public class CulturalAsset extends BaseEntity {
     @Transient
     private List<Image> imageList;
 
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "asset_classification_id", referencedColumnName = "id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @Column
+    private UUID assetClassificationId;
+
+    @Transient
+    private AssetClassification assetClassification;
+
+
+    public UUID getAssetClassificationId() {
+        return assetClassificationId;
+    }
+
+    public void setAssetClassificationId(UUID assetClassificationId) {
+        this.assetClassificationId = assetClassificationId;
+    }
+
+    public AssetClassification getAssetClassification() {
+        return assetClassification;
+    }
+
+    public void setAssetClassification(AssetClassification assetClassification) {
+        this.assetClassification = assetClassification;
+    }
 
     /******* Getters, Setters, Constructors, HashCode & Equals *******/
 
@@ -86,6 +112,8 @@ public class CulturalAsset extends BaseEntity {
 //    public void setId(UUID id) {
 //        this.id = id;
 //    }
+
+
 
     public List<Image> getImageList() {
         return imageList;
