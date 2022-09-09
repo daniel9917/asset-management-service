@@ -84,6 +84,16 @@ public class CulturalAsset extends BaseEntity {
     @Transient
     private AssetClassification assetClassification;
 
+    @Transient
+    private List<AssetManifestation> assetManifestations;
+
+    public List<AssetManifestation> getAssetManifestations() {
+        return assetManifestations;
+    }
+
+    public void setAssetManifestations(List<AssetManifestation> assetManifestations) {
+        this.assetManifestations = assetManifestations;
+    }
 
     public UUID getAssetClassificationId() {
         return assetClassificationId;
