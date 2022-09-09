@@ -1,20 +1,25 @@
 package com.tourism.assetmanagement.utils;
 
 import com.tourism.assetmanagement.domain.AssetClassification;
+import com.tourism.assetmanagement.domain.AssetManifestation;
+import com.tourism.assetmanagement.domain.Image;
 import com.tourism.assetmanagement.domain.classification.*;
 import com.tourism.assetmanagement.errors.NotFoundException;
 import com.tourism.assetmanagement.errors.ServiceException;
 import com.tourism.assetmanagement.mapper.AssetClassificationMapper;
 import com.tourism.assetmanagement.repository.AssetClassificationRepository;
+import com.tourism.assetmanagement.repository.AssetManifestationRepository;
+import com.tourism.assetmanagement.repository.ManifestationRepository;
 import com.tourism.assetmanagement.repository.classification.*;
 import com.tourism.domain.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static java.util.function.Predicate.not;
 
 @Service
 public class AssetClassificationUtil {
@@ -39,7 +44,13 @@ public class AssetClassificationUtil {
     private CategoryRepository categoryRepository;
 
     @Autowired
+    private ManifestationRepository manifestationRepository;
+
+    @Autowired
     private AssetClassificationMapper assetClassificationMapper;
+
+    @Autowired
+    private AssetManifestationRepository assetManifestationRepository;
 
     public AssetClassificationUtil(
             AssetClassificationRepository assetClassificationRepository,
@@ -48,7 +59,9 @@ public class AssetClassificationUtil {
             SubtypeRepository subtypeRepository,
             PatrimonyRepository patrimonyRepository,
             AssetClassificationMapper assetClassificationMapper,
-            CategoryRepository categoryRepository) {
+            CategoryRepository categoryRepository,
+            AssetManifestationRepository assetManifestationRepository,
+            ManifestationRepository manifestationRepository) {
         this.assetClassificationRepository = assetClassificationRepository;
         this.assetGroupRepository = assetGroupRepository;
         this.typeRepository = typeRepository;
@@ -56,6 +69,8 @@ public class AssetClassificationUtil {
         this.patrimonyRepository = patrimonyRepository;
         this.categoryRepository = categoryRepository;
         this.assetClassificationMapper = assetClassificationMapper;
+        this.assetManifestationRepository = assetManifestationRepository;
+        this.manifestationRepository = manifestationRepository;
     }
 
     public AssetClassification save(AssetClassification assetClassification){
@@ -111,6 +126,48 @@ public class AssetClassificationUtil {
         );
     }
 
+    public List<AssetManifestation> getAssetManifestationsByAssetId(UUID assetId){
+        return assetManifestationRepository.findAllByAssetId(assetId);
+    }
+
+    public List<AssetManifestation> saveAllAssetManifestations(List<AssetManifestation> assetManifestations){
+        try {
+            List<AssetManifestation> assetManifestationList = assetManifestationRepository.findAllByAssetId(assetManifestations.get(0).getAssetId());
+            if (!assetManifestations.isEmpty()){
+                if(assetManifestationList.isEmpty()){
+                    List<AssetManifestation> savedAssets = new ArrayList<>();
+                    assetManifestations.forEach(BaseEntity::setFieldsOnCreation);
+                    assetManifestationRepository.saveAll(assetManifestations).forEach(assetManifestation -> savedAssets.add(assetManifestation));
+                    return savedAssets;
+                }else{
+                    List<AssetManifestation> manifestationsToAdd = assetManifestations.stream()
+                            .filter(assetManifestation ->
+                                assetManifestationList.stream()
+                                        .noneMatch(assetManifestation1 -> assetManifestation.getManifestationId().equals(assetManifestation1.getManifestationId()))
+                            ).collect(Collectors.toList());
+                    List<AssetManifestation> manifestationsToDelete = assetManifestationList.stream()
+                            .filter(assetManifestation -> assetManifestations.stream()
+                                    .noneMatch(assetManifestation1 -> assetManifestation.getManifestationId().equals(assetManifestation1.getManifestationId())))
+                            .collect(Collectors.toList());
+                    manifestationsToDelete.forEach(AssetManifestation::setFieldsOnDeletion);
+                    manifestationsToAdd.forEach(AssetManifestation::setFieldsOnCreation);
+                    manifestationsToAdd.addAll(manifestationsToDelete);
+                    List<AssetManifestation> assetManifestations1 = new ArrayList<>();
+                    assetManifestationRepository.saveAll(manifestationsToAdd).forEach(assetManifestation -> {
+                        assetManifestations1.add(assetManifestation);
+                    });
+                    return assetManifestations1.stream()
+                            .filter(
+                                    not(AssetManifestation::isDeleted))
+                            .collect(Collectors.toList());
+                }
+            }
+            return assetManifestationList;
+        }catch (RuntimeException exception){
+            throw new ServiceException();
+        }
+    }
+
     public void loadPatrimonies (List<Patrimony> patrimonyList){
         try{
             patrimonyList.forEach(BaseEntity::setFieldsOnCreation);
@@ -152,6 +209,15 @@ public class AssetClassificationUtil {
         try{
             categoryList.forEach(BaseEntity::setFieldsOnCreation);
             categoryRepository.saveAll(categoryList);
+        }catch (RuntimeException exception){
+            throw new ServiceException(exception.getMessage());
+        }
+    }
+
+    public void loadManifestations (List<Manifestation> manifestationList){
+        try{
+            manifestationList.forEach(BaseEntity::setFieldsOnCreation);
+            manifestationRepository.saveAll(manifestationList);
         }catch (RuntimeException exception){
             throw new ServiceException(exception.getMessage());
         }

@@ -1,6 +1,7 @@
 package com.tourism.assetmanagement.model;
 
 import com.tourism.assetmanagement.domain.AssetClassification;
+import com.tourism.assetmanagement.domain.AssetManifestation;
 import com.tourism.assetmanagement.domain.Image;
 import com.tourism.assetmanagement.validation.OptionalExclusive;
 import com.tourism.model.PersistentDTO;
@@ -62,6 +63,16 @@ public class CulturalAssetDTO extends PersistentDTO {
 
 
     private AssetClassification assetClassification;
+
+    private List<AssetManifestation> assetManifestations;
+
+    public List<AssetManifestation> getAssetManifestations() {
+        return assetManifestations;
+    }
+
+    public void setAssetManifestations(List<AssetManifestation> assetManifestations) {
+        this.assetManifestations = assetManifestations;
+    }
 
     public UUID getAssetClassificationId() {
         return assetClassificationId;

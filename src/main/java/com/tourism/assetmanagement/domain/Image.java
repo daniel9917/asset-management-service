@@ -49,4 +49,7 @@ public class Image extends BaseEntity {
     public void setImageBlob(String imageBlob) {
         this.imageBlob = imageBlob;
     }
+
+    public static class AssetManisfestation {
+    }
 }
