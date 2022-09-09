@@ -19,6 +19,8 @@ public class Subtype extends Classification {
 //    @OneToOne(mappedBy = "asset_classification")
     private UUID id;
 
+    private UUID typeId;
+
     public UUID getId() {
         return id;
     }

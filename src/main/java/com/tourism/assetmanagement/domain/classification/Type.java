@@ -19,11 +19,21 @@ public class Type extends Classification {
 //    @OneToOne(mappedBy = "asset_classification")
     private UUID id;
 
+    private UUID categoryId;
+
     public UUID getId() {
         return id;
     }
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public UUID getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(UUID categoryId) {
+        this.categoryId = categoryId;
     }
 }

@@ -1,13 +1,11 @@
 package com.tourism.assetmanagement.domain;
 
 import com.tourism.assetmanagement.config.AuditTrailLog;
-import com.tourism.assetmanagement.validation.OptionalExclusive;
 import com.tourism.domain.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;

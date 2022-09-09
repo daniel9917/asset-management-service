@@ -19,6 +19,7 @@ public class Category extends Classification {
 //    @OneToOne(mappedBy = "asset_classification")
     private UUID id;
 
+    private UUID patrimonyId;
 
     public UUID getId() {
         return id;
@@ -26,5 +27,13 @@ public class Category extends Classification {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public UUID getPatrimonyId() {
+        return patrimonyId;
+    }
+
+    public void setPatrimonyId(UUID patrimonyId) {
+        this.patrimonyId = patrimonyId;
     }
 }
