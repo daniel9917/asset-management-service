@@ -60,6 +60,7 @@ public class AssetClassificationUtil {
 
     public AssetClassification save(AssetClassification assetClassification){
         AssetClassification previous = null;
+        validateAssetClassifications(assetClassification);
         Optional<AssetClassification> optional = assetClassificationRepository.findByAssetId(assetClassification.getAssetId());
 //        AssetClassification previous = assetClassificationRepository.findByAssetId(assetClassification.getAssetId());
         if (optional.isPresent()){
@@ -153,6 +154,45 @@ public class AssetClassificationUtil {
             categoryRepository.saveAll(categoryList);
         }catch (RuntimeException exception){
             throw new ServiceException(exception.getMessage());
+        }
+    }
+
+    private void validateAssetClassifications(AssetClassification assetClassification){
+        AssetGroup assetGroup = assetGroupRepository.findById(assetClassification.getAssetGroupId()).orElseThrow(
+                () -> {
+                    throw new NotFoundException(assetClassification.getAssetGroupId(), "asset group");
+                }
+        );
+
+        Patrimony patrimony = patrimonyRepository.findById(assetClassification.getPatrimonyId()).orElseThrow(
+                () -> {
+                    throw new NotFoundException(assetClassification.getPatrimonyId(), "patrimony");
+                }
+        );
+
+        Category category = categoryRepository.findById(assetClassification.getCategoryId()).orElseThrow(
+                () -> {
+                    throw new NotFoundException(assetClassification.getCategoryId(), "category");
+                }
+        );
+
+        Type type = typeRepository.findById(assetClassification.getTypeId()).orElseThrow(
+                () -> {
+                    throw new NotFoundException(assetClassification.getTypeId(), "type");
+                }
+        );
+
+        Subtype subtype = subtypeRepository.findById(assetClassification.getSubtypeId()).orElseThrow(
+                () -> {
+                    throw new NotFoundException(assetClassification.getSubtypeId(), "subtype");
+                }
+        );
+        boolean isValid = subtype.getTypeId().equals(type.getId())
+                && type.getCategoryId().equals(category.getId())
+                && category.getPatrimonyId().equals(patrimony.getId())
+                && patrimony.getGroupId().equals(assetGroup.getId());
+        if(!isValid){
+            throw new ServiceException();
         }
     }
 

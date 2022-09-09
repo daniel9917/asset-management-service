@@ -60,6 +60,7 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private List<Image> imageList;
 
+
     private AssetClassification assetClassification;
 
     public UUID getAssetClassificationId() {
