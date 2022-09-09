@@ -85,6 +85,17 @@ public class CulturalAsset extends BaseEntity {
     @Transient
     private List<AssetManifestation> assetManifestations;
 
+    @Transient
+    private List<AssetRoute> assetRouteList;
+
+    public List<AssetRoute> getAssetRouteList() {
+        return assetRouteList;
+    }
+
+    public void setAssetRouteList(List<AssetRoute> assetRouteList) {
+        this.assetRouteList = assetRouteList;
+    }
+
     public List<AssetManifestation> getAssetManifestations() {
         return assetManifestations;
     }
@@ -120,8 +131,6 @@ public class CulturalAsset extends BaseEntity {
 //    public void setId(UUID id) {
 //        this.id = id;
 //    }
-
-
 
     public List<Image> getImageList() {
         return imageList;

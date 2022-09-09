@@ -2,6 +2,7 @@ package com.tourism.assetmanagement.model;
 
 import com.tourism.assetmanagement.domain.AssetClassification;
 import com.tourism.assetmanagement.domain.AssetManifestation;
+import com.tourism.assetmanagement.domain.AssetRoute;
 import com.tourism.assetmanagement.domain.Image;
 import com.tourism.assetmanagement.validation.OptionalExclusive;
 import com.tourism.model.PersistentDTO;
@@ -61,10 +62,19 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private List<Image> imageList;
 
-
     private AssetClassification assetClassification;
 
     private List<AssetManifestation> assetManifestations;
+
+    private List<AssetRoute> assetRouteList;
+
+    public List<AssetRoute> getAssetRouteList() {
+        return assetRouteList;
+    }
+
+    public void setAssetRouteList(List<AssetRoute> assetRouteList) {
+        this.assetRouteList = assetRouteList;
+    }
 
     public List<AssetManifestation> getAssetManifestations() {
         return assetManifestations;

@@ -1,9 +1,6 @@
 package com.tourism.assetmanagement.service;
 
-import com.tourism.assetmanagement.domain.AssetClassification;
-import com.tourism.assetmanagement.domain.AssetManifestation;
-import com.tourism.assetmanagement.domain.CulturalAsset;
-import com.tourism.assetmanagement.domain.Image;
+import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.errors.NotFoundException;
 import com.tourism.assetmanagement.mapper.CulturalAssetMapper;
 import com.tourism.assetmanagement.model.CulturalAssetDTO;
@@ -11,6 +8,7 @@ import com.tourism.assetmanagement.repository.AssetClassificationRepository;
 import com.tourism.assetmanagement.repository.CulturalAssetRepository;
 import com.tourism.assetmanagement.utils.AssetClassificationUtil;
 import com.tourism.assetmanagement.utils.ImageUtil;
+import com.tourism.assetmanagement.utils.RouteUtil;
 import com.tourism.service.BaseService;
 import com.tourism.model.PageData;
 import com.tourism.validation.BaseValidator;
@@ -37,17 +35,22 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     private final AssetClassificationUtil assetClassificationUtil;
 
     @Autowired
-    private ImageUtil imageUtil;
+    private final RouteUtil routeUtil;
+
+    @Autowired
+    private final ImageUtil imageUtil;
 
     public CulturalAssetService(CulturalAssetRepository repository,
                                 CulturalAssetMapper mapper,
                                 AssetClassificationRepository assetClassificationRepository,
                                 AssetClassificationUtil assetClassificationUtil,
-                                BaseValidator validator){
+                                BaseValidator validator, RouteUtil routeUtil, ImageUtil imageUtil){
         super(repository, mapper, validator);
         this.repository = repository;
         this.assetClassificationUtil = assetClassificationUtil;
         this.mapper = mapper;
+        this.routeUtil = routeUtil;
+        this.imageUtil = imageUtil;
     }
 
     @Override
@@ -60,6 +63,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setImageList(imageUtil.getImageList(uuid));
         retrievedAssetDTO.setAssetClassification(assetClassificationUtil.getAssetClassificationByAssetId(uuid));
         retrievedAssetDTO.setAssetManifestations(assetClassificationUtil.getAssetManifestationsByAssetId(uuid));
+        retrievedAssetDTO.setAssetRouteList(routeUtil.findAllByAssetId(uuid));
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -80,6 +84,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                     assetManifestation.setAssetId(uuid);
                     return assetManifestation;
                 }).collect(Collectors.toList())));
+        update.setId(uuid);
+        updatedAsset.setAssetRouteList(saveAssetRoute(mapper.map(update)));
         return updatedAsset;
     }
 
@@ -104,9 +110,15 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                     assetManifestation.setAssetId(culturalAsset.getId());
                     return assetManifestation;
                 }).collect(Collectors.toList())));
+        culturalAsset.setId(savedEntity.getId());
         savedEntity.setImageList(saveImages(savedEntity, culturalAsset));
+        savedEntity.setAssetRouteList(saveAssetRoute(culturalAsset));
         savedEntity = repository.save(savedEntity);
         return mapper.map(savedEntity);
+    }
+
+    private List<AssetRoute> saveAssetRoute(CulturalAsset culturalAsset){
+        return routeUtil.saveAllAssetRoute(culturalAsset.getId(), culturalAsset);
     }
 
     private List<AssetManifestation> saveAssetManifestations(CulturalAsset culturalAsset){
