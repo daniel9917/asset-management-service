@@ -1,6 +1,7 @@
 package com.tourism.assetmanagement.service;
 
 import com.tourism.assetmanagement.domain.AssetClassification;
+import com.tourism.assetmanagement.domain.AssetManifestation;
 import com.tourism.assetmanagement.domain.CulturalAsset;
 import com.tourism.assetmanagement.domain.Image;
 import com.tourism.assetmanagement.errors.NotFoundException;
@@ -58,6 +59,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                         });
         retrievedAssetDTO.setImageList(imageUtil.getImageList(uuid));
         retrievedAssetDTO.setAssetClassification(assetClassificationUtil.getAssetClassificationByAssetId(uuid));
+        retrievedAssetDTO.setAssetManifestations(assetClassificationUtil.getAssetManifestationsByAssetId(uuid));
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -73,6 +75,11 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         CulturalAssetDTO updatedAsset = super.update(uuid, update);
         updatedAsset.setAssetClassification(saveAssetClassification(mapper.map(updatedAsset), mapper.map(update)));
         updatedAsset.setImageList(imageUtil.updateImageList(uuid, update.getImageList()));
+        updatedAsset.setAssetManifestations(assetClassificationUtil.saveAllAssetManifestations(
+                updatedAsset.getAssetManifestations().stream().map(assetManifestation -> {
+                    assetManifestation.setAssetId(uuid);
+                    return assetManifestation;
+                }).collect(Collectors.toList())));
         return updatedAsset;
     }
 
@@ -92,9 +99,22 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
             savedEntity.setAssetClassification(saveAssetClassification(savedEntity,culturalAsset));
             savedEntity.setAssetClassificationId(savedEntity.getAssetClassification().getId());
         }
+        savedEntity.setAssetManifestations(assetClassificationUtil.saveAllAssetManifestations(
+                culturalAsset.getAssetManifestations().stream().map(assetManifestation -> {
+                    assetManifestation.setAssetId(culturalAsset.getId());
+                    return assetManifestation;
+                }).collect(Collectors.toList())));
         savedEntity.setImageList(saveImages(savedEntity, culturalAsset));
         savedEntity = repository.save(savedEntity);
         return mapper.map(savedEntity);
+    }
+
+    private List<AssetManifestation> saveAssetManifestations(CulturalAsset culturalAsset){
+        return assetClassificationUtil.saveAllAssetManifestations(
+                culturalAsset.getAssetManifestations().stream().map(assetManifestation -> {
+                    assetManifestation.setAssetId(culturalAsset.getId());
+                    return assetManifestation;
+                }).collect(Collectors.toList()));
     }
 
     private AssetClassification saveAssetClassification(CulturalAsset saved, CulturalAsset request){
