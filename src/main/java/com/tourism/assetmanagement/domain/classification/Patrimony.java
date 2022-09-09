@@ -17,10 +17,10 @@ import java.util.UUID;
 public class Patrimony extends Classification {
 
     @Id
-//    @OneToOne(mappedBy = "asset_classification")
     private UUID id;
 
-    private UUID groupId;
+    @Column
+    private UUID assetGroupId;
 
     public UUID getId() {
         return id;
@@ -30,11 +30,11 @@ public class Patrimony extends Classification {
         this.id = id;
     }
 
-    public UUID getGroupId() {
-        return groupId;
+    public UUID getAssetGroupId() {
+        return assetGroupId;
     }
 
-    public void setGroupId(UUID groupId) {
-        this.groupId = groupId;
+    public void setAssetGroupId(UUID assetGroupId) {
+        this.assetGroupId = assetGroupId;
     }
 }

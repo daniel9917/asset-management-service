@@ -2,7 +2,6 @@ package com.tourism.assetmanagement.utils;
 
 import com.tourism.assetmanagement.domain.AssetClassification;
 import com.tourism.assetmanagement.domain.AssetManifestation;
-import com.tourism.assetmanagement.domain.Image;
 import com.tourism.assetmanagement.domain.classification.*;
 import com.tourism.assetmanagement.errors.NotFoundException;
 import com.tourism.assetmanagement.errors.ServiceException;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.function.Predicate.not;
@@ -256,7 +254,7 @@ public class AssetClassificationUtil {
         boolean isValid = subtype.getTypeId().equals(type.getId())
                 && type.getCategoryId().equals(category.getId())
                 && category.getPatrimonyId().equals(patrimony.getId())
-                && patrimony.getGroupId().equals(assetGroup.getId());
+                && patrimony.getAssetGroupId().equals(assetGroup.getId());
         if(!isValid){
             throw new ServiceException();
         }

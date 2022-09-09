@@ -23,7 +23,7 @@ public class Image extends BaseEntity {
     @Column(nullable = false)
     private UUID assetId;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String imageBlob;
 
     public Image() {
