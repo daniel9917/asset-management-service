@@ -1,7 +1,6 @@
 package com.tourism.assetmanagement.model;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.tourism.assetmanagement.domain.AssetClassification;
 import com.tourism.assetmanagement.domain.Image;
 import com.tourism.assetmanagement.validation.OptionalExclusive;
 import com.tourism.model.PersistentDTO;
@@ -19,6 +18,8 @@ import java.util.UUID;
 @EqualsAndHashCode
 @OptionalExclusive
 @Validated
+@Getter
+@Setter
 public class CulturalAssetDTO extends PersistentDTO {
     private UUID departmentId;
 
@@ -27,6 +28,8 @@ public class CulturalAssetDTO extends PersistentDTO {
     private UUID subtypeId;
 
     private UUID reservationId;
+
+    private UUID assetClassificationId;
 
     @NotEmpty
     @Size(max = 100)
@@ -56,6 +59,24 @@ public class CulturalAssetDTO extends PersistentDTO {
     private boolean tourismAllowance;
 
     private List<Image> imageList;
+
+    private AssetClassification assetClassification;
+
+    public UUID getAssetClassificationId() {
+        return assetClassificationId;
+    }
+
+    public void setAssetClassificationId(UUID assetClassificationId) {
+        this.assetClassificationId = assetClassificationId;
+    }
+
+    public AssetClassification getAssetClassification() {
+        return assetClassification;
+    }
+
+    public void setAssetClassification(AssetClassification assetClassification) {
+        this.assetClassification = assetClassification;
+    }
 
     public List<Image> getImageList() {
         return imageList;

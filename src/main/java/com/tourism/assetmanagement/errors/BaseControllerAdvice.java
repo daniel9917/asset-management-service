@@ -3,6 +3,7 @@ package com.tourism.assetmanagement.errors;
 import com.tourism.assetmanagement.controller.CulturalAssetController;
 import com.tourism.assetmanagement.errors.NotFoundException;
 import com.tourism.model.ErrorResponse;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class BaseControllerAdvice extends ResponseEntityExceptionHandler {
     private ErrorResponse errorResponse;
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException notFoundException, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> handleNotFoundException(@NotNull NotFoundException notFoundException, WebRequest webRequest){
         this.errorResponse = new ErrorResponse(404, getIdentifier(NotFoundException.class), notFoundException.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
