@@ -1,9 +1,6 @@
 package com.tourism.assetmanagement.model;
 
-import com.tourism.assetmanagement.domain.AssetClassification;
-import com.tourism.assetmanagement.domain.AssetManifestation;
-import com.tourism.assetmanagement.domain.AssetRoute;
-import com.tourism.assetmanagement.domain.Image;
+import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.validation.OptionalExclusive;
 import com.tourism.model.PersistentDTO;
 import lombok.*;
@@ -11,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,7 +56,7 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private boolean unescoRegistry;
 
-    private boolean tourismAllowance;
+    private boolean tourismPermit;
 
     private List<Image> imageList;
 
@@ -67,6 +65,36 @@ public class CulturalAssetDTO extends PersistentDTO {
     private List<AssetManifestation> assetManifestations;
 
     private List<AssetRoute> assetRouteList;
+
+    private LocalDateTime dateEvent;
+
+    private String accessDetail;
+
+    private List<AssetCommunity> assetCommunities;
+
+    public LocalDateTime getDateEvent() {
+        return dateEvent;
+    }
+
+    public void setDateEvent(LocalDateTime dateEvent) {
+        this.dateEvent = dateEvent;
+    }
+
+    public String getAccessDetail() {
+        return accessDetail;
+    }
+
+    public void setAccessDetail(String accessDetail) {
+        this.accessDetail = accessDetail;
+    }
+
+    public List<AssetCommunity> getAssetCommunities() {
+        return assetCommunities;
+    }
+
+    public void setAssetCommunities(List<AssetCommunity> assetCommunities) {
+        this.assetCommunities = assetCommunities;
+    }
 
     public List<AssetRoute> getAssetRouteList() {
         return assetRouteList;
@@ -220,11 +248,11 @@ public class CulturalAssetDTO extends PersistentDTO {
         this.unescoRegistry = unescoRegistry;
     }
 
-    public boolean isTourismAllowance() {
-        return tourismAllowance;
+    public boolean isTourismPermit() {
+        return tourismPermit;
     }
 
-    public void setTourismAllowance(boolean tourismAllowance) {
-        this.tourismAllowance = tourismAllowance;
+    public void setTourismPermit(boolean tourismPermit) {
+        this.tourismPermit = tourismPermit;
     }
 }

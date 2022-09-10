@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -69,7 +70,7 @@ public class CulturalAsset extends BaseEntity {
     private boolean unescoRegistry;
 
     @Column
-    private boolean tourismAllowance;
+    private boolean tourismPermit;
 
     @Transient
     private List<Image> imageList;
@@ -87,6 +88,39 @@ public class CulturalAsset extends BaseEntity {
 
     @Transient
     private List<AssetRoute> assetRouteList;
+
+    @Column
+    private LocalDateTime dateEvent;
+
+    @Column
+    private String accessDetail;
+
+    @Transient
+    private List<AssetCommunity> assetCommunities;
+
+    public LocalDateTime getDateEvent() {
+        return dateEvent;
+    }
+
+    public void setDateEvent(LocalDateTime dateEvent) {
+        this.dateEvent = dateEvent;
+    }
+
+    public String getAccessDetail() {
+        return accessDetail;
+    }
+
+    public void setAccessDetail(String accessDetail) {
+        this.accessDetail = accessDetail;
+    }
+
+    public List<AssetCommunity> getAssetCommunities() {
+        return assetCommunities;
+    }
+
+    public void setAssetCommunities(List<AssetCommunity> assetCommunities) {
+        this.assetCommunities = assetCommunities;
+    }
 
     public List<AssetRoute> getAssetRouteList() {
         return assetRouteList;
@@ -252,12 +286,12 @@ public class CulturalAsset extends BaseEntity {
         this.unescoRegistry = unescoRegistry;
     }
 
-    public boolean isTourismAllowance() {
-        return tourismAllowance;
+    public boolean isTourismPermit() {
+        return tourismPermit;
     }
 
-    public void setTourismAllowance(boolean tourismAllowance) {
-        this.tourismAllowance = tourismAllowance;
+    public void setTourismPermit(boolean tourismPermit) {
+        this.tourismPermit = tourismPermit;
     }
 
     @Override
@@ -271,7 +305,7 @@ public class CulturalAsset extends BaseEntity {
                 && isCosmogony() == that.isCosmogony()
                 && isSafeguardingRegistry() == that.isSafeguardingRegistry()
                 && isUnescoRegistry() == that.isUnescoRegistry()
-                && isTourismAllowance() == that.isTourismAllowance()
+                && isTourismPermit() == that.isTourismPermit()
                 && Objects.equals(getId(), that.getId())
                 && Objects.equals(getDepartmentId(), that.getDepartmentId())
                 && Objects.equals(getMunicipalityId(), that.getMunicipalityId())
@@ -292,6 +326,6 @@ public class CulturalAsset extends BaseEntity {
                 getAlternateNames(), getDescription(), getxCoordinate(),
                 getyCoordinate(), getLocationDetail(), isCosmogony(),
                 getCosmogonyDescription(), isSafeguardingRegistry(),
-                isUnescoRegistry(), isTourismAllowance());
+                isUnescoRegistry(), isTourismPermit());
     }
 }
