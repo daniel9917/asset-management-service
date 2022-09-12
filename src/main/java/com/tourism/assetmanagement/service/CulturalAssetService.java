@@ -7,6 +7,7 @@ import com.tourism.assetmanagement.model.CulturalAssetDTO;
 import com.tourism.assetmanagement.repository.AssetClassificationRepository;
 import com.tourism.assetmanagement.repository.CulturalAssetRepository;
 import com.tourism.assetmanagement.utils.AssetClassificationUtil;
+import com.tourism.assetmanagement.utils.CommunityUtil;
 import com.tourism.assetmanagement.utils.ImageUtil;
 import com.tourism.assetmanagement.utils.RouteUtil;
 import com.tourism.service.BaseService;
@@ -40,17 +41,22 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     @Autowired
     private final ImageUtil imageUtil;
 
+    @Autowired
+    private final CommunityUtil communityUtil;
+
     public CulturalAssetService(CulturalAssetRepository repository,
                                 CulturalAssetMapper mapper,
                                 AssetClassificationRepository assetClassificationRepository,
                                 AssetClassificationUtil assetClassificationUtil,
-                                BaseValidator validator, RouteUtil routeUtil, ImageUtil imageUtil){
+                                BaseValidator validator, RouteUtil routeUtil,
+                                ImageUtil imageUtil, CommunityUtil communityUtil){
         super(repository, mapper, validator);
         this.repository = repository;
         this.assetClassificationUtil = assetClassificationUtil;
         this.mapper = mapper;
         this.routeUtil = routeUtil;
         this.imageUtil = imageUtil;
+        this.communityUtil = communityUtil;
     }
 
     @Override
@@ -64,6 +70,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetClassification(assetClassificationUtil.getAssetClassificationByAssetId(uuid));
         retrievedAssetDTO.setAssetManifestations(assetClassificationUtil.getAssetManifestationsByAssetId(uuid));
         retrievedAssetDTO.setAssetRouteList(routeUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetCommunities(communityUtil.findAllByAssetIt(uuid));
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -86,6 +93,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                 }).collect(Collectors.toList())));
         update.setId(uuid);
         updatedAsset.setAssetRouteList(saveAssetRoute(mapper.map(update)));
+        updatedAsset.setAssetCommunities(saveAssetCommunities(mapper.map(update)));
         return updatedAsset;
     }
 
@@ -113,12 +121,17 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         culturalAsset.setId(savedEntity.getId());
         savedEntity.setImageList(saveImages(savedEntity, culturalAsset));
         savedEntity.setAssetRouteList(saveAssetRoute(culturalAsset));
+        savedEntity.setAssetCommunities(saveAssetCommunities(culturalAsset));
         savedEntity = repository.save(savedEntity);
         return mapper.map(savedEntity);
     }
 
     private List<AssetRoute> saveAssetRoute(CulturalAsset culturalAsset){
         return routeUtil.saveAllAssetRoute(culturalAsset.getId(), culturalAsset);
+    }
+
+    private List<AssetCommunity> saveAssetCommunities(CulturalAsset culturalAsset){
+        return communityUtil.saveAllAssetCommunitites(culturalAsset.getId(), culturalAsset);
     }
 
     private List<AssetManifestation> saveAssetManifestations(CulturalAsset culturalAsset){
