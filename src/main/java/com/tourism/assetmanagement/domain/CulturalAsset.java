@@ -101,6 +101,17 @@ public class CulturalAsset extends BaseEntity {
     @Transient
     private List<AssetAccess> assetAccessList;
 
+    @Transient
+    private List<AssetSport> assetSportList;
+
+    public List<AssetSport> getAssetSportList() {
+        return assetSportList;
+    }
+
+    public void setAssetSportList(List<AssetSport> assetSportList) {
+        this.assetSportList = assetSportList;
+    }
+
     public List<AssetAccess> getAssetAccessList() {
         return assetAccessList;
     }
