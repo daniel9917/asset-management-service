@@ -11,6 +11,7 @@ import com.tourism.assetmanagement.utils.ImageUtil;
 import com.tourism.assetmanagement.utils.RouteUtil;
 import com.tourism.assetmanagement.utils.AssetAccessUtil;
 import com.tourism.assetmanagement.utils.AssetSportUtil;
+import com.tourism.assetmanagement.utils.AssetOfferUtil;
 import com.tourism.service.BaseService;
 import com.tourism.model.PageData;
 import com.tourism.validation.BaseValidator;
@@ -43,13 +44,16 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private final AssetSportUtil assetSportUtil;
 
+    private final AssetOfferUtil assetOfferUtil;
+
     @Autowired
     public CulturalAssetService(CulturalAssetRepository repository,
                                 CulturalAssetMapper mapper,
                                 AssetClassificationUtil assetClassificationUtil,
                                 BaseValidator validator, RouteUtil routeUtil,
                                 ImageUtil imageUtil, CommunityUtil communityUtil,
-                                AssetAccessUtil assetAccessUtil, AssetSportUtil assetSportUtil){
+                                AssetAccessUtil assetAccessUtil, AssetSportUtil assetSportUtil,
+                                AssetOfferUtil assetOfferUtil){
         super(repository, mapper, validator);
         this.repository = repository;
         this.assetClassificationUtil = assetClassificationUtil;
@@ -59,6 +63,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         this.communityUtil = communityUtil;
         this.assetAccessUtil = assetAccessUtil;
         this.assetSportUtil = assetSportUtil;
+        this.assetOfferUtil = assetOfferUtil;
     }
 
     @Override
@@ -75,6 +80,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetCommunities(communityUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetAccessList(assetAccessUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetSportList(assetSportUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetOfferList(assetOfferUtil.findAllByAssetId(uuid));
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -101,6 +107,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         updatedAsset.setAssetCommunities(saveAssetCommunities(updated));
         updatedAsset.setAssetAccessList(saveAssetAccess(updated));
         updatedAsset.setAssetSportList(saveAssetSport(updated));
+        updatedAsset.setAssetOfferList(saveAssetOffer(updated));
         return updatedAsset;
     }
 
@@ -131,6 +138,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         savedEntity.setAssetCommunities(saveAssetCommunities(culturalAsset));
         savedEntity.setAssetAccessList(saveAssetAccess(culturalAsset));
         savedEntity.setAssetSportList(saveAssetSport(culturalAsset));
+        savedEntity.setAssetOfferList(saveAssetOffer(culturalAsset));
         savedEntity = repository.save(savedEntity);
         return mapper.map(savedEntity);
     }
@@ -149,6 +157,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private List<AssetSport> saveAssetSport(CulturalAsset culturalAsset){
         return assetSportUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetSportList(), AssetSport.class, "sportId");
+    }
+
+    private List<AssetOffer> saveAssetOffer(CulturalAsset culturalAsset){
+        return assetOfferUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetOfferList(), AssetOffer.class, "offerId");
     }
 
 

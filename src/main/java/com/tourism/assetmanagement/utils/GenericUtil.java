@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.function.Predicate.not;
+
 public abstract class GenericUtil <Object extends BaseEntity, ObjectType extends BaseEntity, AssetObject extends BaseEntity, ID extends Serializable,
         ObjectRepository extends BaseRepository, ObjectTypeRepository extends BaseRepository, AssetObjectRepository extends BaseAssetObjectRepository>{
 
@@ -85,7 +87,7 @@ public abstract class GenericUtil <Object extends BaseEntity, ObjectType extends
                         .flatMap(Collection::stream)
                         .collect(Collectors.toList());
                 assetObjectRepository.saveAll(assetObjectsPersist).forEach(assetObject -> savedObjects.add((AssetObject) assetObject));
-                return savedObjects.size() > 0 ? savedObjects : previousAssetObjects;
+                return savedObjects.size() > 0 ? savedObjects.stream().filter(not(AssetObject::isDeleted)).collect(Collectors.toList()) : previousAssetObjects;
             }
         }
         return previousAssetObjects;
