@@ -10,6 +10,7 @@ import com.tourism.assetmanagement.utils.AssetClassificationUtil;
 import com.tourism.assetmanagement.utils.CommunityUtil;
 import com.tourism.assetmanagement.utils.ImageUtil;
 import com.tourism.assetmanagement.utils.RouteUtil;
+import com.tourism.assetmanagement.utils.AssetAccessUtil;
 import com.tourism.service.BaseService;
 import com.tourism.model.PageData;
 import com.tourism.validation.BaseValidator;
@@ -44,12 +45,16 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     @Autowired
     private final CommunityUtil communityUtil;
 
+    @Autowired
+    private final AssetAccessUtil assetAccessUtil;
+
     public CulturalAssetService(CulturalAssetRepository repository,
                                 CulturalAssetMapper mapper,
                                 AssetClassificationRepository assetClassificationRepository,
                                 AssetClassificationUtil assetClassificationUtil,
                                 BaseValidator validator, RouteUtil routeUtil,
-                                ImageUtil imageUtil, CommunityUtil communityUtil){
+                                ImageUtil imageUtil, CommunityUtil communityUtil,
+                                AssetAccessUtil assetAccessUtil){
         super(repository, mapper, validator);
         this.repository = repository;
         this.assetClassificationUtil = assetClassificationUtil;
@@ -57,6 +62,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         this.routeUtil = routeUtil;
         this.imageUtil = imageUtil;
         this.communityUtil = communityUtil;
+        this.assetAccessUtil = assetAccessUtil;
     }
 
     @Override
@@ -70,7 +76,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetClassification(assetClassificationUtil.getAssetClassificationByAssetId(uuid));
         retrievedAssetDTO.setAssetManifestations(assetClassificationUtil.getAssetManifestationsByAssetId(uuid));
         retrievedAssetDTO.setAssetRouteList(routeUtil.findAllByAssetId(uuid));
-        retrievedAssetDTO.setAssetCommunities(communityUtil.findAllByAssetIt(uuid));
+        retrievedAssetDTO.setAssetCommunities(communityUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetAccessList(assetAccessUtil.findAllByAssetId(uuid));
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -94,6 +101,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         update.setId(uuid);
         updatedAsset.setAssetRouteList(saveAssetRoute(mapper.map(update)));
         updatedAsset.setAssetCommunities(saveAssetCommunities(mapper.map(update)));
+        updatedAsset.setAssetAccessList(saveAssetAccess(mapper.map(update)));
         return updatedAsset;
     }
 
@@ -122,17 +130,23 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         savedEntity.setImageList(saveImages(savedEntity, culturalAsset));
         savedEntity.setAssetRouteList(saveAssetRoute(culturalAsset));
         savedEntity.setAssetCommunities(saveAssetCommunities(culturalAsset));
+        savedEntity.setAssetAccessList(saveAssetAccess(culturalAsset));
         savedEntity = repository.save(savedEntity);
         return mapper.map(savedEntity);
     }
 
     private List<AssetRoute> saveAssetRoute(CulturalAsset culturalAsset){
-        return routeUtil.saveAllAssetRoute(culturalAsset.getId(), culturalAsset);
+        return routeUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetRouteList(), AssetRoute.class, "routeId");
     }
 
     private List<AssetCommunity> saveAssetCommunities(CulturalAsset culturalAsset){
-        return communityUtil.saveAllAssetCommunitites(culturalAsset.getId(), culturalAsset);
+        return communityUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetCommunities(), AssetCommunity.class, "communityId");
     }
+
+    private List<AssetAccess> saveAssetAccess(CulturalAsset culturalAsset){
+        return assetAccessUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetAccessList(), AssetAccess.class, "accessId");
+    }
+
 
     private List<AssetManifestation> saveAssetManifestations(CulturalAsset culturalAsset){
         return assetClassificationUtil.saveAllAssetManifestations(

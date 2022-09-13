@@ -126,10 +126,6 @@ public abstract class BaseEntity implements Serializable {
         this.updatedBy = updatedBy;
     }
 
-    public boolean isDeletedBy() {
-        return deleted;
-    }
-
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
