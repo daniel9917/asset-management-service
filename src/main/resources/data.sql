@@ -1,3 +1,23 @@
+--INSERTION OF SPORT TYPES
+
+INSERT INTO public.sport_type
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('d9cb07fe-337d-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'futbol');
+
+INSERT INTO public.sport_type
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('e5db8797-dde1-4f0c-84f6-d4f098659c56', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'ajedrez');
+
+-- INSERTION OF SPORTS
+
+INSERT INTO public.sport
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
+VALUES('fdd046ab-75b3-4c6a-930d-77fa03f267a4', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'equipo', 'd9cb07fe-337d-11ed-a261-0242ac120002');
+
+INSERT INTO public.sport
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
+VALUES('98478351-154a-4f96-8dfb-3b4897760461', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'individual', 'e5db8797-dde1-4f0c-84f6-d4f098659c56');
+
 --INSERTION OF ACCESS TYPES
 
 INSERT INTO public.access_type
