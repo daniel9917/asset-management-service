@@ -14,15 +14,13 @@ import java.util.UUID;
 @Service
 public class RouteUtil extends GenericUtil<Route, RouteType, AssetRoute, UUID, RouteRepository, RouteTypeRepository, AssetRouteRepository> {
 
-    @Autowired
     private RouteRepository routeRepository;
 
-    @Autowired
     private AssetRouteRepository assetRouteRepository;
 
-    @Autowired
     private RouteTypeRepository routeTypeRepository;
 
+    @Autowired
     public RouteUtil(RouteRepository routeRepository, AssetRouteRepository assetRouteRepository, RouteTypeRepository routeTypeRepository) {
         super(routeRepository, assetRouteRepository, routeTypeRepository);
         this.routeRepository = routeRepository;

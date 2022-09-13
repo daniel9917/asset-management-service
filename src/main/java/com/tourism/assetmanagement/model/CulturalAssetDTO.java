@@ -76,6 +76,16 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private List<AssetSport> assetSportList;
 
+    private List<AssetOffer> assetOfferList;
+
+    public List<AssetOffer> getAssetOfferList() {
+        return assetOfferList;
+    }
+
+    public void setAssetOfferList(List<AssetOffer> assetOfferList) {
+        this.assetOfferList = assetOfferList;
+    }
+
     public List<AssetSport> getAssetSportList() {
         return assetSportList;
     }

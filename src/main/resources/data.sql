@@ -1,3 +1,23 @@
+--INSERTION OF OFFER TYPES
+
+INSERT INTO public.offer_type
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('1702ce99-bbd8-49c1-a361-2a15c65a6f55', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'pasive');
+
+INSERT INTO public.offer_type
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('dc444bed-5b2e-4c3c-903d-d5932135eb1c', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'aggressive');
+
+-- INSERTION OF OFFER
+
+INSERT INTO public.offer
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", offer_type_id)
+VALUES('e1f605bf-bfb7-4b1e-a177-ad81057aa1ee', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'trip', '1702ce99-bbd8-49c1-a361-2a15c65a6f55');
+
+INSERT INTO public.offer
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", offer_type_id)
+VALUES('7c8b6456-9a9d-49be-95fd-7bd156abaf96', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'tour', 'dc444bed-5b2e-4c3c-903d-d5932135eb1c');
+
 --INSERTION OF SPORT TYPES
 
 INSERT INTO public.sport_type
