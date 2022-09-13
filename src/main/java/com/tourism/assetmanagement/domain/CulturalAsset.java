@@ -98,6 +98,17 @@ public class CulturalAsset extends BaseEntity {
     @Transient
     private List<AssetCommunity> assetCommunities;
 
+    @Transient
+    private List<AssetAccess> assetAccessList;
+
+    public List<AssetAccess> getAssetAccessList() {
+        return assetAccessList;
+    }
+
+    public void setAssetAccessList(List<AssetAccess> assetAccessList) {
+        this.assetAccessList = assetAccessList;
+    }
+
     public LocalDateTime getDateEvent() {
         return dateEvent;
     }

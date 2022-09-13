@@ -1,3 +1,23 @@
+--INSERTION OF ACCESS TYPES
+
+INSERT INTO public.access_type
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('49e1fcf4-32df-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'land');
+
+INSERT INTO public.access_type
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('5076a15a-32df-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'maritime');
+
+-- INSERTION OF ACCESS
+
+INSERT INTO public.access
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", access_type_id)
+VALUES('a35442ec-32df-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'carretera', '49e1fcf4-32df-11ed-a261-0242ac120002');
+
+INSERT INTO public.access
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", access_type_id)
+VALUES('b02b7972-32df-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'ruta marina', '5076a15a-32df-11ed-a261-0242ac120002');
+
 --INSERTION OF ROUTE TYPES
 
 INSERT INTO public.route_type

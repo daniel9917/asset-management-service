@@ -72,6 +72,16 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private List<AssetCommunity> assetCommunities;
 
+    private List<AssetAccess>  assetAccessList;
+
+    public List<AssetAccess> getAssetAccessList() {
+        return assetAccessList;
+    }
+
+    public void setAssetAccessList(List<AssetAccess> assetAccessList) {
+        this.assetAccessList = assetAccessList;
+    }
+
     public LocalDateTime getDateEvent() {
         return dateEvent;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface AssetCommunityRepositoty extends BaseRepository<AssetCommunity, UUID> {
+public interface AssetCommunityRepositoty extends BaseAssetObjectRepository<AssetCommunity, UUID> {
     @Query("select ac from AssetCommunity ac where ac.assetId = :assetId and ac.deleted = false")
     List<AssetCommunity> findAllByAssetId(@NonNull UUID assetId);
 }
