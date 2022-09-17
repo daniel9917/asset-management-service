@@ -1,4 +1,4 @@
-package com.tourism.assetmanagement.repository;
+package com.tourism.assetmanagement.repository.asset;
 
 import com.tourism.assetmanagement.domain.AssetManifestation;
 import com.tourism.repository.BaseRepository;

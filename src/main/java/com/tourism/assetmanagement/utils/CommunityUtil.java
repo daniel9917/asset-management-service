@@ -3,9 +3,9 @@ package com.tourism.assetmanagement.utils;
 import com.tourism.assetmanagement.domain.AssetCommunity;
 import com.tourism.assetmanagement.domain.Community;
 import com.tourism.assetmanagement.domain.CommunityType;
-import com.tourism.assetmanagement.repository.AssetCommunityRepositoty;
+import com.tourism.assetmanagement.repository.asset.AssetCommunityRepositoty;
 import com.tourism.assetmanagement.repository.CommunityRepository;
-import com.tourism.assetmanagement.repository.CommunityTypeRepository;
+import com.tourism.assetmanagement.repository.type.CommunityTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

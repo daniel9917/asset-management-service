@@ -1,4 +1,4 @@
-package com.tourism.assetmanagement.repository;
+package com.tourism.assetmanagement.repository.type;
 
 import com.tourism.assetmanagement.domain.CommunityType;
 import com.tourism.repository.BaseRepository;
