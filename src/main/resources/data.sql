@@ -166,4 +166,11 @@ INSERT INTO public.community
 VALUES('a8ddc2fa-3097-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
 'b1809c52-3097-11ed-a261-0242ac120002', 'frech', 'potatoes');
 
+--INSERTION OF RESERVATION IDS
+
+INSERT INTO public.natural_reservation
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, name, url)
+VALUES('42435d42-363d-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+ 'Reserva Nacional Natural Puinawai', 'https://www.linkedin.com/in/jdanieljmnz/');
+
 
