@@ -107,6 +107,17 @@ public class CulturalAsset extends BaseEntity {
     @Transient
     private List<AssetOffer> assetOfferList;
 
+    @Transient
+    private List<AssetVulnerability> assetVulnerabilityList;
+
+    public List<AssetVulnerability> getAssetVulnerabilityList() {
+        return assetVulnerabilityList;
+    }
+
+    public void setAssetVulnerabilityList(List<AssetVulnerability> assetVulnerabilityList) {
+        this.assetVulnerabilityList = assetVulnerabilityList;
+    }
+
     public List<AssetOffer> getAssetOfferList() {
         return assetOfferList;
     }

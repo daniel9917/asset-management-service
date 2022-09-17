@@ -173,4 +173,10 @@ INSERT INTO public.natural_reservation
 VALUES('42435d42-363d-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
  'Reserva Nacional Natural Puinawai', 'https://www.linkedin.com/in/jdanieljmnz/');
 
+--INSERTION OF VULNERABILITIES
+
+INSERT INTO public.vulnerability
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('68b671a4-3646-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','vulnerability 1');
+
 

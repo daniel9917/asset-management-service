@@ -13,6 +13,7 @@ import com.tourism.assetmanagement.utils.RouteDetailUtil;
 import com.tourism.assetmanagement.utils.AssetAccessDetailUtil;
 import com.tourism.assetmanagement.utils.AssetSportDetailUtil;
 import com.tourism.assetmanagement.utils.AssetOfferDetailUtil;
+import com.tourism.assetmanagement.utils.AssetVulnerabilityUtil;
 import com.tourism.service.BaseService;
 import com.tourism.model.PageData;
 import com.tourism.validation.BaseValidator;
@@ -49,6 +50,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private final AssetOfferDetailUtil assetOfferUtil;
 
+    private final AssetVulnerabilityUtil assetVulnerabilityUtil;
+
     @Autowired
     public CulturalAssetService(CulturalAssetRepository repository, CulturalAssetMapper mapper,
                                 NaturalReservationRepository naturalReservationRepository,
@@ -56,7 +59,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                                 BaseValidator validator, RouteDetailUtil routeUtil,
                                 ImageUtil imageUtil, CommunityDetailUtil communityUtil,
                                 AssetAccessDetailUtil assetAccessUtil, AssetSportDetailUtil assetSportUtil,
-                                AssetOfferDetailUtil assetOfferUtil){
+                                AssetOfferDetailUtil assetOfferUtil, AssetVulnerabilityUtil assetVulnerabilityUtil){
         super(repository, mapper, validator);
         this.repository = repository;
         this.naturalReservationRepository = naturalReservationRepository;
@@ -68,6 +71,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         this.assetAccessUtil = assetAccessUtil;
         this.assetSportUtil = assetSportUtil;
         this.assetOfferUtil = assetOfferUtil;
+        this.assetVulnerabilityUtil = assetVulnerabilityUtil;
     }
 
     @Override
@@ -85,6 +89,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetAccessList(assetAccessUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetSportList(assetSportUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetOfferList(assetOfferUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetVulnerabilityList(assetVulnerabilityUtil.findAllByAssetId(uuid));
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -115,6 +120,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         updatedAsset.setAssetAccessList(saveAssetAccess(updated));
         updatedAsset.setAssetSportList(saveAssetSport(updated));
         updatedAsset.setAssetOfferList(saveAssetOffer(updated));
+        updatedAsset.setAssetVulnerabilityList(saveAssetVulnerability(updated));
         return updatedAsset;
     }
 
@@ -149,6 +155,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         savedEntity.setAssetAccessList(saveAssetAccess(culturalAsset));
         savedEntity.setAssetSportList(saveAssetSport(culturalAsset));
         savedEntity.setAssetOfferList(saveAssetOffer(culturalAsset));
+        savedEntity.setAssetVulnerabilityList(saveAssetVulnerability(culturalAsset));
         savedEntity = repository.save(savedEntity);
         return mapper.map(savedEntity);
     }
@@ -171,6 +178,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private List<AssetOffer> saveAssetOffer(CulturalAsset culturalAsset){
         return assetOfferUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetOfferList(), AssetOffer.class, "offerId");
+    }
+
+    private List<AssetVulnerability> saveAssetVulnerability(CulturalAsset culturalAsset){
+        return assetVulnerabilityUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetVulnerabilityList(), AssetVulnerability.class, "vulnerabilityId");
     }
 
     private void validateNaturalReservation(UUID reservationID){
