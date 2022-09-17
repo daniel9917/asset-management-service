@@ -3,9 +3,9 @@ package com.tourism.assetmanagement.utils;
 import com.tourism.assetmanagement.domain.AssetSport;
 import com.tourism.assetmanagement.domain.Sport;
 import com.tourism.assetmanagement.domain.SportType;
-import com.tourism.assetmanagement.repository.AssetSportRepository;
+import com.tourism.assetmanagement.repository.asset.AssetSportRepository;
 import com.tourism.assetmanagement.repository.SportRepository;
-import com.tourism.assetmanagement.repository.SportTypeRepository;
+import com.tourism.assetmanagement.repository.type.SportTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

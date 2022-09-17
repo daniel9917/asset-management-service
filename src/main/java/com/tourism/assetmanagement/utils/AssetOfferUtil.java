@@ -3,9 +3,9 @@ package com.tourism.assetmanagement.utils;
 import com.tourism.assetmanagement.domain.AssetOffer;
 import com.tourism.assetmanagement.domain.Offer;
 import com.tourism.assetmanagement.domain.OfferType;
-import com.tourism.assetmanagement.repository.AssetOfferRepository;
+import com.tourism.assetmanagement.repository.asset.AssetOfferRepository;
 import com.tourism.assetmanagement.repository.OfferRepository;
-import com.tourism.assetmanagement.repository.OfferTypeRepository;
+import com.tourism.assetmanagement.repository.type.OfferTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -5,6 +5,7 @@ import com.tourism.assetmanagement.errors.NotFoundException;
 import com.tourism.assetmanagement.mapper.CulturalAssetMapper;
 import com.tourism.assetmanagement.model.CulturalAssetDTO;
 import com.tourism.assetmanagement.repository.CulturalAssetRepository;
+import com.tourism.assetmanagement.repository.NaturalReservationRepository;
 import com.tourism.assetmanagement.utils.AssetClassificationUtil;
 import com.tourism.assetmanagement.utils.CommunityUtil;
 import com.tourism.assetmanagement.utils.ImageUtil;
@@ -30,6 +31,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private final CulturalAssetRepository repository;
 
+    private final NaturalReservationRepository naturalReservationRepository;
+
     private final CulturalAssetMapper mapper;
 
     private final AssetClassificationUtil assetClassificationUtil;
@@ -47,8 +50,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     private final AssetOfferUtil assetOfferUtil;
 
     @Autowired
-    public CulturalAssetService(CulturalAssetRepository repository,
-                                CulturalAssetMapper mapper,
+    public CulturalAssetService(CulturalAssetRepository repository, CulturalAssetMapper mapper,
+                                NaturalReservationRepository naturalReservationRepository,
                                 AssetClassificationUtil assetClassificationUtil,
                                 BaseValidator validator, RouteUtil routeUtil,
                                 ImageUtil imageUtil, CommunityUtil communityUtil,
@@ -56,6 +59,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                                 AssetOfferUtil assetOfferUtil){
         super(repository, mapper, validator);
         this.repository = repository;
+        this.naturalReservationRepository = naturalReservationRepository;
         this.assetClassificationUtil = assetClassificationUtil;
         this.mapper = mapper;
         this.routeUtil = routeUtil;
@@ -93,6 +97,9 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     @Override
     public CulturalAssetDTO update(UUID uuid, CulturalAssetDTO update) {
+        if (update.getReservationId() != null ){
+            validateNaturalReservation(update.getReservationId());
+        }
         CulturalAssetDTO updatedAsset = super.update(uuid, update);
         updatedAsset.setAssetClassification(saveAssetClassification(mapper.map(updatedAsset), mapper.map(update)));
         updatedAsset.setImageList(imageUtil.updateImageList(uuid, update.getImageList()));
@@ -123,6 +130,9 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private CulturalAssetDTO persistAsset(CulturalAsset culturalAsset){
         CulturalAsset savedEntity = repository.save(culturalAsset);
+        if (culturalAsset.getReservationId() != null){
+            validateNaturalReservation(culturalAsset.getReservationId());
+        }
         if(Objects.nonNull(culturalAsset.getAssetClassification())){
             savedEntity.setAssetClassification(saveAssetClassification(savedEntity,culturalAsset));
             savedEntity.setAssetClassificationId(savedEntity.getAssetClassification().getId());
@@ -163,6 +173,11 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         return assetOfferUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetOfferList(), AssetOffer.class, "offerId");
     }
 
+    private void validateNaturalReservation(UUID reservationID){
+        naturalReservationRepository.findById(reservationID).orElseThrow(() -> {
+            throw new NotFoundException(reservationID);
+        });
+    }
 
     private List<AssetManifestation> saveAssetManifestations(CulturalAsset culturalAsset){
         return assetClassificationUtil.saveAllAssetManifestations(

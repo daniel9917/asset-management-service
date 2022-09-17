@@ -4,8 +4,8 @@ import com.tourism.assetmanagement.domain.Access;
 import com.tourism.assetmanagement.domain.AccessType;
 import com.tourism.assetmanagement.domain.AssetAccess;
 import com.tourism.assetmanagement.repository.AccessRepository;
-import com.tourism.assetmanagement.repository.AccessTypeRepository;
-import com.tourism.assetmanagement.repository.AssetAccessRepository;
+import com.tourism.assetmanagement.repository.type.AccessTypeRepository;
+import com.tourism.assetmanagement.repository.asset.AssetAccessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
