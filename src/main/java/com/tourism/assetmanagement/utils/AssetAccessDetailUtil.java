@@ -13,7 +13,7 @@ import java.util.UUID;
 
 
 @Service
-public class AssetAccessUtil extends GenericUtil<Access, AccessType, AssetAccess, UUID, AccessRepository, AccessTypeRepository, AssetAccessRepository>{
+public class AssetAccessDetailUtil extends GenericDetailUtil<Access, AccessType, AssetAccess, UUID, AccessRepository, AccessTypeRepository, AssetAccessRepository> {
 
     @Autowired
     private final AccessRepository accessRepository;
@@ -24,7 +24,7 @@ public class AssetAccessUtil extends GenericUtil<Access, AccessType, AssetAccess
     @Autowired
     private final AccessTypeRepository accessTypeRepository;
 
-    public AssetAccessUtil(AccessRepository accessRepository, AssetAccessRepository assetAccessRepository, AccessTypeRepository accessTypeRepository) {
+    public AssetAccessDetailUtil(AccessRepository accessRepository, AssetAccessRepository assetAccessRepository, AccessTypeRepository accessTypeRepository) {
         super(accessRepository, assetAccessRepository, accessTypeRepository);
         this.accessRepository = accessRepository;
         this.assetAccessRepository = assetAccessRepository;

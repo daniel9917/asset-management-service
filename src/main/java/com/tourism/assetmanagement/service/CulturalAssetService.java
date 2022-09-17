@@ -7,12 +7,12 @@ import com.tourism.assetmanagement.model.CulturalAssetDTO;
 import com.tourism.assetmanagement.repository.CulturalAssetRepository;
 import com.tourism.assetmanagement.repository.NaturalReservationRepository;
 import com.tourism.assetmanagement.utils.AssetClassificationUtil;
-import com.tourism.assetmanagement.utils.CommunityUtil;
+import com.tourism.assetmanagement.utils.CommunityDetailUtil;
 import com.tourism.assetmanagement.utils.ImageUtil;
-import com.tourism.assetmanagement.utils.RouteUtil;
-import com.tourism.assetmanagement.utils.AssetAccessUtil;
-import com.tourism.assetmanagement.utils.AssetSportUtil;
-import com.tourism.assetmanagement.utils.AssetOfferUtil;
+import com.tourism.assetmanagement.utils.RouteDetailUtil;
+import com.tourism.assetmanagement.utils.AssetAccessDetailUtil;
+import com.tourism.assetmanagement.utils.AssetSportDetailUtil;
+import com.tourism.assetmanagement.utils.AssetOfferDetailUtil;
 import com.tourism.service.BaseService;
 import com.tourism.model.PageData;
 import com.tourism.validation.BaseValidator;
@@ -37,26 +37,26 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private final AssetClassificationUtil assetClassificationUtil;
 
-    private final RouteUtil routeUtil;
+    private final RouteDetailUtil routeUtil;
 
     private final ImageUtil imageUtil;
 
-    private final CommunityUtil communityUtil;
+    private final CommunityDetailUtil communityUtil;
 
-    private final AssetAccessUtil assetAccessUtil;
+    private final AssetAccessDetailUtil assetAccessUtil;
 
-    private final AssetSportUtil assetSportUtil;
+    private final AssetSportDetailUtil assetSportUtil;
 
-    private final AssetOfferUtil assetOfferUtil;
+    private final AssetOfferDetailUtil assetOfferUtil;
 
     @Autowired
     public CulturalAssetService(CulturalAssetRepository repository, CulturalAssetMapper mapper,
                                 NaturalReservationRepository naturalReservationRepository,
                                 AssetClassificationUtil assetClassificationUtil,
-                                BaseValidator validator, RouteUtil routeUtil,
-                                ImageUtil imageUtil, CommunityUtil communityUtil,
-                                AssetAccessUtil assetAccessUtil, AssetSportUtil assetSportUtil,
-                                AssetOfferUtil assetOfferUtil){
+                                BaseValidator validator, RouteDetailUtil routeUtil,
+                                ImageUtil imageUtil, CommunityDetailUtil communityUtil,
+                                AssetAccessDetailUtil assetAccessUtil, AssetSportDetailUtil assetSportUtil,
+                                AssetOfferDetailUtil assetOfferUtil){
         super(repository, mapper, validator);
         this.repository = repository;
         this.naturalReservationRepository = naturalReservationRepository;

@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 import static java.util.function.Predicate.not;
 
-public abstract class GenericUtil <Object extends BaseEntity, ObjectType extends BaseEntity, AssetObject extends BaseEntity, ID extends Serializable,
+public abstract class GenericDetailUtil<Object extends BaseEntity, ObjectType extends BaseEntity, AssetObject extends BaseEntity, ID extends Serializable,
         ObjectRepository extends BaseRepository, ObjectTypeRepository extends BaseRepository, AssetObjectRepository extends BaseAssetObjectRepository>{
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -34,7 +34,7 @@ public abstract class GenericUtil <Object extends BaseEntity, ObjectType extends
 
     private ObjectTypeRepository objectTypeRepository;
 
-    public GenericUtil(ObjectRepository objectRepository, AssetObjectRepository assetObjectRepository, ObjectTypeRepository objectTypeRepository) {
+    public GenericDetailUtil(ObjectRepository objectRepository, AssetObjectRepository assetObjectRepository, ObjectTypeRepository objectTypeRepository) {
         this.objectRepository = objectRepository;
         this.assetObjectRepository = assetObjectRepository;
         this.objectTypeRepository = objectTypeRepository;
