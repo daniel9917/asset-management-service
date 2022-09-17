@@ -80,6 +80,16 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private List<AssetVulnerability> assetVulnerabilityList;
 
+    private List<AssetRecognition> assetRecognitionList;
+
+    public List<AssetRecognition> getAssetRecognitionList() {
+        return assetRecognitionList;
+    }
+
+    public void setAssetRecognitionList(List<AssetRecognition> assetRecognitionList) {
+        this.assetRecognitionList = assetRecognitionList;
+    }
+
     public List<AssetVulnerability> getAssetVulnerabilityList() {
         return assetVulnerabilityList;
     }
