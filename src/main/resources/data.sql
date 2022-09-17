@@ -185,3 +185,9 @@ INSERT INTO public.recognition
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", "description")
 VALUES('219b7c44-3649-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
 'recognition 1', 'a description for recognition 1');
+
+--INSERTION OF NATURES
+
+INSERT INTO public.nature
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('e16ebf7a-364b-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','nature 1');

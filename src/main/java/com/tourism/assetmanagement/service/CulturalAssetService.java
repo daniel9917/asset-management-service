@@ -47,6 +47,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private final AssetRecognitionUtil assetRecognitionUtil;
 
+    private final AssetNatureUtil assetNatureUtil;
+
     @Autowired
     public CulturalAssetService(CulturalAssetRepository repository, CulturalAssetMapper mapper,
                                 NaturalReservationRepository naturalReservationRepository,
@@ -55,7 +57,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                                 ImageUtil imageUtil, CommunityDetailUtil communityUtil,
                                 AssetAccessDetailUtil assetAccessUtil, AssetSportDetailUtil assetSportUtil,
                                 AssetOfferDetailUtil assetOfferUtil, AssetVulnerabilityUtil assetVulnerabilityUtil,
-                                AssetRecognitionUtil assetRecognitionUtil){
+                                AssetRecognitionUtil assetRecognitionUtil, AssetNatureUtil assetNatureUtil){
         super(repository, mapper, validator);
         this.repository = repository;
         this.naturalReservationRepository = naturalReservationRepository;
@@ -69,6 +71,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         this.assetOfferUtil = assetOfferUtil;
         this.assetVulnerabilityUtil = assetVulnerabilityUtil;
         this.assetRecognitionUtil = assetRecognitionUtil;
+        this.assetNatureUtil = assetNatureUtil;
     }
 
     @Override
@@ -88,6 +91,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetOfferList(assetOfferUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetVulnerabilityList(assetVulnerabilityUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetRecognitionList(assetRecognitionUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetNatureList(assetNatureUtil.findAllByAssetId(uuid));
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -120,6 +124,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         updatedAsset.setAssetOfferList(saveAssetOffer(updated));
         updatedAsset.setAssetVulnerabilityList(saveAssetVulnerability(updated));
         updatedAsset.setAssetRecognitionList(saveAssetRecognition(updated));
+        updatedAsset.setAssetNatureList(saveAssetNature(updated));
         return updatedAsset;
     }
 
@@ -156,6 +161,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         savedEntity.setAssetOfferList(saveAssetOffer(culturalAsset));
         savedEntity.setAssetVulnerabilityList(saveAssetVulnerability(culturalAsset));
         savedEntity.setAssetRecognitionList(saveAssetRecognition(culturalAsset));
+        savedEntity.setAssetNatureList(saveAssetNature(culturalAsset));
         savedEntity = repository.save(savedEntity);
         return mapper.map(savedEntity);
     }
@@ -186,6 +192,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private List<AssetRecognition> saveAssetRecognition(CulturalAsset culturalAsset){
         return assetRecognitionUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetRecognitionList(), AssetRecognition.class, "recognitionId");
+    }
+
+    private List<AssetNature> saveAssetNature(CulturalAsset culturalAsset){
+        return assetNatureUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetNatureList(), AssetNature.class, "natureId");
     }
 
     private void validateNaturalReservation(UUID reservationID){

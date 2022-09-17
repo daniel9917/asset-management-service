@@ -82,6 +82,16 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private List<AssetRecognition> assetRecognitionList;
 
+    private List<AssetNature> assetNatureList;
+
+    public List<AssetNature> getAssetNatureList() {
+        return assetNatureList;
+    }
+
+    public void setAssetNatureList(List<AssetNature> assetNatureList) {
+        this.assetNatureList = assetNatureList;
+    }
+
     public List<AssetRecognition> getAssetRecognitionList() {
         return assetRecognitionList;
     }
