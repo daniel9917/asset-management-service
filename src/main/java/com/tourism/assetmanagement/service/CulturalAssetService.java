@@ -49,6 +49,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private final AssetNatureUtil assetNatureUtil;
 
+    private final AssetCommunicationUtil assetCommunicationUtil;
+
+    private final AssetPublicServiceUtil assetPublicServiceUtil;
+
     @Autowired
     public CulturalAssetService(CulturalAssetRepository repository, CulturalAssetMapper mapper,
                                 NaturalReservationRepository naturalReservationRepository,
@@ -57,7 +61,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                                 ImageUtil imageUtil, CommunityDetailUtil communityUtil,
                                 AssetAccessDetailUtil assetAccessUtil, AssetSportDetailUtil assetSportUtil,
                                 AssetOfferDetailUtil assetOfferUtil, AssetVulnerabilityUtil assetVulnerabilityUtil,
-                                AssetRecognitionUtil assetRecognitionUtil, AssetNatureUtil assetNatureUtil){
+                                AssetRecognitionUtil assetRecognitionUtil, AssetNatureUtil assetNatureUtil,
+                                AssetCommunicationUtil assetCommunicationUtil, AssetPublicServiceUtil assetPublicServiceUtil){
         super(repository, mapper, validator);
         this.repository = repository;
         this.naturalReservationRepository = naturalReservationRepository;
@@ -72,6 +77,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         this.assetVulnerabilityUtil = assetVulnerabilityUtil;
         this.assetRecognitionUtil = assetRecognitionUtil;
         this.assetNatureUtil = assetNatureUtil;
+        this.assetCommunicationUtil = assetCommunicationUtil;
+        this.assetPublicServiceUtil = assetPublicServiceUtil;
     }
 
     @Override
@@ -92,6 +99,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetVulnerabilityList(assetVulnerabilityUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetRecognitionList(assetRecognitionUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetNatureList(assetNatureUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetCommunicationList(assetCommunicationUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetPublicServiceList(assetPublicServiceUtil.findAllByAssetId(uuid));
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -125,6 +134,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         updatedAsset.setAssetVulnerabilityList(saveAssetVulnerability(updated));
         updatedAsset.setAssetRecognitionList(saveAssetRecognition(updated));
         updatedAsset.setAssetNatureList(saveAssetNature(updated));
+        updatedAsset.setAssetCommunicationList(saveAssetCommunication(updated));
+        updatedAsset.setAssetPublicServiceList(saveAssetPublicService(updated));
         return updatedAsset;
     }
 
@@ -162,6 +173,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         savedEntity.setAssetVulnerabilityList(saveAssetVulnerability(culturalAsset));
         savedEntity.setAssetRecognitionList(saveAssetRecognition(culturalAsset));
         savedEntity.setAssetNatureList(saveAssetNature(culturalAsset));
+        savedEntity.setAssetCommunicationList(saveAssetCommunication(culturalAsset));
+        savedEntity.setAssetPublicServiceList(saveAssetPublicService(culturalAsset));
         savedEntity = repository.save(savedEntity);
         return mapper.map(savedEntity);
     }
@@ -196,6 +209,14 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private List<AssetNature> saveAssetNature(CulturalAsset culturalAsset){
         return assetNatureUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetNatureList(), AssetNature.class, "natureId");
+    }
+
+    private List<AssetCommunication> saveAssetCommunication(CulturalAsset culturalAsset){
+        return assetCommunicationUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetCommunicationList(), AssetCommunication.class, "communicationId");
+    }
+
+    private List<AssetPublicService> saveAssetPublicService(CulturalAsset culturalAsset){
+        return assetPublicServiceUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetPublicServiceList(), AssetPublicService.class, "publicServiceId");
     }
 
     private void validateNaturalReservation(UUID reservationID){

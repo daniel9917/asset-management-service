@@ -84,6 +84,26 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private List<AssetNature> assetNatureList;
 
+    private List<AssetCommunication> assetCommunicationList;
+
+    private List<AssetPublicService> assetPublicServiceList;
+
+    public List<AssetPublicService> getAssetPublicServiceList() {
+        return assetPublicServiceList;
+    }
+
+    public void setAssetPublicServiceList(List<AssetPublicService> assetPublicServiceList) {
+        this.assetPublicServiceList = assetPublicServiceList;
+    }
+
+    public List<AssetCommunication> getAssetCommunicationList() {
+        return assetCommunicationList;
+    }
+
+    public void setAssetCommunicationList(List<AssetCommunication> assetCommunicationList) {
+        this.assetCommunicationList = assetCommunicationList;
+    }
+
     public List<AssetNature> getAssetNatureList() {
         return assetNatureList;
     }

@@ -191,3 +191,15 @@ VALUES('219b7c44-3649-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.nature
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
 VALUES('e16ebf7a-364b-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','nature 1');
+
+--INSERTION OF COMMUNICATION
+
+INSERT INTO public.communication
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('ab54f920-364d-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','communication 1');
+
+--INSERTION OF COMMUNICATION
+
+INSERT INTO public."public_service"
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('1e06a0dc-8482-4602-b848-0105346447d1', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','public service 1');
