@@ -1,4 +1,4 @@
-package com.tourism.assetmanagement.domain;
+package com.tourism.assetmanagement.domain.type;
 
 import com.tourism.domain.BaseEntity;
 import lombok.*;
@@ -15,12 +15,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "asset_access")
-public class AssetAccess extends BaseEntity {
+@Table(name = "access_type")
+public class AccessType extends BaseEntity {
 
     @Column
-    private UUID assetId;
+    private UUID id;
 
     @Column
-    private UUID accessId;
+    private String name;
+
 }

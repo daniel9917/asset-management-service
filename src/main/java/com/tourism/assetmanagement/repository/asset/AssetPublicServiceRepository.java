@@ -1,6 +1,6 @@
 package com.tourism.assetmanagement.repository.asset;
 
-import com.tourism.assetmanagement.domain.AssetPublicService;
+import com.tourism.assetmanagement.domain.asset.AssetPublicService;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

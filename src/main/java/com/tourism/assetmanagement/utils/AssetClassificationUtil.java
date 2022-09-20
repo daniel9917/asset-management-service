@@ -1,14 +1,14 @@
 package com.tourism.assetmanagement.utils;
 
-import com.tourism.assetmanagement.domain.AssetClassification;
-import com.tourism.assetmanagement.domain.AssetManifestation;
+import com.tourism.assetmanagement.domain.asset.AssetClassification;
+import com.tourism.assetmanagement.domain.asset.AssetManifestation;
 import com.tourism.assetmanagement.domain.classification.*;
 import com.tourism.assetmanagement.errors.NotFoundException;
 import com.tourism.assetmanagement.errors.ServiceException;
 import com.tourism.assetmanagement.mapper.AssetClassificationMapper;
 import com.tourism.assetmanagement.repository.asset.AssetClassificationRepository;
 import com.tourism.assetmanagement.repository.asset.AssetManifestationRepository;
-import com.tourism.assetmanagement.repository.ManifestationRepository;
+import com.tourism.assetmanagement.repository.classification.ManifestationRepository;
 import com.tourism.assetmanagement.repository.classification.*;
 import com.tourism.domain.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;

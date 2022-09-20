@@ -1,6 +1,6 @@
 package com.tourism.assetmanagement.utils;
 
-import com.tourism.assetmanagement.domain.AssetCommunication;
+import com.tourism.assetmanagement.domain.asset.AssetCommunication;
 import com.tourism.assetmanagement.domain.Communication;
 import com.tourism.assetmanagement.repository.CommunicationRepository;
 import com.tourism.assetmanagement.repository.asset.AssetCommunicationRepository;

@@ -1,8 +1,8 @@
 package com.tourism.assetmanagement.utils;
 
-import com.tourism.assetmanagement.domain.AssetCommunity;
+import com.tourism.assetmanagement.domain.asset.AssetCommunity;
 import com.tourism.assetmanagement.domain.Community;
-import com.tourism.assetmanagement.domain.CommunityType;
+import com.tourism.assetmanagement.domain.type.CommunityType;
 import com.tourism.assetmanagement.repository.asset.AssetCommunityRepositoty;
 import com.tourism.assetmanagement.repository.CommunityRepository;
 import com.tourism.assetmanagement.repository.type.CommunityTypeRepository;

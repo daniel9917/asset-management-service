@@ -1,4 +1,4 @@
-package com.tourism.assetmanagement.domain;
+package com.tourism.assetmanagement.domain.asset;
 
 import com.tourism.domain.BaseEntity;
 import lombok.*;
@@ -8,19 +8,19 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.UUID;
 
-@Table(name = "asset_sport")
 @Entity
-@Data
 @Getter
+@Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class AssetSport extends BaseEntity {
+@EqualsAndHashCode
+@AllArgsConstructor
+@Table(name = "asset_public_service")
+public class AssetPublicService extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column
     private UUID assetId;
 
-    @Column(nullable = false)
-    private UUID sportId;
-
+    @Column
+    private UUID publicServiceId;
 }

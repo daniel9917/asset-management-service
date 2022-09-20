@@ -1,8 +1,8 @@
 package com.tourism.assetmanagement.utils;
 
 import com.tourism.assetmanagement.domain.Access;
-import com.tourism.assetmanagement.domain.AccessType;
-import com.tourism.assetmanagement.domain.AssetAccess;
+import com.tourism.assetmanagement.domain.type.AccessType;
+import com.tourism.assetmanagement.domain.asset.AssetAccess;
 import com.tourism.assetmanagement.repository.AccessRepository;
 import com.tourism.assetmanagement.repository.type.AccessTypeRepository;
 import com.tourism.assetmanagement.repository.asset.AssetAccessRepository;
