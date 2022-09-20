@@ -107,6 +107,61 @@ public class CulturalAsset extends BaseEntity {
     @Transient
     private List<AssetOffer> assetOfferList;
 
+    @Transient
+    private List<AssetVulnerability> assetVulnerabilityList;
+
+    @Transient
+    private List<AssetRecognition> assetRecognitionList;
+
+    @Transient
+    private List<AssetNature> assetNatureList;
+
+    @Transient
+    private List<AssetCommunication> assetCommunicationList;
+
+    @Transient
+    private List<AssetPublicService> assetPublicServiceList;
+
+    public List<AssetPublicService> getAssetPublicServiceList() {
+        return assetPublicServiceList;
+    }
+
+    public void setAssetPublicServiceList(List<AssetPublicService> assetPublicServiceList) {
+        this.assetPublicServiceList = assetPublicServiceList;
+    }
+
+    public List<AssetCommunication> getAssetCommunicationList() {
+        return assetCommunicationList;
+    }
+
+    public void setAssetCommunicationList(List<AssetCommunication> assetCommunicationList) {
+        this.assetCommunicationList = assetCommunicationList;
+    }
+
+    public List<AssetNature> getAssetNatureList() {
+        return assetNatureList;
+    }
+
+    public void setAssetNatureList(List<AssetNature> assetNatureList) {
+        this.assetNatureList = assetNatureList;
+    }
+
+    public List<AssetRecognition> getAssetRecognitionList() {
+        return assetRecognitionList;
+    }
+
+    public void setAssetRecognitionList(List<AssetRecognition> assetRecognitionList) {
+        this.assetRecognitionList = assetRecognitionList;
+    }
+
+    public List<AssetVulnerability> getAssetVulnerabilityList() {
+        return assetVulnerabilityList;
+    }
+
+    public void setAssetVulnerabilityList(List<AssetVulnerability> assetVulnerabilityList) {
+        this.assetVulnerabilityList = assetVulnerabilityList;
+    }
+
     public List<AssetOffer> getAssetOfferList() {
         return assetOfferList;
     }

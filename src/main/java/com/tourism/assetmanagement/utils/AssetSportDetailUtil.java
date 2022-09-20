@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class AssetSportUtil extends GenericUtil<Sport, SportType, AssetSport, UUID, SportRepository, SportTypeRepository, AssetSportRepository>{
+public class AssetSportDetailUtil extends GenericDetailUtil<Sport, SportType, AssetSport, UUID, SportRepository, SportTypeRepository, AssetSportRepository> {
 
 
     private final SportRepository sportRepository;
@@ -20,7 +20,7 @@ public class AssetSportUtil extends GenericUtil<Sport, SportType, AssetSport, UU
     private final AssetSportRepository assetSportRepository;
 
     @Autowired
-    public AssetSportUtil(SportRepository sportRepository, AssetSportRepository assetSportRepository, SportTypeRepository sportTypeRepository) {
+    public AssetSportDetailUtil(SportRepository sportRepository, AssetSportRepository assetSportRepository, SportTypeRepository sportTypeRepository) {
         super(sportRepository, assetSportRepository, sportTypeRepository);
         this.sportRepository = sportRepository;
         this.sportTypeRepository = sportTypeRepository;

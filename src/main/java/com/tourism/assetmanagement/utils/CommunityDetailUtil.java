@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class CommunityUtil extends GenericUtil<Community, CommunityType, AssetCommunity, UUID, CommunityRepository, CommunityTypeRepository, AssetCommunityRepositoty> {
+public class CommunityDetailUtil extends GenericDetailUtil<Community, CommunityType, AssetCommunity, UUID, CommunityRepository, CommunityTypeRepository, AssetCommunityRepositoty> {
 
     @Autowired
     private CommunityRepository communityRepository;
@@ -23,9 +23,9 @@ public class CommunityUtil extends GenericUtil<Community, CommunityType, AssetCo
     @Autowired
     private CommunityTypeRepository communityTypeRepository;
 
-    public CommunityUtil(CommunityRepository communityRepository,
-                         AssetCommunityRepositoty assetCommunityRepositoty,
-                         CommunityTypeRepository communityTypeRepository) {
+    public CommunityDetailUtil(CommunityRepository communityRepository,
+                               AssetCommunityRepositoty assetCommunityRepositoty,
+                               CommunityTypeRepository communityTypeRepository) {
         super(communityRepository, assetCommunityRepositoty, communityTypeRepository);
         this.communityRepository = communityRepository;
         this.assetCommunityRepositoty = assetCommunityRepositoty;

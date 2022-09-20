@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class RouteUtil extends GenericUtil<Route, RouteType, AssetRoute, UUID, RouteRepository, RouteTypeRepository, AssetRouteRepository> {
+public class RouteDetailUtil extends GenericDetailUtil<Route, RouteType, AssetRoute, UUID, RouteRepository, RouteTypeRepository, AssetRouteRepository> {
 
     private RouteRepository routeRepository;
 
@@ -21,7 +21,7 @@ public class RouteUtil extends GenericUtil<Route, RouteType, AssetRoute, UUID, R
     private RouteTypeRepository routeTypeRepository;
 
     @Autowired
-    public RouteUtil(RouteRepository routeRepository, AssetRouteRepository assetRouteRepository, RouteTypeRepository routeTypeRepository) {
+    public RouteDetailUtil(RouteRepository routeRepository, AssetRouteRepository assetRouteRepository, RouteTypeRepository routeTypeRepository) {
         super(routeRepository, assetRouteRepository, routeTypeRepository);
         this.routeRepository = routeRepository;
         this.assetRouteRepository = assetRouteRepository;

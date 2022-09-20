@@ -6,13 +6,7 @@ import com.tourism.assetmanagement.mapper.CulturalAssetMapper;
 import com.tourism.assetmanagement.model.CulturalAssetDTO;
 import com.tourism.assetmanagement.repository.CulturalAssetRepository;
 import com.tourism.assetmanagement.repository.NaturalReservationRepository;
-import com.tourism.assetmanagement.utils.AssetClassificationUtil;
-import com.tourism.assetmanagement.utils.CommunityUtil;
-import com.tourism.assetmanagement.utils.ImageUtil;
-import com.tourism.assetmanagement.utils.RouteUtil;
-import com.tourism.assetmanagement.utils.AssetAccessUtil;
-import com.tourism.assetmanagement.utils.AssetSportUtil;
-import com.tourism.assetmanagement.utils.AssetOfferUtil;
+import com.tourism.assetmanagement.utils.*;
 import com.tourism.service.BaseService;
 import com.tourism.model.PageData;
 import com.tourism.validation.BaseValidator;
@@ -37,26 +31,38 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private final AssetClassificationUtil assetClassificationUtil;
 
-    private final RouteUtil routeUtil;
+    private final RouteDetailUtil routeUtil;
 
     private final ImageUtil imageUtil;
 
-    private final CommunityUtil communityUtil;
+    private final CommunityDetailUtil communityUtil;
 
-    private final AssetAccessUtil assetAccessUtil;
+    private final AssetAccessDetailUtil assetAccessUtil;
 
-    private final AssetSportUtil assetSportUtil;
+    private final AssetSportDetailUtil assetSportUtil;
 
-    private final AssetOfferUtil assetOfferUtil;
+    private final AssetOfferDetailUtil assetOfferUtil;
+
+    private final AssetVulnerabilityUtil assetVulnerabilityUtil;
+
+    private final AssetRecognitionUtil assetRecognitionUtil;
+
+    private final AssetNatureUtil assetNatureUtil;
+
+    private final AssetCommunicationUtil assetCommunicationUtil;
+
+    private final AssetPublicServiceUtil assetPublicServiceUtil;
 
     @Autowired
     public CulturalAssetService(CulturalAssetRepository repository, CulturalAssetMapper mapper,
                                 NaturalReservationRepository naturalReservationRepository,
                                 AssetClassificationUtil assetClassificationUtil,
-                                BaseValidator validator, RouteUtil routeUtil,
-                                ImageUtil imageUtil, CommunityUtil communityUtil,
-                                AssetAccessUtil assetAccessUtil, AssetSportUtil assetSportUtil,
-                                AssetOfferUtil assetOfferUtil){
+                                BaseValidator validator, RouteDetailUtil routeUtil,
+                                ImageUtil imageUtil, CommunityDetailUtil communityUtil,
+                                AssetAccessDetailUtil assetAccessUtil, AssetSportDetailUtil assetSportUtil,
+                                AssetOfferDetailUtil assetOfferUtil, AssetVulnerabilityUtil assetVulnerabilityUtil,
+                                AssetRecognitionUtil assetRecognitionUtil, AssetNatureUtil assetNatureUtil,
+                                AssetCommunicationUtil assetCommunicationUtil, AssetPublicServiceUtil assetPublicServiceUtil){
         super(repository, mapper, validator);
         this.repository = repository;
         this.naturalReservationRepository = naturalReservationRepository;
@@ -68,6 +74,11 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         this.assetAccessUtil = assetAccessUtil;
         this.assetSportUtil = assetSportUtil;
         this.assetOfferUtil = assetOfferUtil;
+        this.assetVulnerabilityUtil = assetVulnerabilityUtil;
+        this.assetRecognitionUtil = assetRecognitionUtil;
+        this.assetNatureUtil = assetNatureUtil;
+        this.assetCommunicationUtil = assetCommunicationUtil;
+        this.assetPublicServiceUtil = assetPublicServiceUtil;
     }
 
     @Override
@@ -85,6 +96,11 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetAccessList(assetAccessUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetSportList(assetSportUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetOfferList(assetOfferUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetVulnerabilityList(assetVulnerabilityUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetRecognitionList(assetRecognitionUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetNatureList(assetNatureUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetCommunicationList(assetCommunicationUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetPublicServiceList(assetPublicServiceUtil.findAllByAssetId(uuid));
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -115,6 +131,11 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         updatedAsset.setAssetAccessList(saveAssetAccess(updated));
         updatedAsset.setAssetSportList(saveAssetSport(updated));
         updatedAsset.setAssetOfferList(saveAssetOffer(updated));
+        updatedAsset.setAssetVulnerabilityList(saveAssetVulnerability(updated));
+        updatedAsset.setAssetRecognitionList(saveAssetRecognition(updated));
+        updatedAsset.setAssetNatureList(saveAssetNature(updated));
+        updatedAsset.setAssetCommunicationList(saveAssetCommunication(updated));
+        updatedAsset.setAssetPublicServiceList(saveAssetPublicService(updated));
         return updatedAsset;
     }
 
@@ -149,6 +170,11 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         savedEntity.setAssetAccessList(saveAssetAccess(culturalAsset));
         savedEntity.setAssetSportList(saveAssetSport(culturalAsset));
         savedEntity.setAssetOfferList(saveAssetOffer(culturalAsset));
+        savedEntity.setAssetVulnerabilityList(saveAssetVulnerability(culturalAsset));
+        savedEntity.setAssetRecognitionList(saveAssetRecognition(culturalAsset));
+        savedEntity.setAssetNatureList(saveAssetNature(culturalAsset));
+        savedEntity.setAssetCommunicationList(saveAssetCommunication(culturalAsset));
+        savedEntity.setAssetPublicServiceList(saveAssetPublicService(culturalAsset));
         savedEntity = repository.save(savedEntity);
         return mapper.map(savedEntity);
     }
@@ -171,6 +197,26 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private List<AssetOffer> saveAssetOffer(CulturalAsset culturalAsset){
         return assetOfferUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetOfferList(), AssetOffer.class, "offerId");
+    }
+
+    private List<AssetVulnerability> saveAssetVulnerability(CulturalAsset culturalAsset){
+        return assetVulnerabilityUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetVulnerabilityList(), AssetVulnerability.class, "vulnerabilityId");
+    }
+
+    private List<AssetRecognition> saveAssetRecognition(CulturalAsset culturalAsset){
+        return assetRecognitionUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetRecognitionList(), AssetRecognition.class, "recognitionId");
+    }
+
+    private List<AssetNature> saveAssetNature(CulturalAsset culturalAsset){
+        return assetNatureUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetNatureList(), AssetNature.class, "natureId");
+    }
+
+    private List<AssetCommunication> saveAssetCommunication(CulturalAsset culturalAsset){
+        return assetCommunicationUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetCommunicationList(), AssetCommunication.class, "communicationId");
+    }
+
+    private List<AssetPublicService> saveAssetPublicService(CulturalAsset culturalAsset){
+        return assetPublicServiceUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetPublicServiceList(), AssetPublicService.class, "publicServiceId");
     }
 
     private void validateNaturalReservation(UUID reservationID){
