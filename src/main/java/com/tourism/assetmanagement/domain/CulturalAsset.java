@@ -1,6 +1,7 @@
 package com.tourism.assetmanagement.domain;
 
 import com.tourism.assetmanagement.config.AuditTrailLog;
+import com.tourism.assetmanagement.domain.asset.*;
 import com.tourism.domain.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -36,6 +37,9 @@ public class CulturalAsset extends BaseEntity {
 
     @Column
     private UUID reservationId;
+
+    @Column(nullable = false)
+    private UUID locationId;
 
     @Column
     private String name;
@@ -121,6 +125,14 @@ public class CulturalAsset extends BaseEntity {
 
     @Transient
     private List<AssetPublicService> assetPublicServiceList;
+
+    public UUID getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(UUID locationId) {
+        this.locationId = locationId;
+    }
 
     public List<AssetPublicService> getAssetPublicServiceList() {
         return assetPublicServiceList;

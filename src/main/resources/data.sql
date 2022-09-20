@@ -198,8 +198,39 @@ INSERT INTO public.communication
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
 VALUES('ab54f920-364d-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','communication 1');
 
---INSERTION OF COMMUNICATION
+--INSERTION OF PUBLIC SERVICE
 
 INSERT INTO public."public_service"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
 VALUES('1e06a0dc-8482-4602-b848-0105346447d1', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','public service 1');
+
+--INSERTION OF ORDERINGS
+
+INSERT INTO public."ordering"
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, name)
+VALUES('b3ef7270-3893-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','Country');
+
+INSERT INTO public."ordering"
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, name)
+VALUES('6ae9c755-6185-4557-a2d7-90939de8af81', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','Department');
+
+INSERT INTO public."ordering"
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, name)
+VALUES('a3bed77d-b07b-4686-8506-32dfec154568', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','Municipality');
+
+--INSERTION OF LOCATIONS
+
+INSERT INTO public."location"
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, detail, latitude, longitude, "name", ordering_id)
+VALUES('91b447ae-2ebf-4740-a116-59e24670e1e7', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+ 'el riesgo es que te quieras quedar', 1.0, 1.0, 'Colombia', 'b3ef7270-3893-11ed-a261-0242ac120002');
+
+INSERT INTO public."location"
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, detail, latitude, longitude, "name", ordering_id, parent_location_id)
+VALUES('0f135e4c-c8e7-401c-82ae-f7b0b51467bd', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+ 'El centro del país', 2.0, 3.0, 'Cundinamarca', '6ae9c755-6185-4557-a2d7-90939de8af81','91b447ae-2ebf-4740-a116-59e24670e1e7');
+
+INSERT INTO public."location"
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, detail, latitude, longitude, "name", ordering_id, parent_location_id)
+VALUES('d06a1f72-1b48-4a19-ae33-6321a435443d', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+ 'A los moteros les encanta!', 5.0, 6.0, 'Villeta', 'a3bed77d-b07b-4686-8506-32dfec154568','0f135e4c-c8e7-401c-82ae-f7b0b51467bd');

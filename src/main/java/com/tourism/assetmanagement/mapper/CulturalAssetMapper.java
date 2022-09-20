@@ -1,18 +1,12 @@
 package com.tourism.assetmanagement.mapper;
 
 
-import com.tourism.assetmanagement.domain.AssetClassification;
 import com.tourism.assetmanagement.domain.CulturalAsset;
 import com.tourism.assetmanagement.model.CulturalAssetDTO;
 import com.tourism.mapper.BaseMapper;
-import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Mapper(
         componentModel = "spring"
