@@ -1,8 +1,8 @@
 package com.tourism.assetmanagement.utils;
 
-import com.tourism.assetmanagement.domain.AssetOffer;
+import com.tourism.assetmanagement.domain.asset.AssetOffer;
 import com.tourism.assetmanagement.domain.Offer;
-import com.tourism.assetmanagement.domain.OfferType;
+import com.tourism.assetmanagement.domain.type.OfferType;
 import com.tourism.assetmanagement.repository.asset.AssetOfferRepository;
 import com.tourism.assetmanagement.repository.OfferRepository;
 import com.tourism.assetmanagement.repository.type.OfferTypeRepository;

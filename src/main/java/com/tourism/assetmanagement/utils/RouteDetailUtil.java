@@ -1,8 +1,8 @@
 package com.tourism.assetmanagement.utils;
 
-import com.tourism.assetmanagement.domain.AssetRoute;
+import com.tourism.assetmanagement.domain.asset.AssetRoute;
 import com.tourism.assetmanagement.domain.Route;
-import com.tourism.assetmanagement.domain.RouteType;
+import com.tourism.assetmanagement.domain.type.RouteType;
 import com.tourism.assetmanagement.repository.asset.AssetRouteRepository;
 import com.tourism.assetmanagement.repository.RouteRepository;
 import com.tourism.assetmanagement.repository.type.RouteTypeRepository;

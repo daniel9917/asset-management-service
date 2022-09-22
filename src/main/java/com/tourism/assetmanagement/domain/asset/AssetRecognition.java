@@ -1,4 +1,4 @@
-package com.tourism.assetmanagement.domain;
+package com.tourism.assetmanagement.domain.asset;
 
 import com.tourism.domain.BaseEntity;
 import lombok.*;
@@ -12,15 +12,15 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "asset_public_service")
-public class AssetPublicService extends BaseEntity {
+@Table(name = "asset_recognition")
+public class AssetRecognition extends BaseEntity {
 
-    @Column
+    @Column(nullable = false)
     private UUID assetId;
 
-    @Column
-    private UUID publicServiceId;
+    @Column(nullable = false)
+    private UUID recognitionId;
 }

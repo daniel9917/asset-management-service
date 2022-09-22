@@ -12,15 +12,25 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "asset_recognition")
-public class AssetRecognition extends BaseEntity {
+@Table(name = "location")
+public class Location extends BaseEntity {
 
     @Column(nullable = false)
-    private UUID assetId;
+    private UUID orderingId;
 
     @Column(nullable = false)
-    private UUID recognitionId;
+    private Double latitude;
+
+    @Column(nullable = false)
+    private Double longitude;
+
+    private String detail;
+
+    @Column
+    private UUID parentLocationId;
+
+    private String name;
+
 }

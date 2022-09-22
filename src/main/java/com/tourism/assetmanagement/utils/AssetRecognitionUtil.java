@@ -1,6 +1,6 @@
 package com.tourism.assetmanagement.utils;
 
-import com.tourism.assetmanagement.domain.AssetRecognition;
+import com.tourism.assetmanagement.domain.asset.AssetRecognition;
 import com.tourism.assetmanagement.domain.Recognition;
 import com.tourism.assetmanagement.repository.RecognitionRepository;
 import com.tourism.assetmanagement.repository.asset.AssetRecognitionRepository;

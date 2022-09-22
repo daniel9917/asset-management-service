@@ -1,12 +1,15 @@
 package com.tourism.assetmanagement.model;
 
 import com.tourism.assetmanagement.domain.*;
+import com.tourism.assetmanagement.domain.asset.*;
 import com.tourism.assetmanagement.validation.OptionalExclusive;
 import com.tourism.model.PersistentDTO;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,6 +43,10 @@ public class CulturalAssetDTO extends PersistentDTO {
     @NotEmpty
     @Size(max = 250)
     private String description;
+
+    @NotNull
+    @NotEmpty
+    private UUID locationId;
 
     private int xCoordinate;
 
@@ -87,6 +94,14 @@ public class CulturalAssetDTO extends PersistentDTO {
     private List<AssetCommunication> assetCommunicationList;
 
     private List<AssetPublicService> assetPublicServiceList;
+
+    public UUID getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(UUID locationId) {
+        this.locationId = locationId;
+    }
 
     public List<AssetPublicService> getAssetPublicServiceList() {
         return assetPublicServiceList;

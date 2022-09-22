@@ -1,6 +1,6 @@
 package com.tourism.assetmanagement.utils;
 
-import com.tourism.assetmanagement.domain.AssetPublicService;
+import com.tourism.assetmanagement.domain.asset.AssetPublicService;
 import com.tourism.assetmanagement.domain.PublicService;
 import com.tourism.assetmanagement.repository.PublicServiceRepository;
 import com.tourism.assetmanagement.repository.asset.AssetPublicServiceRepository;

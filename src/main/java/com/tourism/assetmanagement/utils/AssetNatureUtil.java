@@ -1,6 +1,6 @@
 package com.tourism.assetmanagement.utils;
 
-import com.tourism.assetmanagement.domain.AssetNature;
+import com.tourism.assetmanagement.domain.asset.AssetNature;
 import com.tourism.assetmanagement.domain.Nature;
 import com.tourism.assetmanagement.repository.NatureRepository;
 import com.tourism.assetmanagement.repository.asset.AssetNatureRepository;

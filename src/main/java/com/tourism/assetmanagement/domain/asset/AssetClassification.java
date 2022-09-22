@@ -1,4 +1,4 @@
-package com.tourism.assetmanagement.domain;
+package com.tourism.assetmanagement.domain.asset;
 
 import com.tourism.assetmanagement.domain.classification.*;
 import com.tourism.domain.BaseEntity;

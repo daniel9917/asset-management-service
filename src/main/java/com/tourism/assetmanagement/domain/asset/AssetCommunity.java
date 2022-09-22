@@ -1,4 +1,4 @@
-package com.tourism.assetmanagement.domain;
+package com.tourism.assetmanagement.domain.asset;
 
 import com.tourism.domain.BaseEntity;
 import lombok.AllArgsConstructor;

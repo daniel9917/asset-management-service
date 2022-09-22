@@ -1,6 +1,6 @@
 package com.tourism.assetmanagement.mapper;
 
-import com.tourism.assetmanagement.domain.AssetClassification;
+import com.tourism.assetmanagement.domain.asset.AssetClassification;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

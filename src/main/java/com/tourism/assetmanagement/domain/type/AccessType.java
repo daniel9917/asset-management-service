@@ -1,4 +1,4 @@
-package com.tourism.assetmanagement.domain;
+package com.tourism.assetmanagement.domain.type;
 
 import com.tourism.domain.BaseEntity;
 import lombok.*;
@@ -8,19 +8,20 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
 @Builder
-@Table(name = "asset_vulnerability")
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@AllArgsConstructor
-public class AssetVulnerability extends BaseEntity {
+@Entity
+@Table(name = "access_type")
+public class AccessType extends BaseEntity {
 
     @Column
-    private UUID vulnerabilityId;
+    private UUID id;
 
     @Column
-    private UUID assetId;
+    private String name;
+
 }

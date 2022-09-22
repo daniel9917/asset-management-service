@@ -1,6 +1,6 @@
 package com.tourism.assetmanagement.repository.asset;
 
-import com.tourism.assetmanagement.domain.AssetManifestation;
+import com.tourism.assetmanagement.domain.asset.AssetManifestation;
 import com.tourism.repository.BaseRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.NonNull;
