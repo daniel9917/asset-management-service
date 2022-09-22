@@ -1,6 +1,6 @@
 package com.tourism.service;
 
-import com.tourism.assetmanagement.errors.NotFoundException;
+import com.tourism.errors.NotFoundException;
 import com.tourism.domain.BaseEntity;
 import com.tourism.mapper.BaseMapper;
 import com.tourism.model.BaseDTO;

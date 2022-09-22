@@ -1,11 +1,9 @@
 package com.tourism.assetmanagement.utils;
 
 import com.tourism.assetmanagement.domain.Image;
-import com.tourism.assetmanagement.errors.ServiceException;
+import com.tourism.errors.ServiceException;
 import com.tourism.assetmanagement.repository.ImageRepository;
-import com.tourism.domain.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

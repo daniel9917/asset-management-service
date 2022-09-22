@@ -2,7 +2,7 @@ package com.tourism.assetmanagement.service;
 
 import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.domain.asset.*;
-import com.tourism.assetmanagement.errors.NotFoundException;
+import com.tourism.errors.NotFoundException;
 import com.tourism.assetmanagement.mapper.CulturalAssetMapper;
 import com.tourism.assetmanagement.model.CulturalAssetDTO;
 import com.tourism.assetmanagement.repository.CulturalAssetRepository;
