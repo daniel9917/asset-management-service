@@ -1,4 +1,4 @@
-package com.tourism.assetmanagement.errors;
+package com.tourism.errors;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

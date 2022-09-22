@@ -3,8 +3,8 @@ package com.tourism.assetmanagement.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tourism.assetmanagement.errors.NotFoundException;
-import com.tourism.assetmanagement.errors.ServiceException;
+import com.tourism.errors.NotFoundException;
+import com.tourism.errors.ServiceException;
 import com.tourism.assetmanagement.repository.asset.BaseAssetObjectRepository;
 import com.tourism.domain.BaseEntity;
 import com.tourism.repository.BaseRepository;
