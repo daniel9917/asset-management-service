@@ -1,8 +1,8 @@
 package com.tourism.service;
 
+import com.tourism.assetmanagement.model.PageDTO;
 import com.tourism.model.BaseDTO;
 import com.tourism.model.PageData;
-import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -15,7 +15,7 @@ public interface BaseServiceManagement <T extends BaseDTO, ID extends Serializab
 
     T update(ID id, T update);
 
-    PageData<T> list (Pageable pageable);
+    PageData<T> list (PageDTO pageDTO);
 
     void delete(ID id);
 }
