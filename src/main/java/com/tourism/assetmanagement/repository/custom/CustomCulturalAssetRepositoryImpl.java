@@ -71,10 +71,6 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
                                 .filter(chunk ->
                                         (!chunk.equals("") && Objects.nonNull(chunk))
                                 ).collect(Collectors.toList()));
-//        query += locationChunk;
-//        query = classifications ? (query + mergeChunksForClassifications(classificationChunks)) : query;
-//        query = query.replace("[", "");
-//        query = query.replace("]", "");
         return (List<CulturalAsset>) entityManager.createNativeQuery(query, CulturalAsset.class).getResultList();
     }
 
