@@ -2,6 +2,8 @@ package com.tourism.assetmanagement.service;
 
 import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.domain.asset.*;
+import com.tourism.assetmanagement.model.PageDTO;
+import com.tourism.assetmanagement.repository.custom.CustomCulturalAssetRepository;
 import com.tourism.errors.NotFoundException;
 import com.tourism.assetmanagement.mapper.CulturalAssetMapper;
 import com.tourism.assetmanagement.model.CulturalAssetDTO;
@@ -12,7 +14,6 @@ import com.tourism.service.BaseService;
 import com.tourism.model.PageData;
 import com.tourism.validation.BaseValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,6 +56,9 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     private final AssetPublicServiceUtil assetPublicServiceUtil;
 
     @Autowired
+    private final CustomCulturalAssetRepository customCulturalAssetRepository;
+
+    @Autowired
     public CulturalAssetService(CulturalAssetRepository repository, CulturalAssetMapper mapper,
                                 NaturalReservationRepository naturalReservationRepository,
                                 AssetClassificationUtil assetClassificationUtil,
@@ -63,8 +67,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                                 AssetAccessDetailUtil assetAccessUtil, AssetSportDetailUtil assetSportUtil,
                                 AssetOfferDetailUtil assetOfferUtil, AssetVulnerabilityUtil assetVulnerabilityUtil,
                                 AssetRecognitionUtil assetRecognitionUtil, AssetNatureUtil assetNatureUtil,
-                                AssetCommunicationUtil assetCommunicationUtil, AssetPublicServiceUtil assetPublicServiceUtil){
+                                AssetCommunicationUtil assetCommunicationUtil, AssetPublicServiceUtil assetPublicServiceUtil,
+                                CustomCulturalAssetRepository customCulturalAssetRepository){
         super(repository, mapper, validator);
+        this.customCulturalAssetRepository = customCulturalAssetRepository;
         this.repository = repository;
         this.naturalReservationRepository = naturalReservationRepository;
         this.assetClassificationUtil = assetClassificationUtil;
@@ -141,8 +147,11 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     }
 
     @Override
-    public PageData<CulturalAssetDTO> list(Pageable pageable) {
-        return super.list(pageable);
+    public PageData<CulturalAssetDTO> list(PageDTO pageDTO) {
+        List<CulturalAsset> filteredList = customCulturalAssetRepository.findByFilters(pageDTO);
+        PageData<CulturalAssetDTO> page = super.list(pageDTO);
+        page.setData(filteredList.stream().map(culturalAsset -> mapper.map(culturalAsset)).collect(Collectors.toList()));
+        return page;
     }
 
     @Override

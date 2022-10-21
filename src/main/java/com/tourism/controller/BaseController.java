@@ -1,12 +1,12 @@
 package com.tourism.controller;
 
 import com.tourism.api.TemplateAPI;
+import com.tourism.assetmanagement.model.PageDTO;
 import com.tourism.service.BaseService;
 import com.tourism.domain.BaseEntity;
 import com.tourism.model.BaseDTO;
 import com.tourism.model.PageData;
 import com.tourism.validation.BaseValidator;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,8 +45,8 @@ public class BaseController <E extends BaseEntity, T extends BaseDTO, P extends 
         return new ResponseEntity<>( service.update(uuid, dto), HttpStatus.OK);
     }
 
-    public ResponseEntity<PageData<T>> list(Pageable pageable) {
-        return new ResponseEntity<>(((PageData<T>) service.list(pageable)), HttpStatus.OK);
+    public ResponseEntity<PageData<T>> list(@RequestBody PageDTO pageDTO) {
+        return new ResponseEntity<>(((PageData<T>) service.list(pageDTO)), HttpStatus.OK);
     }
 
     public ResponseEntity delete(@PathVariable ID id) {

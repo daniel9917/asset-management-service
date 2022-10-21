@@ -3,9 +3,9 @@ package com.tourism.assetmanagement.api;
 
 import com.tourism.api.TemplateAPI;
 import com.tourism.assetmanagement.model.CulturalAssetDTO;
+import com.tourism.assetmanagement.model.PageDTO;
 import com.tourism.model.PageData;
 import com.tourism.model.ErrorResponse;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +53,7 @@ public interface CulturalAssetAPI extends TemplateAPI <CulturalAssetDTO, Cultura
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    ResponseEntity<PageData<CulturalAssetDTO>> list(Pageable pageable);
+    ResponseEntity<PageData<CulturalAssetDTO>> list(PageDTO pageDTO);
 
     @DeleteMapping(
             value = "/{id}",

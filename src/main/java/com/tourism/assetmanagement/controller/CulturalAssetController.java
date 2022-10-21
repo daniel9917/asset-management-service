@@ -2,6 +2,7 @@ package com.tourism.assetmanagement.controller;
 
 
 import com.tourism.assetmanagement.api.CulturalAssetAPI;
+import com.tourism.assetmanagement.model.PageDTO;
 import com.tourism.assetmanagement.service.CulturalAssetService;
 import com.tourism.assetmanagement.domain.CulturalAsset;
 import com.tourism.assetmanagement.model.CulturalAssetDTO;
@@ -11,9 +12,11 @@ import com.tourism.model.PageData;
 import com.tourism.model.ErrorResponse;
 import com.tourism.validation.BaseValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.UUID;
 
@@ -54,8 +57,8 @@ public class CulturalAssetController extends BaseController <CulturalAsset, Cult
     }
 
     @Override
-    public ResponseEntity<PageData<CulturalAssetDTO>> list(Pageable pageable) {
-        return super.list(pageable);
+    public ResponseEntity<PageData<CulturalAssetDTO>> list(PageDTO pageDTO) {
+        return super.list(pageDTO);
     }
 
     @Override

@@ -1,13 +1,14 @@
 package com.tourism.service;
 
+import com.tourism.assetmanagement.model.PageDTO;
 import com.tourism.errors.NotFoundException;
 import com.tourism.domain.BaseEntity;
 import com.tourism.mapper.BaseMapper;
 import com.tourism.model.BaseDTO;
 import com.tourism.model.PageData;
+import com.tourism.model.PageDataInfo;
 import com.tourism.repository.BaseRepository;
 import com.tourism.validation.BaseValidator;
-import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -60,8 +61,8 @@ public abstract class BaseService <E extends BaseEntity, P extends BaseDTO, ID e
     }
 
     @Override
-    public PageData<P> list(Pageable pageable) {
-        return new PageData<>();
+    public PageData<P> list(PageDTO pageDTO) {
+        return (PageData<P>) PageData.builder().pageDataInfo(PageDataInfo.builder().first(0).current(0).last(0).build()).build();
     }
 
     @Override
