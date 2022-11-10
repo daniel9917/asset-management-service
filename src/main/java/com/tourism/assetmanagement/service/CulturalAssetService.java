@@ -2,7 +2,9 @@ package com.tourism.assetmanagement.service;
 
 import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.domain.asset.*;
+import com.tourism.assetmanagement.model.FormDataDTO;
 import com.tourism.assetmanagement.model.PageDTO;
+import com.tourism.assetmanagement.references.ServiceConstants;
 import com.tourism.assetmanagement.repository.custom.CustomCulturalAssetRepository;
 import com.tourism.errors.NotFoundException;
 import com.tourism.assetmanagement.mapper.CulturalAssetMapper;
@@ -261,6 +263,13 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
             return image;
         }).collect(Collectors.toList());
         return imageUtil.loadImage(addedIds);
+    }
+
+    public FormDataDTO getFormData (String objectName) {
+        if (ServiceConstants.formBuilderValues.contains(objectName)){
+            return customCulturalAssetRepository.findAllObject(objectName);
+        }
+        return null;
     }
 
 

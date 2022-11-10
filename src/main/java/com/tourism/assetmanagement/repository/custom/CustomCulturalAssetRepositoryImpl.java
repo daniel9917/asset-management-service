@@ -3,6 +3,7 @@ package com.tourism.assetmanagement.repository.custom;
 import com.tourism.assetmanagement.domain.CulturalAsset;
 import com.tourism.assetmanagement.domain.Location;
 import com.tourism.assetmanagement.model.FilterDTO;
+import com.tourism.assetmanagement.model.FormDataDTO;
 import com.tourism.assetmanagement.model.PageDTO;
 import com.tourism.assetmanagement.repository.CulturalAssetRepository;
 import com.tourism.assetmanagement.repository.LocationRepository;
@@ -33,6 +34,22 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
 
     @Autowired
     public LocationRepository locationRepository;
+
+    public FormDataDTO findAllObject (String objectName){
+        if ( objectName.equals("Municipality") || objectName.equals("Department")) {
+            String query = "select * from location where ordering_id in (select id from" +
+                    " \"ordering\" ord  where ord.\"name\" = '" + objectName + "') and deleted = false;";
+            List values = entityManager.createNativeQuery(query, Location.class).getResultList();
+
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        }
+        else {
+            return FormDataDTO.builder().values(List.of()).objectName(objectName).build();
+        }
+
+    }
+
+
 
     public List<CulturalAsset> findByFilters(PageDTO pageDTO){
         query = "SELECT * FROM cultural_asset WHERE ";
