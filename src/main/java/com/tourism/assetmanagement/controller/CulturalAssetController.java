@@ -17,15 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@CrossOrigin
 @RestController
 @RequestMapping(CulturalAssetAPI.URI)
 public class CulturalAssetController extends BaseController <CulturalAsset, CulturalAssetDTO, CulturalAssetDTO,  UUID> implements CulturalAssetAPI {
@@ -73,6 +69,16 @@ public class CulturalAssetController extends BaseController <CulturalAsset, Cult
     public @ResponseBody ResponseEntity<FormDataDTO> list (@PathVariable String objectName) {
         return ServiceConstants.formBuilderValues.contains(objectName) ?
                 new ResponseEntity<>(service.getFormData(objectName), HttpStatus.OK) :
+                new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+
+    @GetMapping(
+            value = "/form-builder/common/{type}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<FormDataDTO> listCommon (@PathVariable String type) {
+        return ServiceConstants.formBuilderValues.contains(type) ?
+                new ResponseEntity<>(service.getFormData(type), HttpStatus.OK) :
                 new ResponseEntity<>(null, HttpStatus.OK);
     }
 

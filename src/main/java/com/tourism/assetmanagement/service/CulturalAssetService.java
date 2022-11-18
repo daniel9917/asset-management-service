@@ -271,6 +271,4 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         }
         return null;
     }
-
-
 }

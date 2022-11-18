@@ -1,7 +1,12 @@
 package com.tourism.assetmanagement.repository.custom;
 
-import com.tourism.assetmanagement.domain.CulturalAsset;
-import com.tourism.assetmanagement.domain.Location;
+import com.tourism.assetmanagement.domain.*;
+import com.tourism.assetmanagement.domain.asset.AssetAccess;
+import com.tourism.assetmanagement.domain.classification.AssetGroup;
+import com.tourism.assetmanagement.domain.classification.Manifestation;
+import com.tourism.assetmanagement.domain.classification.Subtype;
+import com.tourism.assetmanagement.domain.type.CommunityType;
+import com.tourism.assetmanagement.domain.type.RouteType;
 import com.tourism.assetmanagement.model.FilterDTO;
 import com.tourism.assetmanagement.model.FormDataDTO;
 import com.tourism.assetmanagement.model.PageDTO;
@@ -35,15 +40,82 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
     @Autowired
     public LocationRepository locationRepository;
 
-    public FormDataDTO findAllObject (String objectName){
-        if ( objectName.equals("Municipality") || objectName.equals("Department")) {
-            String query = "select * from location where ordering_id in (select id from" +
+    public FormDataDTO findAllObject (String objectName) {
+        String query = "";
+        if (objectName.equals("Municipality") || objectName.equals("Department")) {
+            query = "select * from location where ordering_id in (select id from" +
                     " \"ordering\" ord  where ord.\"name\" = '" + objectName + "') and deleted = false;";
             List values = entityManager.createNativeQuery(query, Location.class).getResultList();
-
             return FormDataDTO.builder().values(values).objectName(objectName).build();
-        }
-        else {
+        } else if (objectName.equals("EthnicGroup")) {
+            query = "select * from community where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Community.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Ethnicity")) {
+            query = "select * from community_type where deleted = false;";
+            List values = entityManager.createNativeQuery(query, CommunityType.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Subtype")) {
+            query = "select * from subtype where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Subtype.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Manifestation")) {
+            query = "select * from manifestation where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Manifestation.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Group")) {
+            query = "select * from asset_group where deleted = false;";
+            List values = entityManager.createNativeQuery(query, AssetGroup.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Vulnerability")) {
+            query = "select * from vulnerability where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Vulnerability.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Access")) {
+            query = "select * from access where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Access.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Sport")) {
+            query = "select * from sport where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Sport.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("PublicService")) {
+            query = "select * from public_service where deleted = false;";
+            List values = entityManager.createNativeQuery(query, PublicService.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Communication")) {
+            query = "select * from communication where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Communication.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("AccessRoute")) {
+            query = "select * from route_type where deleted = false;";
+            List values = entityManager.createNativeQuery(query, RouteType.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("OtherServices") || objectName.equals("Tours") || objectName.equals("Folklore")) {
+            String colName = "";
+            if (objectName.equals("OtherServices")) {
+                colName = "otros_servicios";
+            } else if (objectName.equals("Tours")) {
+                colName = "recorridos_turisticos";
+            } else if (objectName.equals("Folklore")) {
+                colName = "folklore";
+            }
+            query = "select * from offer o where o.offer_type_id in (select id from offer_type ot where ot.name = '" + colName + "');";
+            List values = entityManager.createNativeQuery(query, Offer.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Terrestrial") || objectName.equals("Maritime") || objectName.equals("Aerial")) {
+            String colName = "";
+            if (objectName.equals("Terrestrial")) {
+                colName = "terrestre";
+            } else if (objectName.equals("Maritime")) {
+                colName = "maritimo";
+            } else if (objectName.equals("Aerial")) {
+                colName = "aereo";
+            }
+            query = "select * from access a where a.access_type_id in (select id from access_type at where at.name = '" + colName + "');";
+            List values = entityManager.createNativeQuery(query, Access.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else {
             return FormDataDTO.builder().values(List.of()).objectName(objectName).build();
         }
 

@@ -95,6 +95,57 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private List<AssetPublicService> assetPublicServiceList;
 
+    private String links;
+
+    private boolean inmaterialManifestation;
+
+    private boolean partOfNaturalReservation;
+
+    private String reservationLink;
+
+    private boolean onGoingRecognition;
+
+    public boolean isOnGoingRecognition() {
+        return onGoingRecognition;
+    }
+
+    public void setOnGoingRecognition(boolean onGoingRecognition) {
+        this.onGoingRecognition = onGoingRecognition;
+    }
+
+    public String getReservationLink() {
+        return reservationLink;
+    }
+
+    public void setReservationLink(String reservationLink) {
+        this.reservationLink = reservationLink;
+    }
+
+    public boolean isPartOfNaturalReservation() {
+        return partOfNaturalReservation;
+    }
+
+    public void setPartOfNaturalReservation(boolean partOfNaturalReservation) {
+        this.partOfNaturalReservation = partOfNaturalReservation;
+    }
+
+    public String getLinks() {
+        return links;
+    }
+
+    public void setLinks(String links) {
+        this.links = links;
+    }
+
+
+    public boolean isInmaterialManifestation() {
+        return inmaterialManifestation;
+    }
+
+    public void setInmaterialManifestation(boolean inmaterialManifestation) {
+        this.inmaterialManifestation = inmaterialManifestation;
+    }
+
     public UUID getLocationId() {
         return locationId;
     }
