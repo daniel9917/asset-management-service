@@ -22,7 +22,9 @@ public class ServiceConstants {
             "PublicService",
             "Communication",
             "Vulnerability",
-            "AccessRoute");
+            "AccessRoute",
+            "Nature"
+            );
 
     static void addValues(){
 

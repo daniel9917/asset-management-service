@@ -32,6 +32,8 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private UUID reservationId;
 
+    private UUID groupId;
+
     private UUID assetClassificationId;
 
     @NotEmpty
@@ -104,6 +106,24 @@ public class CulturalAssetDTO extends PersistentDTO {
     private String reservationLink;
 
     private boolean onGoingRecognition;
+
+    private UUID routeTypeId;
+
+    public UUID getRouteTypeId() {
+        return routeTypeId;
+    }
+
+    public void setRouteTypeId(UUID routeTypeId) {
+        this.routeTypeId = routeTypeId;
+    }
+
+    public UUID getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(UUID groupId) {
+        this.groupId = groupId;
+    }
 
     public boolean isOnGoingRecognition() {
         return onGoingRecognition;

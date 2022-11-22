@@ -36,6 +36,9 @@ public class CulturalAsset extends BaseEntity {
     private UUID subtypeId;
 
     @Column
+    private UUID groupId;
+
+    @Column
     private UUID reservationId;
 
     @Column(nullable = false)
@@ -140,6 +143,25 @@ public class CulturalAsset extends BaseEntity {
 
     @Column
     private boolean onGoingRecognition;
+
+    @Column
+    private UUID routeTypeId;
+
+    public UUID getRouteTypeId() {
+        return routeTypeId;
+    }
+
+    public void setRouteTypeId(UUID routeTypeId) {
+        this.routeTypeId = routeTypeId;
+    }
+
+    public UUID getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(UUID groupId) {
+        this.groupId = groupId;
+    }
 
     public boolean isOnGoingRecognition() {
         return onGoingRecognition;
