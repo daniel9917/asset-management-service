@@ -41,7 +41,7 @@ public class CulturalAsset extends BaseEntity {
     @Column
     private UUID reservationId;
 
-    @Column(nullable = false)
+    @Column
     private UUID locationId;
 
     @Column
@@ -82,8 +82,6 @@ public class CulturalAsset extends BaseEntity {
     @Transient
     private List<Image> imageList;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "asset_classification_id", referencedColumnName = "id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     @Column
     private UUID assetClassificationId;
 
@@ -138,14 +136,25 @@ public class CulturalAsset extends BaseEntity {
     @Column
     private String reservationLink;
 
-    @Column
-    private String links;
+    @Transient
+    private List<String> links;
 
     @Column
     private boolean onGoingRecognition;
 
     @Column
     private UUID routeTypeId;
+
+    @Transient
+    private Location locationObject;
+
+    public Location getLocationObject() {
+        return locationObject;
+    }
+
+    public void setLocationObject(Location locationObject) {
+        this.locationObject = locationObject;
+    }
 
     public UUID getRouteTypeId() {
         return routeTypeId;
@@ -187,11 +196,11 @@ public class CulturalAsset extends BaseEntity {
         this.partOfNaturalReservation = partOfNaturalReservation;
     }
 
-    public String getLinks() {
+    public List<String> getLinks() {
         return links;
     }
 
-    public void setLinks(String links) {
+    public void setLinks(List<String> links) {
         this.links = links;
     }
 
@@ -483,27 +492,55 @@ public class CulturalAsset extends BaseEntity {
                 && isSafeguardingRegistry() == that.isSafeguardingRegistry()
                 && isUnescoRegistry() == that.isUnescoRegistry()
                 && isTourismPermit() == that.isTourismPermit()
-                && Objects.equals(getId(), that.getId())
+                && isInmaterialManifestation() == that.isInmaterialManifestation()
+                && isPartOfNaturalReservation() == that.isPartOfNaturalReservation()
+                && isOnGoingRecognition() == that.isOnGoingRecognition()
                 && Objects.equals(getDepartmentId(), that.getDepartmentId())
                 && Objects.equals(getMunicipalityId(), that.getMunicipalityId())
                 && Objects.equals(getSubtypeId(), that.getSubtypeId())
+                && Objects.equals(getGroupId(), that.getGroupId())
                 && Objects.equals(getReservationId(), that.getReservationId())
+                && Objects.equals(getLocationId(), that.getLocationId())
                 && Objects.equals(getName(), that.getName())
                 && Objects.equals(getAlternateNames(), that.getAlternateNames())
                 && Objects.equals(getDescription(), that.getDescription())
                 && Objects.equals(getLocationDetail(), that.getLocationDetail())
-                && Objects.equals(getCosmogonyDescription(), that.getCosmogonyDescription());
+                && Objects.equals(getCosmogonyDescription(), that.getCosmogonyDescription())
+                && Objects.equals(getImageList(), that.getImageList())
+                && Objects.equals(getAssetClassificationId(), that.getAssetClassificationId())
+                && Objects.equals(getAssetClassification(), that.getAssetClassification())
+                && Objects.equals(getAssetManifestations(), that.getAssetManifestations())
+                && Objects.equals(getAssetRouteList(), that.getAssetRouteList())
+                && Objects.equals(getDateEvent(), that.getDateEvent())
+                && Objects.equals(getAccessDetail(), that.getAccessDetail())
+                && Objects.equals(getAssetCommunities(), that.getAssetCommunities())
+                && Objects.equals(getAssetAccessList(), that.getAssetAccessList())
+                && Objects.equals(getAssetSportList(), that.getAssetSportList())
+                && Objects.equals(getAssetOfferList(), that.getAssetOfferList())
+                && Objects.equals(getAssetVulnerabilityList(), that.getAssetVulnerabilityList())
+                && Objects.equals(getAssetRecognitionList(), that.getAssetRecognitionList())
+                && Objects.equals(getAssetNatureList(), that.getAssetNatureList())
+                && Objects.equals(getAssetCommunicationList(), that.getAssetCommunicationList())
+                && Objects.equals(getAssetPublicServiceList(), that.getAssetPublicServiceList())
+                && Objects.equals(getReservationLink(), that.getReservationLink())
+                && Objects.equals(getLinks(), that.getLinks()) && Objects.equals(getRouteTypeId(), that.getRouteTypeId())
+                && Objects.equals(getLocationObject(), that.getLocationObject());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(),
-                getId(), getDepartmentId(), getMunicipalityId(),
-                getSubtypeId(), getReservationId(), getName(),
-                getAlternateNames(), getDescription(), getxCoordinate(),
-                getyCoordinate(), getLocationDetail(), isCosmogony(),
-                getCosmogonyDescription(), isSafeguardingRegistry(),
-                isUnescoRegistry(), isTourismPermit());
+                getDepartmentId(), getMunicipalityId(), getSubtypeId(), getGroupId(),
+                getReservationId(), getLocationId(), getName(), getAlternateNames(),
+                getDescription(), getxCoordinate(), getyCoordinate(), getLocationDetail(),
+                isCosmogony(), getCosmogonyDescription(), isSafeguardingRegistry(),
+                isUnescoRegistry(), isTourismPermit(), getImageList(), getAssetClassificationId(),
+                getAssetClassification(), getAssetManifestations(), getAssetRouteList(),
+                getDateEvent(), getAccessDetail(), getAssetCommunities(), getAssetAccessList(),
+                getAssetSportList(), getAssetOfferList(), getAssetVulnerabilityList(),
+                getAssetRecognitionList(), getAssetNatureList(), getAssetCommunicationList(),
+                getAssetPublicServiceList(), isInmaterialManifestation(), isPartOfNaturalReservation(),
+                getReservationLink(), getLinks(), isOnGoingRecognition(), getRouteTypeId(), getLocationObject());
     }
 }
 

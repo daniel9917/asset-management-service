@@ -88,7 +88,7 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
             List values = entityManager.createNativeQuery(query, Communication.class).getResultList();
             return FormDataDTO.builder().values(values).objectName(objectName).build();
         } else if (objectName.equals("AccessRoute")) {
-            query = "select * from route_type where deleted = false;";
+            query = "select * from route where deleted = false;";
             List values = entityManager.createNativeQuery(query, RouteType.class).getResultList();
             return FormDataDTO.builder().values(values).objectName(objectName).build();
         } else if (objectName.equals("Nature")) {
