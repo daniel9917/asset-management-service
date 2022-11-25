@@ -9,7 +9,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(
-        componentModel = "spring"
+        componentModel = "spring",
+        uses = LocationMapper.class
 )
 public abstract class CulturalAssetMapper extends BaseMapper<CulturalAsset, CulturalAssetDTO, CulturalAssetDTO> {
 //    @Mapping(target = "assetClassficationId", ignore = true)

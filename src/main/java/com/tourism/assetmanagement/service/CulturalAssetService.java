@@ -2,7 +2,10 @@ package com.tourism.assetmanagement.service;
 
 import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.domain.asset.*;
+import com.tourism.assetmanagement.model.FormDataDTO;
 import com.tourism.assetmanagement.model.PageDTO;
+import com.tourism.assetmanagement.references.ServiceConstants;
+import com.tourism.assetmanagement.repository.LocationRepository;
 import com.tourism.assetmanagement.repository.custom.CustomCulturalAssetRepository;
 import com.tourism.errors.NotFoundException;
 import com.tourism.assetmanagement.mapper.CulturalAssetMapper;
@@ -15,6 +18,7 @@ import com.tourism.model.PageData;
 import com.tourism.validation.BaseValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -55,6 +59,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private final AssetPublicServiceUtil assetPublicServiceUtil;
 
+    private final LocationRepository locationRepository;
+
     @Autowired
     private final CustomCulturalAssetRepository customCulturalAssetRepository;
 
@@ -68,7 +74,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                                 AssetOfferDetailUtil assetOfferUtil, AssetVulnerabilityUtil assetVulnerabilityUtil,
                                 AssetRecognitionUtil assetRecognitionUtil, AssetNatureUtil assetNatureUtil,
                                 AssetCommunicationUtil assetCommunicationUtil, AssetPublicServiceUtil assetPublicServiceUtil,
-                                CustomCulturalAssetRepository customCulturalAssetRepository){
+                                CustomCulturalAssetRepository customCulturalAssetRepository, LocationRepository locationRepository){
         super(repository, mapper, validator);
         this.customCulturalAssetRepository = customCulturalAssetRepository;
         this.repository = repository;
@@ -86,6 +92,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         this.assetNatureUtil = assetNatureUtil;
         this.assetCommunicationUtil = assetCommunicationUtil;
         this.assetPublicServiceUtil = assetPublicServiceUtil;
+        this.locationRepository = locationRepository;
     }
 
     @Override
@@ -168,13 +175,19 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
             savedEntity.setAssetClassification(saveAssetClassification(savedEntity,culturalAsset));
             savedEntity.setAssetClassificationId(savedEntity.getAssetClassification().getId());
         }
-        savedEntity.setAssetManifestations(assetClassificationUtil.saveAllAssetManifestations(
-                culturalAsset.getAssetManifestations().stream().map(assetManifestation -> {
-                    assetManifestation.setAssetId(culturalAsset.getId());
-                    return assetManifestation;
-                }).collect(Collectors.toList())));
+        if(!CollectionUtils.isEmpty(culturalAsset.getAssetManifestations())) {
+            savedEntity.setAssetManifestations(assetClassificationUtil.saveAllAssetManifestations(
+                    culturalAsset.getAssetManifestations().stream().map(assetManifestation -> {
+                        assetManifestation.setAssetId(culturalAsset.getId());
+                        return assetManifestation;
+                    }).collect(Collectors.toList())));
+        }
         culturalAsset.setId(savedEntity.getId());
-        savedEntity.setImageList(saveImages(savedEntity, culturalAsset));
+        if (!CollectionUtils.isEmpty(culturalAsset.getImageList())){
+            savedEntity.setImageList(saveImages(savedEntity, culturalAsset));
+        }
+        savedEntity.setLocationObject(saveLocation(culturalAsset));
+        savedEntity.setLocationId(savedEntity.getLocationObject().getId());
         savedEntity.setAssetRouteList(saveAssetRoute(culturalAsset));
         savedEntity.setAssetCommunities(saveAssetCommunities(culturalAsset));
         savedEntity.setAssetAccessList(saveAssetAccess(culturalAsset));
@@ -187,6 +200,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         savedEntity.setAssetPublicServiceList(saveAssetPublicService(culturalAsset));
         savedEntity = repository.save(savedEntity);
         return mapper.map(savedEntity);
+    }
+
+    private Location saveLocation (CulturalAsset culturalAsset){
+        return locationRepository.save(culturalAsset.getLocationObject());
     }
 
     private List<AssetRoute> saveAssetRoute(CulturalAsset culturalAsset){
@@ -263,5 +280,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         return imageUtil.loadImage(addedIds);
     }
 
-
+    public FormDataDTO getFormData (String objectName) {
+        if (ServiceConstants.formBuilderValues.contains(objectName)){
+            return customCulturalAssetRepository.findAllObject(objectName);
+        }
+        return null;
+    }
 }

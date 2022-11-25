@@ -1,5 +1,6 @@
 package com.tourism.assetmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.domain.asset.*;
 import com.tourism.assetmanagement.validation.OptionalExclusive;
@@ -7,9 +8,7 @@ import com.tourism.model.PersistentDTO;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +22,7 @@ import java.util.UUID;
 @Validated
 @Getter
 @Setter
+@JsonIgnoreProperties({"imageList"})
 public class CulturalAssetDTO extends PersistentDTO {
     private UUID departmentId;
 
@@ -31,6 +31,8 @@ public class CulturalAssetDTO extends PersistentDTO {
     private UUID subtypeId;
 
     private UUID reservationId;
+
+    private UUID groupId;
 
     private UUID assetClassificationId;
 
@@ -44,8 +46,6 @@ public class CulturalAssetDTO extends PersistentDTO {
     @Size(max = 250)
     private String description;
 
-    @NotNull
-    @NotEmpty
     private UUID locationId;
 
     private int xCoordinate;
@@ -94,6 +94,85 @@ public class CulturalAssetDTO extends PersistentDTO {
     private List<AssetCommunication> assetCommunicationList;
 
     private List<AssetPublicService> assetPublicServiceList;
+
+    private List<String> links;
+
+    private boolean inmaterialManifestation;
+
+    private boolean partOfNaturalReservation;
+
+    private String reservationLink;
+
+    private boolean onGoingRecognition;
+
+    private UUID routeTypeId;
+
+    private LocationDTO locationObject;
+
+    public LocationDTO getLocationObject() {
+        return locationObject;
+    }
+
+    public void setLocationObject(LocationDTO locationObject) {
+        this.locationObject = locationObject;
+    }
+
+    public UUID getRouteTypeId() {
+        return routeTypeId;
+    }
+
+    public void setRouteTypeId(UUID routeTypeId) {
+        this.routeTypeId = routeTypeId;
+    }
+
+    public UUID getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(UUID groupId) {
+        this.groupId = groupId;
+    }
+
+    public boolean isOnGoingRecognition() {
+        return onGoingRecognition;
+    }
+
+    public void setOnGoingRecognition(boolean onGoingRecognition) {
+        this.onGoingRecognition = onGoingRecognition;
+    }
+
+    public String getReservationLink() {
+        return reservationLink;
+    }
+
+    public void setReservationLink(String reservationLink) {
+        this.reservationLink = reservationLink;
+    }
+
+    public boolean isPartOfNaturalReservation() {
+        return partOfNaturalReservation;
+    }
+
+    public void setPartOfNaturalReservation(boolean partOfNaturalReservation) {
+        this.partOfNaturalReservation = partOfNaturalReservation;
+    }
+
+    public List<String> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<String> links) {
+        this.links = links;
+    }
+
+
+    public boolean isInmaterialManifestation() {
+        return inmaterialManifestation;
+    }
+
+    public void setInmaterialManifestation(boolean inmaterialManifestation) {
+        this.inmaterialManifestation = inmaterialManifestation;
+    }
 
     public UUID getLocationId() {
         return locationId;

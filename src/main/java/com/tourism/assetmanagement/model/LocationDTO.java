@@ -1,21 +1,25 @@
-package com.tourism.assetmanagement.domain;
+package com.tourism.assetmanagement.model;
 
-import com.tourism.domain.BaseEntity;
+
+import com.tourism.assetmanagement.validation.OptionalExclusive;
+import com.tourism.model.PersistentDTO;
 import lombok.*;
+import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.UUID;
 
-@Entity
+@Data
+@EqualsAndHashCode
+@OptionalExclusive
+@Validated
 @Getter
 @Setter
-@Builder
-@Table(name = "location")
-public class Location extends BaseEntity {
+public class LocationDTO extends PersistentDTO {
 
-    public Location(UUID orderingId, Double latitude, Double longitude, String detail, UUID parentLocationId, String name) {
+    public LocationDTO() {
+    }
+
+    public LocationDTO(UUID orderingId, Double latitude, Double longitude, String detail, UUID parentLocationId, String name) {
         this.orderingId = orderingId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -24,21 +28,14 @@ public class Location extends BaseEntity {
         this.name = name;
     }
 
-    public Location() {
-    }
-
-    @Column(nullable = false)
     private UUID orderingId;
 
-    @Column(nullable = false)
     private Double latitude;
 
-    @Column(nullable = false)
     private Double longitude;
 
     private String detail;
 
-    @Column
     private UUID parentLocationId;
 
     private String name;
