@@ -1,5 +1,6 @@
 package com.tourism.assetmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.domain.asset.*;
 import com.tourism.assetmanagement.validation.OptionalExclusive;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @Validated
 @Getter
 @Setter
+@JsonIgnoreProperties({"imageList"})
 public class CulturalAssetDTO extends PersistentDTO {
     private UUID departmentId;
 
