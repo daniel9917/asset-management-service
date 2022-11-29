@@ -1,5 +1,6 @@
 package com.tourism.assetmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tourism.model.PersistentDTO;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"deleted", "deletedAt","createdBy","createdAt","updated","updatedBy", "updatedAt"})
 public class FormDataDTO extends PersistentDTO {
 
 

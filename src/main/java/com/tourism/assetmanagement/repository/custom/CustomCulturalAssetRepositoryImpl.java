@@ -1,10 +1,10 @@
 package com.tourism.assetmanagement.repository.custom;
 
 import com.tourism.assetmanagement.domain.*;
-import com.tourism.assetmanagement.domain.asset.AssetAccess;
 import com.tourism.assetmanagement.domain.classification.AssetGroup;
 import com.tourism.assetmanagement.domain.classification.Manifestation;
 import com.tourism.assetmanagement.domain.classification.Subtype;
+import com.tourism.assetmanagement.domain.classification.Type;
 import com.tourism.assetmanagement.domain.type.CommunityType;
 import com.tourism.assetmanagement.domain.type.RouteType;
 import com.tourism.assetmanagement.model.FilterDTO;
@@ -20,6 +20,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -33,6 +35,8 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
     public String query;
 
     private boolean classifications = false;
+
+    private boolean communities = false;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -54,6 +58,10 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
         } else if (objectName.equals("Ethnicity")) {
             query = "select * from community_type where deleted = false;";
             List values = entityManager.createNativeQuery(query, CommunityType.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Type")) {
+            query = "select * from type where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Type.class).getResultList();
             return FormDataDTO.builder().values(values).objectName(objectName).build();
         } else if (objectName.equals("Subtype")) {
             query = "select * from subtype where deleted = false;";
@@ -130,6 +138,7 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
     public List<CulturalAsset> findByFilters(PageDTO pageDTO){
         query = "SELECT * FROM cultural_asset WHERE ";
         List<String> classificationChunks = new ArrayList<>();
+        Map<String, List<String>> communityItems = new HashMap<>();
         //Chunks for the query
         List<String> queryChunks = new ArrayList<>();
         String locationChunk = "";
@@ -142,6 +151,11 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
                 if(!locationChunk.equals("") && Objects.nonNull(locationChunk)){
                     queryChunks.add(locationChunk);
                 }
+            }
+
+            else if (filter.fieldName.equals("community") || filter.fieldName.equals("community_type")){
+                communityItems.put(filter.fieldName, filter.getValues());
+                communities = true;
             }
 
             // if the filter name type, subtype, catefory, asset_group or patrimony
@@ -158,6 +172,9 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
         if (classifications){
             queryChunks.add(mergeChunksForClassifications(classificationChunks));
         }
+        if (communities) {
+            queryChunks.add(mergeChunksForCommunitites(communityItems));
+        }
         query += String.join(
                         " AND ",
                         queryChunks.stream()
@@ -168,6 +185,9 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
 //        query = classifications ? (query + mergeChunksForClassifications(classificationChunks)) : query;
 //        query = query.replace("[", "");
 //        query = query.replace("]", "");
+        if(pageDTO.getFilters().isEmpty()){
+            query = "SELECT * FROM cultural_asset;";
+        }
         return (List<CulturalAsset>) entityManager.createNativeQuery(query, CulturalAsset.class).getResultList();
     }
 
@@ -243,5 +263,25 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
                                 .filter(chunk -> !chunk.equals(""))
                                 .collect(Collectors.toList())) +
                 ")";
+    }
+
+    private String mergeChunksForCommunitites(Map<String, List<String>> items) {
+        String initialQuery = " cultural_asset.id IN (SELECT asset_id FROM asset_community aco WHERE aco.community_id IN ";
+        if (items.size() == 1) {
+            if (items.containsKey("community")){
+                String ids = "( " + items.get("community").stream().map(s -> "'"+ s + "'").collect(Collectors.joining(",")) + ")";
+                return initialQuery + ids +")";
+            }
+            else if(items.containsKey("community_type")){
+                String ids = "( " + items.get("community_type").stream().map(s -> "'"+ s + "'").collect(Collectors.joining(",")) + ")";
+                return initialQuery + " ( SELECT id FROM community c where c.community_type_id IN" + ids +"))";
+            }
+        } else if (items.size() == 2 ) {
+            return initialQuery + "( SELECT id FROM community c where c.community_type_id IN" +
+                    "( " + items.get("community_type").stream().map(s -> "'"+ s + "'").collect(Collectors.joining(",")) + ")"
+                    +" OR c.id IN " +
+                    "( " + items.get("community").stream().map(s -> "'"+ s + "'").collect(Collectors.joining(",")) + ")" + "))";
+        }
+        return "";
     }
 }

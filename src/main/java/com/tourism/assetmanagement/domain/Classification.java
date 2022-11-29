@@ -1,11 +1,10 @@
 package com.tourism.assetmanagement.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tourism.domain.BaseEntity;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -14,6 +13,7 @@ import java.util.UUID;
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"deleted", "deletedAt","createdBy","createdAt","updated","updatedBy", "updatedAt"})
 public abstract class Classification extends BaseEntity {
 
     @Id

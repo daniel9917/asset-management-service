@@ -82,6 +82,13 @@ public class CulturalAssetController extends BaseController <CulturalAsset, Cult
                 new ResponseEntity<>(null, HttpStatus.OK);
     }
 
+    @GetMapping(
+            value = "/form-builder/filters",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<FormDataDTO> getFilters () {
+        return new ResponseEntity<>(service.getFilters(), HttpStatus.OK);
+    }
+
     @Override
     public ResponseEntity<ErrorResponse> delete(@PathVariable UUID id) {
         return super.delete(id);

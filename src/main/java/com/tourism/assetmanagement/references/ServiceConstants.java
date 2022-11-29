@@ -1,6 +1,7 @@
 package com.tourism.assetmanagement.references;
 
 import java.util.List;
+import java.util.Map;
 
 public class ServiceConstants {
     public static List<String> formBuilderValues = List.of(
@@ -25,6 +26,25 @@ public class ServiceConstants {
             "AccessRoute",
             "Nature"
             );
+
+    /**
+     * Values of inner maps are used for getting the right query in method findAllObject() @CustomCulturalAssetRepositoryImpl
+     */
+    public static Map<String, Map<String, String>> filters = Map.of(
+            "Ubicacion", Map.of(
+                    "Departamento", "Department",
+                    "Municipio", "Municipality"),
+            "Comunidad", Map.of(
+                    "Grupo etnico", "Ethnicity",
+                    "Comunidad", "EthnicGroup"),
+            "Clasificacion", Map.of(
+                    "Tipo", "Type",
+                    "Subtipo", "Subtype",
+                    "Manifestacion", "Manifestation",
+                    "Patrimonio", "Patrimony"
+            )
+
+    );
 
     static void addValues(){
 
