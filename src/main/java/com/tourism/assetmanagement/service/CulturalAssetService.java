@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Service
@@ -285,5 +286,22 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
             return customCulturalAssetRepository.findAllObject(objectName);
         }
         return null;
+    }
+
+    public FormDataDTO getFilters() {
+        List filters = new ArrayList<>();
+        ServiceConstants.filters.forEach((s, stringStringMap) -> {
+            List<Object> sectionElements = new ArrayList<>();
+            stringStringMap.forEach((name, tableName) -> {
+
+                FormDataDTO filter = customCulturalAssetRepository.findAllObject(tableName);
+                filter.setObjectName(name);
+                if(!CollectionUtils.isEmpty(filter.getValues())){
+                    sectionElements.add(filter);
+                }
+            });
+            filters.add(FormDataDTO.builder().objectName(s).values(sectionElements).build());
+        });
+        return FormDataDTO.builder().objectName("filterObjects").values(filters).build();
     }
 }

@@ -2,6 +2,7 @@ package com.tourism.assetmanagement.controller;
 
 
 import com.tourism.assetmanagement.api.CulturalAssetAPI;
+import com.tourism.assetmanagement.model.FilterDTO;
 import com.tourism.assetmanagement.model.FormDataDTO;
 import com.tourism.assetmanagement.model.PageDTO;
 import com.tourism.assetmanagement.references.ServiceConstants;
@@ -19,6 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @CrossOrigin
@@ -64,6 +68,22 @@ public class CulturalAssetController extends BaseController <CulturalAsset, Cult
     }
 
     @GetMapping(
+            value = "/list-by-filters",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<PageData<CulturalAssetDTO>> listByFilters (@RequestParam Map<String, String> params) {
+        List<FilterDTO> filters = new ArrayList<>();
+        //Get and validate filter params
+        params.forEach((s, s2) -> {
+            if (!s2.equals("") && (s2 != null)){
+                FilterDTO filter =  FilterDTO.builder().values(List.of(s2)).fieldName(s).build();
+                filters.add(filter);
+            }
+        });
+        PageDTO dto = PageDTO.builder().filters(filters).build();
+        return super.list(dto);
+    }
+
+    @GetMapping(
             value = "/form-builder/{objectName}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<FormDataDTO> list (@PathVariable String objectName) {
@@ -80,6 +100,13 @@ public class CulturalAssetController extends BaseController <CulturalAsset, Cult
         return ServiceConstants.formBuilderValues.contains(type) ?
                 new ResponseEntity<>(service.getFormData(type), HttpStatus.OK) :
                 new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @GetMapping(
+            value = "/form-builder/filters",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<FormDataDTO> getFilters () {
+        return new ResponseEntity<>(service.getFilters(), HttpStatus.OK);
     }
 
     @Override
