@@ -38,6 +38,8 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
 
     private boolean communities = false;
 
+    private boolean locations = false;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -139,18 +141,21 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
         query = "SELECT * FROM cultural_asset WHERE ";
         List<String> classificationChunks = new ArrayList<>();
         Map<String, List<String>> communityItems = new HashMap<>();
+        List<String> locationItems = new ArrayList<>();
         //Chunks for the query
         List<String> queryChunks = new ArrayList<>();
         String locationChunk = "";
 
+        if(Objects.isNull(pageDTO) || CollectionUtils.isEmpty(pageDTO.getFilters())) {
+            query = "SELECT * FROM cultural_asset;";
+            return (List<CulturalAsset>) entityManager.createNativeQuery(query, CulturalAsset.class).getResultList();
+        }
+
         for (FilterDTO filter : pageDTO.getFilters()){
             // if the filter name is location
-            if (filter.fieldName.equals("location")){
-                locationChunk = getQueryForLocations(filter.fieldName, filter.getValues());
-                // if no empty values for filter
-                if(!locationChunk.equals("") && Objects.nonNull(locationChunk)){
-                    queryChunks.add(locationChunk);
-                }
+            if (filter.fieldName.equals("municipality") || filter.fieldName.equals("department") || filter.fieldName.equals("department")){
+                locationItems.addAll(filter.getValues());
+                locations = true;
             }
 
             else if (filter.fieldName.equals("community") || filter.fieldName.equals("community_type")){
@@ -174,6 +179,9 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
         }
         if (communities) {
             queryChunks.add(mergeChunksForCommunitites(communityItems));
+        }
+        if (locations) {
+            queryChunks.add(getQueryForLocations("location", locationItems));
         }
         query += String.join(
                         " AND ",
@@ -199,14 +207,13 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
         List<UUID> fullLocations = getChildLocations(values.stream()
                 .map(value -> UUID.fromString(value))
                 .collect(Collectors.toList()));
-        chunkQuery = " cultural_asset."
-                + fieldName +
-                "_id IN ( " +
+        chunkQuery = " cultural_asset.location_id IN ( " +
+                "SELECT id FROM location l where l.parent_location_id IN (" +
                 //Surrounding every uuid with comma for meeting sql syntax
                 String.join(", ", fullLocations.stream()
                         .map(uuid -> "'" + uuid + "'")
                         .collect(Collectors.toList()))
-                + ") ";
+                + ")) ";
         return chunkQuery;
     }
 
