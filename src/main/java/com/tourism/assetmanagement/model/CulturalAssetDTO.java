@@ -8,6 +8,7 @@ import com.tourism.model.PersistentDTO;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -22,7 +23,7 @@ import java.util.UUID;
 @Validated
 @Getter
 @Setter
-@JsonIgnoreProperties({"imageList"})
+@JsonIgnoreProperties({"createdAt", "createdBy", "deletedAt", "deleted", "updatedAt", "updatedBy"})
 public class CulturalAssetDTO extends PersistentDTO {
     private UUID departmentId;
 
@@ -64,6 +65,8 @@ public class CulturalAssetDTO extends PersistentDTO {
     private boolean unescoRegistry;
 
     private boolean tourismPermit;
+
+    private FormDataDTO maturityDTO;
 
     private List<Image> imageList;
 
@@ -108,6 +111,43 @@ public class CulturalAssetDTO extends PersistentDTO {
     private UUID routeTypeId;
 
     private LocationDTO locationObject;
+
+    private String recommendations;
+
+    public FormDataDTO getMaturityDTO() {
+        return maturityDTO;
+    }
+
+    public void setMaturityDTO(FormDataDTO maturityDTO) {
+        this.maturityDTO = maturityDTO;
+    }
+
+    private List<AssetRecommendation> assetRecommendationList;
+
+    public List<AssetRecommendation> getAssetRecommendationList() {
+        return assetRecommendationList;
+    }
+
+    public void setAssetRecommendationList(List<AssetRecommendation> assetRecommendationList) {
+        this.assetRecommendationList = assetRecommendationList;
+    }
+
+    public String getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(String recommendations) {
+        this.recommendations = recommendations;
+    }
+    private List<FormDataDTO> dataDTOList;
+
+    public List<FormDataDTO> getDataDTOList() {
+        return dataDTOList;
+    }
+
+    public void setDataDTOList(List<FormDataDTO> dataDTOList) {
+        this.dataDTOList = dataDTOList;
+    }
 
     public LocationDTO getLocationObject() {
         return locationObject;

@@ -1,5 +1,6 @@
 package com.tourism.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tourism.assetmanagement.config.AuditTrailLog;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @SuperBuilder(toBuilder = true)
 @EntityListeners(AuditTrailLog.class)
 @MappedSuperclass
+@JsonIgnoreProperties({"createdAt", "createdBy", "deletedAt", "deleted", "updatedAt", "updatedBy"})
 public abstract class BaseEntity implements Serializable {
 
     @Id

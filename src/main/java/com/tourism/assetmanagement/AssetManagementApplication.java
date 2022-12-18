@@ -3,6 +3,10 @@ package com.tourism.assetmanagement;
 import com.tourism.mapper.BaseMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication(scanBasePackages = {
 		"com.tourism",
@@ -12,17 +16,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 }, scanBasePackageClasses = {
 	BaseMapper.class
 })
-
-//@ComponentScan(basePackages = {
-//		"com.tourism.assetmanagement.mapper",
-//		"com.tourism.assetmanagement.controller",
-//		"com.tourism.assetmanagement.service",
-//		"com.tourism.validation"
-//})
 public class AssetManagementApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AssetManagementApplication.class, args);
+	}
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer(){
+		return new WebMvcConfigurer() {
+			public void addCorsMappings(CorsRegistry corsRegistry){
+				corsRegistry.addMapping("/**").allowedHeaders("*").allowedMethods("*");
+			}
+		};
 	}
 
 }

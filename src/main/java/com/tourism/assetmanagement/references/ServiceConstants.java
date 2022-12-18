@@ -24,7 +24,10 @@ public class ServiceConstants {
             "Communication",
             "Vulnerability",
             "AccessRoute",
-            "Nature"
+            "Nature",
+            "Quality",
+            "Wellness",
+            "Economic"
             );
 
     /**
@@ -41,10 +44,7 @@ public class ServiceConstants {
                     "Tipo", "Type",
                     "Subtipo", "Subtype",
                     "Manifestacion", "Manifestation",
-                    "Patrimonio", "Patrimony"
-            )
-
-    );
+                    "Patrimonio", "Patrimony"));
 
     static void addValues(){
 

@@ -1,6 +1,7 @@
 package com.tourism.assetmanagement.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tourism.assetmanagement.validation.OptionalExclusive;
 import com.tourism.model.PersistentDTO;
 import lombok.*;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Validated
 @Getter
 @Setter
+@JsonIgnoreProperties({"createdAt", "createdBy", "deletedAt", "deleted", "updatedAt", "updatedBy"})
 public class LocationDTO extends PersistentDTO {
 
     public LocationDTO() {

@@ -3,6 +3,8 @@ package com.tourism.assetmanagement.utils;
 import com.tourism.assetmanagement.domain.asset.AssetClassification;
 import com.tourism.assetmanagement.domain.asset.AssetManifestation;
 import com.tourism.assetmanagement.domain.classification.*;
+import com.tourism.assetmanagement.model.CulturalAssetDTO;
+import com.tourism.assetmanagement.model.FormDataDTO;
 import com.tourism.errors.NotFoundException;
 import com.tourism.errors.ServiceException;
 import com.tourism.assetmanagement.mapper.AssetClassificationMapper;
@@ -71,6 +73,130 @@ public class AssetClassificationUtil {
         this.manifestationRepository = manifestationRepository;
     }
 
+    public AssetClassification saveAssetClassification (UUID assetId, UUID subtypeId) {
+        Subtype existingSubtype = subtypeRepository.findById(subtypeId).orElseThrow(()-> {
+            throw new NotFoundException(subtypeId);
+        });
+        Type existingType = typeRepository.findById(existingSubtype.getTypeId()).orElseThrow(()-> {
+            throw new NotFoundException(existingSubtype.getTypeId());
+        });
+        Category existingCategory = categoryRepository.findById(existingType.getCategoryId()).orElseThrow(()-> {
+            throw new NotFoundException(existingType.getCategoryId());
+        });
+
+        Patrimony existingPatrimony = patrimonyRepository.findById(existingCategory.getPatrimonyId()).orElseThrow(()-> {
+            throw new NotFoundException(existingCategory.getPatrimonyId());
+        });
+
+        AssetGroup existingGroup =  assetGroupRepository.findById(existingPatrimony.getAssetGroupId()).orElseThrow(()-> {
+            throw new NotFoundException(existingPatrimony.getAssetGroupId());
+        });
+
+        return save(AssetClassification.builder()
+                    .assetId(assetId)
+                    .subtypeId(existingSubtype.getId())
+                    .typeId(existingType.getId())
+                    .categoryId(existingCategory.getId())
+                    .assetGroupId(existingGroup.getId())
+                    .patrimonyId(existingPatrimony.getId())
+                    .build());
+    }
+
+    public FormDataDTO getManifestationData (CulturalAssetDTO culturalAssetDTO) {
+
+//        List<Object> assetManifestationList = assetManifestationRepository.findAllByAssetId(culturalAssetDTO.getId()).stream().map(assetManifestation -> {
+//            return (Object) assetManifestation;
+//        }).collect(Collectors.toList());
+
+        List<Object> assetManifestationList = assetManifestationRepository.findAllByAssetId(culturalAssetDTO.getId()).stream().map(assetManifestation -> {
+            return manifestationRepository.findById(assetManifestation.getManifestationId()).orElseThrow(() -> {
+                throw new NotFoundException(assetManifestation.getManifestationId());
+            }).getName();
+        }).collect(Collectors.toList());
+
+        ArrayList<Object> values = new ArrayList<>();
+
+        values.add(FormDataDTO.builder()
+                .objectName("¿Está permitido el turismo?")
+                .values(List.of(culturalAssetDTO.isTourismPermit() ? "Sí" : "No"))
+                .build());
+
+        values.add(FormDataDTO.builder()
+                .objectName("¿Se encuentra en una reserva natural?")
+                .values(List.of(culturalAssetDTO.isPartOfNaturalReservation() ? "Sí" : "No"))
+                .build());
+
+        values.add(FormDataDTO.builder()
+                .objectName("Reconocimiento Unesco")
+                .values(List.of(culturalAssetDTO.isUnescoRegistry() ? "Sí" : "No"))
+                .build());
+
+        values.add(FormDataDTO.builder()
+                .objectName("Reconocimiento Salvaguardia: ")
+                .values(List.of(culturalAssetDTO.isSafeguardingRegistry() ? "Sí" : "No"))
+                .build());
+
+        if(culturalAssetDTO.isPartOfNaturalReservation()){
+            values.add(FormDataDTO.builder()
+                    .objectName("Nombre de la reserva natural")
+                    .values(List.of(culturalAssetDTO.getReservationLink()))
+                    .build());
+        }
+
+        values.add(FormDataDTO.builder()
+                .objectName("Manifestaciones")
+                .values(assetManifestationList)
+                .build());
+        return FormDataDTO.builder()
+                .objectName("Naturaleza")
+                .values(values)
+                .build();
+    }
+
+    public FormDataDTO getClassificationData (UUID assetId){
+        AssetClassification classification = assetClassificationRepository.findByAssetId(assetId)
+                .orElseThrow(() -> {throw new NotFoundException(assetId);});
+        Subtype existingSubtype = subtypeRepository.findById(classification.getSubtypeId()).orElseThrow(()-> {
+            throw new NotFoundException(classification.getSubtypeId());
+        });
+        Type existingType = typeRepository.findById(existingSubtype.getTypeId()).orElseThrow(()-> {
+            throw new NotFoundException(existingSubtype.getTypeId());
+        });
+        Category existingCategory = categoryRepository.findById(existingType.getCategoryId()).orElseThrow(()-> {
+            throw new NotFoundException(existingType.getCategoryId());
+        });
+
+        Patrimony existingPatrimony = patrimonyRepository.findById(existingCategory.getPatrimonyId()).orElseThrow(()-> {
+            throw new NotFoundException(existingCategory.getPatrimonyId());
+        });
+
+        AssetGroup existingGroup =  assetGroupRepository.findById(existingPatrimony.getAssetGroupId()).orElseThrow(()-> {
+            throw new NotFoundException(existingPatrimony.getAssetGroupId());
+        });
+        List<FormDataDTO> values = new ArrayList<>();
+        return FormDataDTO.builder()
+                .objectName("Clasificacion")
+                .values(List.of(
+                        FormDataDTO.builder()
+                                .objectName("Subtipo")
+                                .values(List.of(existingSubtype.getName())).build(),
+                        FormDataDTO.builder()
+                                .objectName("Tipo")
+                                .values(List.of(existingType.getName())).build(),
+                        FormDataDTO.builder()
+                                .objectName("Categoria")
+                                .values(List.of(existingCategory.getName())).build(),
+                        FormDataDTO.builder()
+                                .objectName("Patrimonio")
+                                .values(List.of(existingPatrimony.getName())).build(),
+                        FormDataDTO.builder()
+                                .objectName("Grupo")
+                                .values(List.of(existingGroup.getName())).build()
+                ))
+                .build();
+
+    }
+
     public AssetClassification save(AssetClassification assetClassification){
         AssetClassification previous = null;
         validateAssetClassifications(assetClassification);
@@ -117,11 +243,7 @@ public class AssetClassificationUtil {
     }
 
     public AssetClassification getAssetClassificationByAssetId(UUID assetId){
-        return assetClassificationRepository.findByAssetId(assetId).orElseThrow(
-                ()->{
-                    throw new NotFoundException(assetId, "AssetClassification");
-                }
-        );
+        return assetClassificationRepository.findByAssetId(assetId).orElse(null);
     }
 
     public List<AssetManifestation> getAssetManifestationsByAssetId(UUID assetId){

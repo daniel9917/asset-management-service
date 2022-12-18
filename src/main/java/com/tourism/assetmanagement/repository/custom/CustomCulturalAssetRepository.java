@@ -6,7 +6,7 @@ import com.tourism.assetmanagement.model.PageDTO;
 
 import java.util.List;
 
-public interface CustomCulturalAssetRepository {
+public interface  CustomCulturalAssetRepository {
 
     List<CulturalAsset> findByFilters(PageDTO pageDTO);
 

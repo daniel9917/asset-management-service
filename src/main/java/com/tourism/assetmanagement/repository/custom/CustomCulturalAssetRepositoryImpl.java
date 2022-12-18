@@ -129,7 +129,12 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
             query = "select * from access a where a.access_type_id in (select id from access_type at where at.name = '" + colName + "');";
             List values = entityManager.createNativeQuery(query, Access.class).getResultList();
             return FormDataDTO.builder().values(values).objectName(objectName).build();
-        } else {
+        } else if(objectName.equals("Quality") || objectName.equals("Wellness") || objectName.equals("Economic")){
+            query = "select * from recommendation r where r.recommendation_type_id in (select id from recommendation_type rt where rt.name = '" + objectName + "') and deleted = false;";
+            List values = entityManager.createNativeQuery(query, Recommendation.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        }
+        else {
             return FormDataDTO.builder().values(List.of()).objectName(objectName).build();
         }
 
