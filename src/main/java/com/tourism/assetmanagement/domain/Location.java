@@ -30,10 +30,10 @@ public class Location extends BaseEntity {
     @Column(nullable = false)
     private UUID orderingId;
 
-    @Column(nullable = false)
+    @Column()
     private Double latitude;
 
-    @Column(nullable = false)
+    @Column()
     private Double longitude;
 
     private String detail;

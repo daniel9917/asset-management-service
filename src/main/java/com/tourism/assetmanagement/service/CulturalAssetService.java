@@ -2,7 +2,9 @@ package com.tourism.assetmanagement.service;
 
 import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.domain.asset.*;
+import com.tourism.assetmanagement.mapper.LocationMapper;
 import com.tourism.assetmanagement.model.FormDataDTO;
+import com.tourism.assetmanagement.model.LocationDTO;
 import com.tourism.assetmanagement.model.PageDTO;
 import com.tourism.assetmanagement.references.ServiceConstants;
 import com.tourism.assetmanagement.repository.LocationRepository;
@@ -60,10 +62,18 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private final AssetPublicServiceUtil assetPublicServiceUtil;
 
+    private final AssetRecommendationDetailUtil assetRecommendationDetailUtil;
+
     private final LocationRepository locationRepository;
 
     @Autowired
+    private final LocationMapper locationMapper;
+
+    @Autowired
     private final CustomCulturalAssetRepository customCulturalAssetRepository;
+
+    @Autowired
+    private final ExternalService externalService;
 
     @Autowired
     public CulturalAssetService(CulturalAssetRepository repository, CulturalAssetMapper mapper,
@@ -75,7 +85,9 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                                 AssetOfferDetailUtil assetOfferUtil, AssetVulnerabilityUtil assetVulnerabilityUtil,
                                 AssetRecognitionUtil assetRecognitionUtil, AssetNatureUtil assetNatureUtil,
                                 AssetCommunicationUtil assetCommunicationUtil, AssetPublicServiceUtil assetPublicServiceUtil,
-                                CustomCulturalAssetRepository customCulturalAssetRepository, LocationRepository locationRepository){
+                                CustomCulturalAssetRepository customCulturalAssetRepository, LocationRepository locationRepository,
+                                LocationMapper locationMapper, AssetRecommendationDetailUtil assetRecommendationDetailUtil,
+                                ExternalService externalService){
         super(repository, mapper, validator);
         this.customCulturalAssetRepository = customCulturalAssetRepository;
         this.repository = repository;
@@ -94,6 +106,9 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         this.assetCommunicationUtil = assetCommunicationUtil;
         this.assetPublicServiceUtil = assetPublicServiceUtil;
         this.locationRepository = locationRepository;
+        this.locationMapper = locationMapper;
+        this.assetRecommendationDetailUtil = assetRecommendationDetailUtil;
+        this.externalService = externalService;
     }
 
     @Override
@@ -103,6 +118,12 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                         () -> {
                             throw new NotFoundException(uuid);
                         });
+        Location locationObject = locationRepository.findById(retrievedAssetDTO.getLocationId()).orElseThrow(
+                () -> {
+                    throw new NotFoundException(retrievedAssetDTO.getLocationId());
+                }
+        );
+        retrievedAssetDTO.setLocationObject(locationMapper.map(locationObject));
         retrievedAssetDTO.setImageList(imageUtil.getImageList(uuid));
         retrievedAssetDTO.setAssetClassification(assetClassificationUtil.getAssetClassificationByAssetId(uuid));
         retrievedAssetDTO.setAssetManifestations(assetClassificationUtil.getAssetManifestationsByAssetId(uuid));
@@ -116,6 +137,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetNatureList(assetNatureUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetCommunicationList(assetCommunicationUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetPublicServiceList(assetPublicServiceUtil.findAllByAssetId(uuid));
+        formatAssetDetail(retrievedAssetDTO);
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -187,12 +209,15 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         if (!CollectionUtils.isEmpty(culturalAsset.getImageList())){
             savedEntity.setImageList(saveImages(savedEntity, culturalAsset));
         }
+        savedEntity.setAssetClassification(saveAssetClassification(savedEntity, culturalAsset));
+        savedEntity.setAssetClassificationId(savedEntity.getAssetClassification().getId());
         savedEntity.setLocationObject(saveLocation(culturalAsset));
         savedEntity.setLocationId(savedEntity.getLocationObject().getId());
         savedEntity.setAssetRouteList(saveAssetRoute(culturalAsset));
         savedEntity.setAssetCommunities(saveAssetCommunities(culturalAsset));
         savedEntity.setAssetAccessList(saveAssetAccess(culturalAsset));
         savedEntity.setAssetSportList(saveAssetSport(culturalAsset));
+        savedEntity.setAssetRecommendationList(saveAssetRecommendation(culturalAsset));
         savedEntity.setAssetOfferList(saveAssetOffer(culturalAsset));
         savedEntity.setAssetVulnerabilityList(saveAssetVulnerability(culturalAsset));
         savedEntity.setAssetRecognitionList(saveAssetRecognition(culturalAsset));
@@ -225,6 +250,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private List<AssetOffer> saveAssetOffer(CulturalAsset culturalAsset){
         return assetOfferUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetOfferList(), AssetOffer.class, "offerId");
+    }
+
+    private List<AssetRecommendation> saveAssetRecommendation(CulturalAsset culturalAsset){
+        return assetRecommendationDetailUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetRecommendationList(), AssetRecommendation.class, "recommendationId");
     }
 
     private List<AssetVulnerability> saveAssetVulnerability(CulturalAsset culturalAsset){
@@ -262,15 +291,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     }
 
     private AssetClassification saveAssetClassification(CulturalAsset saved, CulturalAsset request){
-        AssetClassification assetClassification = AssetClassification.builder()
-                .assetGroupId(request.getAssetClassification().getAssetGroupId())
-                .assetId(saved.getId())
-                .categoryId(request.getAssetClassification().getCategoryId())
-                .subtypeId(request.getAssetClassification().getSubtypeId())
-                .patrimonyId(request.getAssetClassification().getPatrimonyId())
-                .typeId(request.getAssetClassification().getTypeId())
-                .build();
-        return assetClassificationUtil.save(assetClassification);
+        return assetClassificationUtil.saveAssetClassification(saved.getId(), request.getSubtypeId());
     }
 
     private List<Image> saveImages(CulturalAsset saved, CulturalAsset request){
@@ -303,5 +324,130 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
             filters.add(FormDataDTO.builder().objectName(s).values(sectionElements).build());
         });
         return FormDataDTO.builder().objectName("filterObjects").values(filters).build();
+    }
+
+    public void formatAssetDetail (CulturalAssetDTO culturalAssetDTO){
+        List<FormDataDTO> items = new ArrayList<>();
+        if(culturalAssetDTO.getAssetClassification() != null) {
+            items.add(assetClassificationUtil.getClassificationData(culturalAssetDTO.getId()));
+        }
+        if (culturalAssetDTO.getLocationObject() != null) {
+            items.add(getLocationData(culturalAssetDTO.getLocationObject()));
+        }
+        items.add(assetClassificationUtil.getManifestationData(culturalAssetDTO));
+        items.add(getStateData(culturalAssetDTO));
+        items.add(getCommunityData(culturalAssetDTO));
+        items.add(getAccessData(culturalAssetDTO));
+        items.add(getCosmogonyData(culturalAssetDTO));
+        items.add(assetRecommendationDetailUtil.getRecommendationData(culturalAssetDTO.getId()));
+        culturalAssetDTO.setDataDTOList(items);
+        // Retrieve asset impact
+        culturalAssetDTO.setMaturityDTO(getAssetImpact(culturalAssetDTO.getAssetCommunities()));
+    }
+
+    private FormDataDTO getAssetImpact (List <AssetCommunity> assetCommunities) {
+        FormDataDTO requestObject  = FormDataDTO.builder()
+                .objectName("communityIdList")
+                .values(assetCommunities.stream()
+                        .map(AssetCommunity::getCommunityId)
+                        .collect(Collectors.toList()))
+                .build();
+        return externalService.getAssetImpact(requestObject);
+    }
+
+    public FormDataDTO getCommunityData(CulturalAssetDTO culturalAssetDTO){
+        return FormDataDTO.builder().objectName("Comunidades Etnicas").values(
+                List.of(
+                        communityUtil.geCommunityData(culturalAssetDTO.getId()),
+                        communityUtil.getCommunityTypeData(culturalAssetDTO.getId())
+                )
+        ).build();
+    }
+
+
+    public FormDataDTO getAccessData (CulturalAssetDTO culturalAssetDTO) {
+        return FormDataDTO.builder().objectName("Acceso").values(
+                List.of(
+                        assetAccessUtil.getAccessTypeData(culturalAssetDTO.getId()),
+                        assetAccessUtil.getAccessData(culturalAssetDTO.getId()),
+                        routeUtil.getAssetAccessRoutesData(culturalAssetDTO.getId())
+                       )
+        ).build();
+
+    }
+
+    public FormDataDTO getCosmogonyData (CulturalAssetDTO culturalAssetDTO) {
+        return FormDataDTO.builder().objectName("Cosmogonia").values(
+                List.of(
+                        FormDataDTO.builder()
+                                .objectName("¿Es un espacio sagrado?")
+                                .values(List.of(culturalAssetDTO.isCosmogony() ? "Sí" : "No"))
+                                .build(),
+                        FormDataDTO.builder()
+                                .objectName("¿Por qué es sagrado?")
+                                .values(List.of(culturalAssetDTO.getCosmogonyDescription()))
+                                .build()
+                )
+        ).build();
+    }
+
+
+    public FormDataDTO getStateData (CulturalAssetDTO culturalAssetDTO) {
+        return FormDataDTO.builder().objectName("Estado").values(
+                List.of(
+                        assetVulnerabilityUtil.getVulerabilityData(culturalAssetDTO.getId()),
+                        assetNatureUtil.getNatureData(culturalAssetDTO.getId()),
+                        assetSportUtil.getSportData(culturalAssetDTO.getId()),
+                        assetOfferUtil.getOfferData(culturalAssetDTO.getId()),
+                        assetPublicServiceUtil.getPublicServiceData(culturalAssetDTO.getId()),
+                        assetCommunicationUtil.geCommunicationData(culturalAssetDTO.getId()))
+        ).build();
+
+    }
+
+    public FormDataDTO getLocationData(LocationDTO locationObject) {
+        Location municipality = null;
+        Location department = null;
+        FormDataDTO location = FormDataDTO.builder().objectName("Ubicacion").build();
+        List<Object> locations = new ArrayList<>();
+        if(locationObject.getOrderingId().equals(UUID.fromString("336e030a-6a7f-11ed-a1eb-0242ac120002"))){
+             municipality = locationRepository.findById(locationObject.getParentLocationId()).orElseThrow(
+                    () -> {
+                        throw new NotFoundException(locationObject.getParentLocationId());
+                    }
+            );
+             UUID departmentId = municipality.getParentLocationId();
+             department =  locationRepository.findById(departmentId).orElseThrow(
+                     () -> {
+                         throw new NotFoundException(departmentId);
+                     }
+             );
+        }else if(locationObject.getOrderingId().equals(UUID.fromString("a3bed77d-b07b-4686-8506-32dfec154568")) ){
+            municipality = locationMapper.map(locationObject);
+            UUID departmentId = municipality.getParentLocationId();
+            department =  locationRepository.findById(departmentId).orElseThrow(
+                    () -> {
+                        throw new NotFoundException(departmentId);
+                    }
+            );
+        }else {
+            department = locationMapper.map(locationObject);
+        }
+        if (Objects.nonNull(municipality)) {
+            locations.add(
+                    FormDataDTO.builder()
+                        .objectName("Municipio")
+                        .values(List.of(municipality.getName()))
+                        .build());
+        }
+        if (Objects.nonNull(department)) {
+            locations.add(
+                    FormDataDTO.builder()
+                            .objectName("Departamento")
+                            .values(List.of(department.getName()))
+                            .build());
+        }
+        location.setValues(locations);
+        return location;
     }
 }

@@ -9,6 +9,7 @@ import com.tourism.assetmanagement.references.ServiceConstants;
 import com.tourism.assetmanagement.service.CulturalAssetService;
 import com.tourism.assetmanagement.domain.CulturalAsset;
 import com.tourism.assetmanagement.model.CulturalAssetDTO;
+import com.tourism.errors.NotFoundException;
 import com.tourism.service.BaseService;
 import com.tourism.controller.BaseController;
 import com.tourism.model.PageData;
@@ -25,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@CrossOrigin
 @RestController
 @RequestMapping(CulturalAssetAPI.URI)
 public class CulturalAssetController extends BaseController <CulturalAsset, CulturalAssetDTO, CulturalAssetDTO,  UUID> implements CulturalAssetAPI {

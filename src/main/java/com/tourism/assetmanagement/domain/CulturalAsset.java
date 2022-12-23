@@ -2,6 +2,7 @@ package com.tourism.assetmanagement.domain;
 
 import com.tourism.assetmanagement.config.AuditTrailLog;
 import com.tourism.assetmanagement.domain.asset.*;
+import com.tourism.assetmanagement.model.FormDataDTO;
 import com.tourism.domain.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -147,6 +148,39 @@ public class CulturalAsset extends BaseEntity {
 
     @Transient
     private Location locationObject;
+
+    @Transient
+    private List<FormDataDTO> dataDTOList;
+
+    @Column(length = 10000)
+    private String recommendations;
+
+    @Transient
+    private List<AssetRecommendation> assetRecommendationList;
+
+    public List<AssetRecommendation> getAssetRecommendationList() {
+        return assetRecommendationList;
+    }
+
+    public void setAssetRecommendationList(List<AssetRecommendation> assetRecommendationList) {
+        this.assetRecommendationList = assetRecommendationList;
+    }
+
+    public String getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(String recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    public List<FormDataDTO> getDataDTOList() {
+        return dataDTOList;
+    }
+
+    public void setDataDTOList(List<FormDataDTO> dataDTOList) {
+        this.dataDTOList = dataDTOList;
+    }
 
     public Location getLocationObject() {
         return locationObject;
