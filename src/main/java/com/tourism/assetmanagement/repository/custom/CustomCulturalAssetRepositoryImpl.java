@@ -133,6 +133,10 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
             query = "select * from recommendation r where r.recommendation_type_id in (select id from recommendation_type rt where rt.name = '" + objectName + "') and deleted = false;";
             List values = entityManager.createNativeQuery(query, Recommendation.class).getResultList();
             return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Criteria")){
+            query = "SELECT * FROM criteria c where c.deleted = false";
+            List values = entityManager.createNativeQuery(query, Criteria.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
         }
         else {
             return FormDataDTO.builder().values(List.of()).objectName(objectName).build();
@@ -143,6 +147,9 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
 
 
     public List<CulturalAsset> findByFilters(PageDTO pageDTO){
+        this.classifications = false;
+        this.communities = false;
+        this.locations = false;
         query = "SELECT * FROM cultural_asset WHERE ";
         List<String> classificationChunks = new ArrayList<>();
         Map<String, List<String>> communityItems = new HashMap<>();
@@ -158,7 +165,7 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
 
         for (FilterDTO filter : pageDTO.getFilters()){
             // if the filter name is location
-            if (filter.fieldName.equals("municipality") || filter.fieldName.equals("department") || filter.fieldName.equals("department")){
+            if (filter.fieldName.equals("municipality") || filter.fieldName.equals("department") || filter.fieldName.equals("location")){
                 locationItems.addAll(filter.getValues());
                 locations = true;
             }
@@ -176,6 +183,7 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
                     filter.fieldName.equals("asset_group") ||
                     filter.fieldName.equals("patrimony")){
                 String classificationChunk = getQueryForClassification(filter.fieldName, filter.getValues());
+                classifications = true;
                 classificationChunks.add(classificationChunk);
             }
         }

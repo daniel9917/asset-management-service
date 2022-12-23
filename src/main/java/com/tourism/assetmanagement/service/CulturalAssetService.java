@@ -64,6 +64,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private final AssetRecommendationDetailUtil assetRecommendationDetailUtil;
 
+    private final AssetCriteriaUtil assetCriteriaUtil;
+
     private final LocationRepository locationRepository;
 
     @Autowired
@@ -85,10 +87,11 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                                 AssetOfferDetailUtil assetOfferUtil, AssetVulnerabilityUtil assetVulnerabilityUtil,
                                 AssetRecognitionUtil assetRecognitionUtil, AssetNatureUtil assetNatureUtil,
                                 AssetCommunicationUtil assetCommunicationUtil, AssetPublicServiceUtil assetPublicServiceUtil,
-                                CustomCulturalAssetRepository customCulturalAssetRepository, LocationRepository locationRepository,
+                                AssetCriteriaUtil assetCriteriaUtil, CustomCulturalAssetRepository customCulturalAssetRepository,
                                 LocationMapper locationMapper, AssetRecommendationDetailUtil assetRecommendationDetailUtil,
-                                ExternalService externalService){
+                                LocationRepository locationRepository, ExternalService externalService){
         super(repository, mapper, validator);
+        this.assetCriteriaUtil = assetCriteriaUtil;
         this.customCulturalAssetRepository = customCulturalAssetRepository;
         this.repository = repository;
         this.naturalReservationRepository = naturalReservationRepository;
@@ -135,6 +138,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetVulnerabilityList(assetVulnerabilityUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetRecognitionList(assetRecognitionUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetNatureList(assetNatureUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetCriteriaList(assetCriteriaUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetCommunicationList(assetCommunicationUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetPublicServiceList(assetPublicServiceUtil.findAllByAssetId(uuid));
         formatAssetDetail(retrievedAssetDTO);
@@ -222,6 +226,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         savedEntity.setAssetVulnerabilityList(saveAssetVulnerability(culturalAsset));
         savedEntity.setAssetRecognitionList(saveAssetRecognition(culturalAsset));
         savedEntity.setAssetNatureList(saveAssetNature(culturalAsset));
+        savedEntity.setAssetCriteriaList(saveAssetCriteria(culturalAsset));
         savedEntity.setAssetCommunicationList(saveAssetCommunication(culturalAsset));
         savedEntity.setAssetPublicServiceList(saveAssetPublicService(culturalAsset));
         savedEntity = repository.save(savedEntity);
@@ -262,6 +267,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     private List<AssetRecognition> saveAssetRecognition(CulturalAsset culturalAsset){
         return assetRecognitionUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetRecognitionList(), AssetRecognition.class, "recognitionId");
+    }
+
+    private List<AssetCriteria> saveAssetCriteria(CulturalAsset culturalAsset){
+        return assetCriteriaUtil.saveObjects(culturalAsset.getId(), culturalAsset.getAssetCriteriaList(), AssetCriteria.class, "criteriaId");
     }
 
     private List<AssetNature> saveAssetNature(CulturalAsset culturalAsset){

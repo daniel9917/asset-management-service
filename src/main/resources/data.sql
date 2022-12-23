@@ -309,25 +309,25 @@ VALUES('c97790ca-3003-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0
 
 --INSERTION OF ASSET CLASSIFICATIONS
 
-INSERT INTO public."asset_group"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name")
-VALUES('914638c6-2bd2-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','asset_group01', 'asset group classification');
-
-INSERT INTO public."patrimony"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
-VALUES('a4938058-2f3a-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','patrimony01', 'patrimony classification', '914638c6-2bd2-11ed-a261-0242ac120002');
-
-INSERT INTO public."category"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
-VALUES('7a151140-2bd2-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'category01', 'category classification', 'a4938058-2f3a-11ed-a261-0242ac120002');
-
-INSERT INTO public."type"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
-VALUES('876b4166-2bd2-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'type01', 'type classification','7a151140-2bd2-11ed-a261-0242ac120002');
+--INSERT INTO public."asset_group"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name")
+--VALUES('914638c6-2bd2-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','asset_group01', 'asset group classification');
+--
+--INSERT INTO public."patrimony"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
+--VALUES('a4938058-2f3a-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','patrimony01', 'patrimony classification', '914638c6-2bd2-11ed-a261-0242ac120002');
+--
+--INSERT INTO public."category"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
+--VALUES('7a151140-2bd2-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'category01', 'category classification', 'a4938058-2f3a-11ed-a261-0242ac120002');
+--
+--INSERT INTO public."type"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
+--VALUES('876b4166-2bd2-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'type01', 'type classification','7a151140-2bd2-11ed-a261-0242ac120002');
 
 --INSERTION OF TYPES
 
@@ -1100,30 +1100,30 @@ false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Tejidos en paja', 
 
 --INSERTION OF A CLASSIFICATION
 
-INSERT INTO public."asset_group"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name")
-VALUES('263885c6-2f32-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','asset_group02', 'asset group classificatio2');
-
-INSERT INTO public."patrimony"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
-VALUES('20f4a518-2f32-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','patrimony02', 'patrimony classificatio2', '263885c6-2f32-11ed-a261-0242ac120002');
-
-INSERT INTO public."category"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
-VALUES('f92fac26-2f31-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'category02', 'category classificatio2', '20f4a518-2f32-11ed-a261-0242ac120002');
-
-INSERT INTO public."type"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
-VALUES('ffc9f3fc-2f31-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'type02', 'type classificatio2', 'f92fac26-2f31-11ed-a261-0242ac120002');
-
-INSERT INTO public."subtype"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
-VALUES('04815c1e-2f32-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'subtype02', 'subtype classificatio2', 'ffc9f3fc-2f31-11ed-a261-0242ac120002');
+--INSERT INTO public."asset_group"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name")
+--VALUES('263885c6-2f32-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','asset_group02', 'asset group classificatio2');
+--
+--INSERT INTO public."patrimony"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
+--VALUES('20f4a518-2f32-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','patrimony02', 'patrimony classificatio2', '263885c6-2f32-11ed-a261-0242ac120002');
+--
+--INSERT INTO public."category"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
+--VALUES('f92fac26-2f31-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'category02', 'category classificatio2', '20f4a518-2f32-11ed-a261-0242ac120002');
+--
+--INSERT INTO public."type"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
+--VALUES('ffc9f3fc-2f31-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'type02', 'type classificatio2', 'f92fac26-2f31-11ed-a261-0242ac120002');
+--
+--INSERT INTO public."subtype"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
+--VALUES('04815c1e-2f32-11ed-a261-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'subtype02', 'subtype classificatio2', 'ffc9f3fc-2f31-11ed-a261-0242ac120002');
 
 --INSERTION OF PATRIMONY
 INSERT INTO public."patrimony"
@@ -1593,3 +1593,166 @@ INSERT INTO public.recommendation
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", recommendation_type_id)
 VALUES('a6b4578c-7bdd-11ed-a1eb-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Evitar pedir regalados los productos o servicios', 'd095839c-7bdc-11ed-a1eb-0242ac120002');
 
+
+--INSERTION OF CRITERIA
+
+
+--PI Criteria
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('3446ac36-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Colectiva', '78e5bf12-a4f5-4f92-b70c-e2e9df886302');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('3927034a-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Tradicional', '78e5bf12-a4f5-4f92-b70c-e2e9df886302');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('3b682d8c-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Anónima', '78e5bf12-a4f5-4f92-b70c-e2e9df886302');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('3db688a4-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Espontánea', '78e5bf12-a4f5-4f92-b70c-e2e9df886302');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('4016c816-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Popular', '78e5bf12-a4f5-4f92-b70c-e2e9df886302');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('49af292e-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número.', '78e5bf12-a4f5-4f92-b70c-e2e9df886302');
+
+
+
+--PM Criteria
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('773ed9b4-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Estado de conservacion', '2c4752e0-0281-48fb-9bb5-b110219f5236');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('78fe5af4-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Constitución del Bien', '2c4752e0-0281-48fb-9bb5-b110219f5236');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('7b28747c-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Representatividad General', '2c4752e0-0281-48fb-9bb5-b110219f5236');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('434e2c24-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número.', '2c4752e0-0281-48fb-9bb5-b110219f5236');
+
+--FE Criteria
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('43f962e0-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Organizacion del evento', '13355e70-f45b-4fcd-ba07-fb1a6e332676');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('45c6c860-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Beneficios Socioculturales para la Comunidad', '13355e70-f45b-4fcd-ba07-fb1a6e332676');
+
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('4a6b3914-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Beneficios Económicos Locales', '13355e70-f45b-4fcd-ba07-fb1a6e332676');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('3ff450b2-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número.', '13355e70-f45b-4fcd-ba07-fb1a6e332676');
+
+--GE Criteria
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('484ef2ce-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Pertinencia', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('4d7b0a62-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Representatividad', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('4f82fbbc-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Relevancia', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('52a29f6e-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Naturaleza e identidad colectiva', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('559eb806-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Vigencia', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('57f4689e-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Equidad', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('5a2c7f66-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Responsabilidad', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('3c6615f2-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número.', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
+
+--SN Criteria
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('5d287224-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Sin contaminacion del aire', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('61a36a7a-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Sin Contaminación del Agua', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('69e044c4-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Sin Contaminación Visual', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('6c1881d4-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Estado de Conservación', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('67c64cb0-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Contaminación Sonora', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('6e620d66-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Diversidad', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('703c1316-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Singularidad', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
+
+INSERT INTO public.criteria
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id)
+VALUES('36ff6ac8-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número.', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
