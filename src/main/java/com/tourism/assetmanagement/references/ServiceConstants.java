@@ -27,7 +27,8 @@ public class ServiceConstants {
             "Nature",
             "Quality",
             "Wellness",
-            "Economic"
+            "Economic",
+            "Criteria"
             );
 
     /**
