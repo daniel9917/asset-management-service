@@ -158,6 +158,18 @@ public class CulturalAsset extends BaseEntity {
     @Transient
     private List<AssetRecommendation> assetRecommendationList;
 
+    @Transient
+    private List<AssetCriteria> assetCriteriaList;
+
+    public List<AssetCriteria> getAssetCriteriaList() {
+        return assetCriteriaList;
+    }
+
+    public void setAssetCriteriaList(List<AssetCriteria> assetCriteriaList) {
+        this.assetCriteriaList = assetCriteriaList;
+    }
+
+
     public List<AssetRecommendation> getAssetRecommendationList() {
         return assetRecommendationList;
     }

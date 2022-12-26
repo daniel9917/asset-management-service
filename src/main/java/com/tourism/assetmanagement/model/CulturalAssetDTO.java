@@ -94,6 +94,8 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private List<AssetNature> assetNatureList;
 
+    private List<AssetCriteria> assetCriteriaList;
+
     private List<AssetCommunication> assetCommunicationList;
 
     private List<AssetPublicService> assetPublicServiceList;
@@ -123,6 +125,14 @@ public class CulturalAssetDTO extends PersistentDTO {
     }
 
     private List<AssetRecommendation> assetRecommendationList;
+
+    public List<AssetCriteria> getAssetCriteriaList() {
+        return assetCriteriaList;
+    }
+
+    public void setAssetCriteriaList(List<AssetCriteria> assetCriteriaList) {
+        this.assetCriteriaList = assetCriteriaList;
+    }
 
     public List<AssetRecommendation> getAssetRecommendationList() {
         return assetRecommendationList;
