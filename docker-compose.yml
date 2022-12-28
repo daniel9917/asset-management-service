@@ -2,7 +2,7 @@ version: '2'
 
 services:
   assetapp:
-    image: 'asset-management-service:latest'
+    image: 'daniel9917/asset-management-service-test'
     build:
       context: .
     container_name: assetapp
