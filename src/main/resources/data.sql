@@ -1270,7 +1270,11 @@ VALUES('737eab32-c87a-4624-a339-f0478e56ade1', now(), 'dbf1e202-3097-11ed-a261-0
 
 INSERT INTO public.community_type
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name")
-VALUES('c95378f8-795d-42b0-b349-8dc682d92952', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002', 'CT05', 'Ninguna');
+VALUES('886f8fac-a29e-11ed-a8fc-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002', 'CT05', 'Palenquero');
+
+INSERT INTO public.community_type
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name")
+VALUES('c95378f8-795d-42b0-b349-8dc682d92952', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002', 'CT06', 'Ninguna');
 
 --INSERTION OF COMMUNITITES
 

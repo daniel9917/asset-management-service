@@ -106,6 +106,8 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private boolean partOfNaturalReservation;
 
+    private String reservationName;
+
     private String reservationLink;
 
     private boolean onGoingRecognition;
@@ -125,6 +127,14 @@ public class CulturalAssetDTO extends PersistentDTO {
     }
 
     private List<AssetRecommendation> assetRecommendationList;
+
+    public String getReservationName() {
+        return reservationName;
+    }
+
+    public void setReservationName(String reservationName) {
+        this.reservationName = reservationName;
+    }
 
     public List<AssetCriteria> getAssetCriteriaList() {
         return assetCriteriaList;
