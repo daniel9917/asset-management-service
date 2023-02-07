@@ -1645,7 +1645,7 @@ VALUES('0aa97b48-21d9-4e81-8092-58b0f9d88372', now(), 'dbf1e202-3097-11ed-a261-0
 
 INSERT INTO public.community
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, community_type_id, "language", "name")
-VALUES('6e4de1b23-4533-4235-bea4-43394de9c6f9', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+VALUES('e0222037-9932-43ff-9ee8-2508bb7d9f18', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
 'aebbbc9a-3097-11ed-a261-0242ac120002', 'Wampi-misamerawam', 'Pubense');
 
 INSERT INTO public.community
@@ -2175,7 +2175,7 @@ VALUES('36cd53ea-4ff7-11ed-bdc3-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 
 INSERT INTO public."location"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, detail, latitude, longitude, "name", ordering_id, parent_location_id)
-VALUES('3c67fbfc-4ff7-11ed-bdc3-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+VALUES('ab3833c0-9fdc-4ab3-86f0-a47766a6650b', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
 'Las principales actividades agrícolas son el cultivo de plátano, yuca y chontaduro', 0.051, -71.222, 'La Victoria', 'a3bed77d-b07b-4686-8506-32dfec154568','a0ef6db0-1789-4c4b-850c-dfb7c8e4d8a5');
 
 INSERT INTO public."location"
