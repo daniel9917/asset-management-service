@@ -17,4 +17,6 @@ import java.util.UUID;
 public class Criteria extends BaseEntity {
     private UUID groupId;
     private String name;
+    private int min;
+    private int max;
 }

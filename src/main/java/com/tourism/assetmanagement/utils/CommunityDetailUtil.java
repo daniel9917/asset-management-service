@@ -67,4 +67,8 @@ public class CommunityDetailUtil extends GenericDetailUtil<Community, CommunityT
         return FormDataDTO.builder().objectName("Tipos de comunidades")
                 .values(values).build();
     }
+
+    public List<AssetCommunity> getAssetCommunities (UUID assetId){
+        return assetCommunityRepositoty.findAllByAssetId(assetId);
+    }
 }

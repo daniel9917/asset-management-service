@@ -182,7 +182,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
     @Override
     public PageData<CulturalAssetDTO> list(PageDTO pageDTO) {
-        List<CulturalAsset> filteredList = customCulturalAssetRepository.findByFilters(pageDTO);
+        List<CulturalAsset> filteredList = customCulturalAssetRepository.findByFilters(pageDTO).stream().map(culturalAsset -> {
+            culturalAsset.setAssetCommunities(communityUtil.getAssetCommunities(culturalAsset.getId()));
+            return culturalAsset;
+        }).collect(Collectors.toList());
         PageData<CulturalAssetDTO> page = super.list(pageDTO);
         page.setData(filteredList.stream().map(culturalAsset -> mapper.map(culturalAsset)).collect(Collectors.toList()));
         return page;
