@@ -7,18 +7,22 @@ services:
       context: .
     container_name: assetapp
     depends_on:
-      - assetDb
+      - assetdb
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://assetDb:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=1234
       - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+    command:
+      - run
+      - --cors
+      - "*"
     ports:
       - "8080:8080"
 
-  assetDb:
+  assetdb:
     image: 'postgres:13.1-alpine'
-    container_name: assetDb
+    container_name: assetdb
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234

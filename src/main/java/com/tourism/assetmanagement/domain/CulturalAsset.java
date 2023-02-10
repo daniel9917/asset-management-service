@@ -137,6 +137,9 @@ public class CulturalAsset extends BaseEntity {
     @Column
     private String reservationLink;
 
+    @Column
+    private String reservationName;
+
     @Transient
     private List<String> links;
 
@@ -168,7 +171,6 @@ public class CulturalAsset extends BaseEntity {
     public void setAssetCriteriaList(List<AssetCriteria> assetCriteriaList) {
         this.assetCriteriaList = assetCriteriaList;
     }
-
 
     public List<AssetRecommendation> getAssetRecommendationList() {
         return assetRecommendationList;
@@ -386,6 +388,14 @@ public class CulturalAsset extends BaseEntity {
         this.assetClassification = assetClassification;
     }
 
+    public String getReservationName() {
+        return reservationName;
+    }
+
+    public void setReservationName(String reservationName) {
+        this.reservationName = reservationName;
+    }
+
     /******* Getters, Setters, Constructors, HashCode & Equals *******/
 
 //    @Override
@@ -397,6 +407,8 @@ public class CulturalAsset extends BaseEntity {
 //    public void setId(UUID id) {
 //        this.id = id;
 //    }
+
+
 
     public List<Image> getImageList() {
         return imageList;
