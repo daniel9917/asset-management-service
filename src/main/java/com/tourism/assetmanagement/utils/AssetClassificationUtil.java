@@ -15,6 +15,7 @@ import com.tourism.assetmanagement.repository.classification.*;
 import com.tourism.domain.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -139,8 +140,14 @@ public class AssetClassificationUtil {
         if(culturalAssetDTO.isPartOfNaturalReservation()){
             values.add(FormDataDTO.builder()
                     .objectName("Nombre de la reserva natural")
-                    .values(List.of(culturalAssetDTO.getReservationLink()))
+                    .values(List.of(culturalAssetDTO.getReservationName()))
                     .build());
+            if(!StringUtils.isEmpty(culturalAssetDTO.getReservationName())){
+                values.add(FormDataDTO.builder()
+                        .objectName("Links de la reserva natural")
+                        .values(List.of(culturalAssetDTO.getReservationLink()))
+                        .build());
+            }
         }
 
         values.add(FormDataDTO.builder()
@@ -148,7 +155,7 @@ public class AssetClassificationUtil {
                 .values(assetManifestationList)
                 .build());
         return FormDataDTO.builder()
-                .objectName("Naturaleza")
+                .objectName("Naturaleza del activo")
                 .values(values)
                 .build();
     }

@@ -41,7 +41,7 @@ public class CulturalAssetDTO extends PersistentDTO {
     @Size(max = 100)
     private String name;
 
-    private List<String> alternateNames;
+    private String alternateNames;
 
     @NotEmpty
     @Size(max = 250)
@@ -410,11 +410,11 @@ public class CulturalAssetDTO extends PersistentDTO {
         this.name = name;
     }
 
-    public List<String> getAlternateNames() {
+    public String getAlternateNames() {
         return alternateNames;
     }
 
-    public void setAlternateNames(List<String> alternateNames) {
+    public void setAlternateNames(String alternateNames) {
         this.alternateNames = alternateNames;
     }
 

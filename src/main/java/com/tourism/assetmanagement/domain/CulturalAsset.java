@@ -45,11 +45,11 @@ public class CulturalAsset extends BaseEntity {
     @Column
     private UUID locationId;
 
-    @Column
+    @Column(length = 2000)
     private String name;
 
-    @Transient
-    private List<String> alternateNames;
+    @Column(length = 2000)
+    private String alternateNames;
 
     @Column
     private String description;
@@ -61,14 +61,14 @@ public class CulturalAsset extends BaseEntity {
     @Column
     private int yCoordinate;
 
-    @Column
+    @Column(length = 2000)
     private String locationDetail;
 
     //    MutuallyExclusive
     @Column
     private boolean cosmogony;
 
-    @Column
+    @Column(length = 2000)
     private String cosmogonyDescription;
 
     @Column
@@ -98,7 +98,7 @@ public class CulturalAsset extends BaseEntity {
     @Column
     private LocalDateTime dateEvent;
 
-    @Column
+    @Column(length = 2000)
     private String accessDetail;
 
     @Transient
@@ -134,10 +134,10 @@ public class CulturalAsset extends BaseEntity {
     @Column
     private boolean partOfNaturalReservation;
 
-    @Column
+    @Column(length = 2000)
     private String reservationLink;
 
-    @Column
+    @Column(length = 2000)
     private String reservationName;
 
     @Transient
@@ -458,11 +458,11 @@ public class CulturalAsset extends BaseEntity {
         this.name = name;
     }
 
-    public List<String> getAlternateNames() {
+    public String getAlternateNames() {
         return alternateNames;
     }
 
-    public void setAlternateNames(List<String> alternateNames) {
+    public void setAlternateNames(String alternateNames) {
         this.alternateNames = alternateNames;
     }
 
