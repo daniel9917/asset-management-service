@@ -30,9 +30,9 @@ public class SwaggerConfig {
                             "Documentación para la API Rest de Gestión de Activos",
                             "1.0",
                             "Prototipo Monografia Pregrado",
-                            new Contact("Cristian Niño & Jose Jimez",
-                                        "linkedin.com/in/ccninor/ & linkedin.com/in/jdanieljmnz/",
-                                        "ccninor@correo.udistrital.edu.co & jdjimenezm@correo.dusitrital.edu.co"),
+                            new Contact("Cristian Niño & Jose Jimenez",
+                                        "https://www.udistrital.edu.co/inicio",
+                                        "ccninor@correo.udistrital.edu.co "),
                             "OWASP",
                             "www.google.com",
                             Collections.emptyList());
