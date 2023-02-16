@@ -1,10 +1,7 @@
 package com.tourism.assetmanagement.repository.custom;
 
 import com.tourism.assetmanagement.domain.*;
-import com.tourism.assetmanagement.domain.classification.AssetGroup;
-import com.tourism.assetmanagement.domain.classification.Manifestation;
-import com.tourism.assetmanagement.domain.classification.Subtype;
-import com.tourism.assetmanagement.domain.classification.Type;
+import com.tourism.assetmanagement.domain.classification.*;
 import com.tourism.assetmanagement.domain.type.CommunityType;
 import com.tourism.assetmanagement.domain.type.RouteType;
 import com.tourism.assetmanagement.model.FilterDTO;
@@ -76,6 +73,14 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
         } else if (objectName.equals("Group")) {
             query = "select * from asset_group where deleted = false;";
             List values = entityManager.createNativeQuery(query, AssetGroup.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Patrimony")) {
+            query = "select * from patrimony where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Patrimony.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Category")) {
+            query = "select * from category where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Category.class).getResultList();
             return FormDataDTO.builder().values(values).objectName(objectName).build();
         } else if (objectName.equals("Vulnerability")) {
             query = "select * from vulnerability where deleted = false;";

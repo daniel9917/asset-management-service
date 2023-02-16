@@ -160,6 +160,14 @@ public class AssetClassificationUtil {
                 .build();
     }
 
+    public List<Object> getAssetManifestationsAsList (CulturalAssetDTO culturalAssetDTO) {
+        return assetManifestationRepository.findAllByAssetId(culturalAssetDTO.getId()).stream().map(assetManifestation -> {
+            return manifestationRepository.findById(assetManifestation.getManifestationId()).orElseThrow(() -> {
+                throw new NotFoundException(assetManifestation.getManifestationId());
+            }).getName();
+        }).collect(Collectors.toList());
+    }
+
     public FormDataDTO getClassificationData (UUID assetId){
         AssetClassification classification = assetClassificationRepository.findByAssetId(assetId)
                 .orElseThrow(() -> {throw new NotFoundException(assetId);});

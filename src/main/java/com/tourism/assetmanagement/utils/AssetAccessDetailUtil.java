@@ -11,6 +11,8 @@ import com.tourism.errors.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,13 +38,13 @@ public class AssetAccessDetailUtil extends GenericDetailUtil<Access, AccessType,
     }
 
     public FormDataDTO getAccessData(UUID assetID){
-        List<Object> values = assetAccessRepository.findAllByAssetId(assetID).stream().map((av) -> {
+        List<Object> values = new ArrayList<>( new HashSet<>( assetAccessRepository.findAllByAssetId(assetID).stream().map((av) -> {
             return accessRepository.findById(av.getAccessId()).orElseThrow(
                     () -> {
                         throw new NotFoundException(av.getAccessId());
                     }
             ).getName();
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList())));
 
         return FormDataDTO.builder().objectName("Accesos")
                 .values(values).build();
@@ -50,7 +52,8 @@ public class AssetAccessDetailUtil extends GenericDetailUtil<Access, AccessType,
     }
 
     public FormDataDTO getAccessTypeData (UUID assetID){
-        List<Object> values = assetAccessRepository.findAllByAssetId(assetID).stream().map((av) -> {
+        List<Object> values = new ArrayList<>();
+        values.addAll(new HashSet<>( assetAccessRepository.findAllByAssetId(assetID).stream().map((av) -> {
             Access access = accessRepository.findById(av.getAccessId()).orElseThrow(
                     () -> {
                         throw new NotFoundException(av.getAccessId());
@@ -61,7 +64,7 @@ public class AssetAccessDetailUtil extends GenericDetailUtil<Access, AccessType,
                         throw new NotFoundException(access.getAccessTypeId());
                     }
             ).getName();
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList())));
 
         return FormDataDTO.builder().objectName("Tipos de acceso")
                 .values(values).build();

@@ -26,5 +26,8 @@ public class AssetNature extends BaseEntity {
     private UUID natureId;
 
     @Column
+    private Integer score;
+
+    @Column
     private String locationNature;
 }

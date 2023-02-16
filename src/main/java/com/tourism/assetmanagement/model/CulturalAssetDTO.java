@@ -68,6 +68,8 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private FormDataDTO maturityDTO;
 
+    private FormDataDTO typologyDTO;
+
     private List<Image> imageList;
 
     private AssetClassification assetClassification;
@@ -142,6 +144,14 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     public void setAssetCriteriaList(List<AssetCriteria> assetCriteriaList) {
         this.assetCriteriaList = assetCriteriaList;
+    }
+
+    public FormDataDTO getTypologyDTO() {
+        return typologyDTO;
+    }
+
+    public void setTypologyDTO(FormDataDTO typologyDTO) {
+        this.typologyDTO = typologyDTO;
     }
 
     public List<AssetRecommendation> getAssetRecommendationList() {

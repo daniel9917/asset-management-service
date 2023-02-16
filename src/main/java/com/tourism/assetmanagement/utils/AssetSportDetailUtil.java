@@ -10,9 +10,10 @@ import com.tourism.assetmanagement.repository.type.SportTypeRepository;
 import com.tourism.errors.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +46,39 @@ public class AssetSportDetailUtil extends GenericDetailUtil<Sport, SportType, As
                 .objectName("Deportes")
                 .values(values)
                 .build();
+
+    }
+
+    public List<FormDataDTO> getSportScores (UUID assetId) {
+        List <Sport> sportList = sportRepository.findAllSport();
+        List <SportType> sportTypeList = sportTypeRepository.findAllSportTypes();
+
+        return sportTypeList.stream().map(sportType -> {
+            List <Sport> sportsByType = sportList.stream().filter(sport -> sport.getSportTypeId().equals(sportType.getId())).collect(Collectors.toList());
+            List <FormDataDTO> sportScoresByType = sportsByType.stream().map(
+                    sport -> {
+                        List <AssetSport> assetSports = assetSportRepository.findAllByAssetIdAndSportId(assetId, sport.getId()).stream()
+                                .filter(assetSport -> Objects.nonNull(assetSport.getScore())).collect(Collectors.toList());
+
+                        return
+                                FormDataDTO
+                                        .builder()
+                                        .objectName(sport.getName())
+                                        .values(
+                                                CollectionUtils.isEmpty(assetSports) ?
+                                                        List.of(0) :
+                                                        List.of(
+                                                                assetSports.stream()
+                                                                        .map(AssetSport::getScore)
+                                                                        .reduce(0, Integer::sum)
+                                                        )
+                                        )
+                                        .build();
+
+                    }
+            ).collect(Collectors.toList());
+            return FormDataDTO.builder().objectName("DEPORTES " + sportType.getName()).values(new ArrayList<>(sportScoresByType)).build();
+        }).collect(Collectors.toList());
 
     }
 }

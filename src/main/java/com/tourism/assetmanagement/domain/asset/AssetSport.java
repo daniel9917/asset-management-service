@@ -20,6 +20,9 @@ public class AssetSport extends BaseEntity {
     @Column(nullable = false)
     private UUID assetId;
 
+    @Column(nullable = true)
+    private Integer score;
+
     @Column(nullable = false)
     private UUID sportId;
 
