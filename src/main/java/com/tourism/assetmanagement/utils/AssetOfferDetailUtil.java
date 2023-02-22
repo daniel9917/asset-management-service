@@ -32,7 +32,7 @@ public class AssetOfferDetailUtil extends GenericDetailUtil<Offer, OfferType, As
 
     public FormDataDTO getOfferData(UUID assetID){
 
-        List<Object> values = assetOfferRepository.findAllByAssetId(assetID).stream().map((av) -> {
+        List<Object> values = assetOfferRepository.findAllByAssetId(assetID).stream().filter(assetSport -> assetSport.getScore() == 0).map((av) -> {
             return offerRepository.findById(av.getOfferId()).orElseThrow(
                     () -> {
                         throw new NotFoundException(av.getOfferId());

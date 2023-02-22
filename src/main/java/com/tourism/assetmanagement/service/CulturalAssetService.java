@@ -356,7 +356,13 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         }
         culturalAssetDTO.setDataDTOList(items);
         // Retrieve asset impact
-        culturalAssetDTO.setMaturityDTO(getAssetImpact(culturalAssetDTO.getAssetCommunities()));
+
+        List <UUID> idList = culturalAssetDTO.getAssetCommunities().stream()
+                .map(AssetCommunity::getCommunityId)
+                .collect(Collectors.toList());
+        idList.add(culturalAssetDTO.getDepartmentId());
+        idList.add(culturalAssetDTO.getMunicipalityId());
+        culturalAssetDTO.setMaturityDTO(getAssetImpact(idList));
     }
 
     public void formatAssetDetailNew (CulturalAssetDTO culturalAssetDTO){
@@ -372,7 +378,12 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         }
         culturalAssetDTO.setDataDTOList(items);
         // Retrieve asset impact
-        culturalAssetDTO.setMaturityDTO(getAssetImpact(culturalAssetDTO.getAssetCommunities()));
+        List <UUID> idList = culturalAssetDTO.getAssetCommunities().stream()
+                .map(AssetCommunity::getCommunityId)
+                .collect(Collectors.toList());
+        idList.add(culturalAssetDTO.getDepartmentId());
+        idList.add(culturalAssetDTO.getMunicipalityId());
+        culturalAssetDTO.setMaturityDTO(getAssetImpact(idList));
         culturalAssetDTO.setTypologyDTO(getAssetTypology(culturalAssetDTO.getId()));
     }
 
@@ -408,8 +419,8 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                             .objectName("Nombre")
                             .values(List.of(culturalAssetDTO.getName()))
                             .build(),
-                                communityUtil.geCommunityData(culturalAssetDTO.getId()),
-                                communityUtil.getCommunityTypeData(culturalAssetDTO.getId()),
+                            communityUtil.getCommunityTypeData(culturalAssetDTO.getId()),
+                            communityUtil.geCommunityData(culturalAssetDTO.getId()),
                         FormDataDTO.builder()
                             .objectName("¿Es una manifestación cultural inmaterial?")
                             .values(List.of(culturalAssetDTO.isInmaterialManifestation() ? "Sí" : "No"))
@@ -437,7 +448,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                 .values(
                         List.of(
                         FormDataDTO.builder()
-                                .objectName("Reconocimiento Salvaguardia: ")
+                                .objectName("Reconocimiento Salvaguardia ")
                                 .values(List.of(culturalAssetDTO.isSafeguardingRegistry() ? "Sí" : "No"))
                                 .build(),
                         FormDataDTO.builder()
@@ -457,12 +468,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                 .build();
     }
 
-    private FormDataDTO getAssetImpact (List <AssetCommunity> assetCommunities) {
+    private FormDataDTO getAssetImpact (List <UUID> assetCommunities) {
         FormDataDTO requestObject  = FormDataDTO.builder()
                 .objectName("communityIdList")
-                .values(assetCommunities.stream()
-                        .map(AssetCommunity::getCommunityId)
-                        .collect(Collectors.toList()))
+                .values(assetCommunities.stream().collect(Collectors.toList()))
                 .build();
         return externalService.getAssetImpact(requestObject);
     }
@@ -556,19 +565,19 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         }else {
             department = locationMapper.map(locationObject);
         }
-        if (Objects.nonNull(municipality)) {
-            locations.add(
-                    FormDataDTO.builder()
-                        .objectName("Municipio")
-                        .values(List.of(municipality.getName()))
-                        .build());
-        }
         if (Objects.nonNull(department)) {
             locations.add(
                     FormDataDTO.builder()
                             .objectName("Departamento")
                             .values(List.of(department.getName()))
                             .build());
+        }
+        if (Objects.nonNull(municipality)) {
+            locations.add(
+                    FormDataDTO.builder()
+                        .objectName("Municipio")
+                        .values(List.of(municipality.getName()))
+                        .build());
         }
         location.setValues(locations);
         return location;

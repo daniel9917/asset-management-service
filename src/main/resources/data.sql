@@ -305,6 +305,9 @@ INSERT INTO public.route_type
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
 VALUES('6111d888-3003-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'Nacionales');
 
+INSERT INTO public.route_type
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('475c70e6-66dc-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'Departamentales');
 
 INSERT INTO public.route_type
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
@@ -313,10 +316,6 @@ VALUES('76e3d1d4-3003-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0
 INSERT INTO public.route_type
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
 VALUES('49c6bc4c-66dc-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'No aplica');
-
-INSERT INTO public.route_type
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
-VALUES('475c70e6-66dc-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'Departamentales');
 
 
 --INSERTION OF ROUTES
@@ -7942,7 +7941,7 @@ VALUES('4016c816-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.criteria
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id, "min", "max")
 VALUES('49af292e-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
-'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número', '78e5bf12-a4f5-4f92-b70c-e2e9df886302', 6, 30);
+'Potencial: Local (6), Regional (12), Nacional (18), Internacional (30). Escriba el número que corresponda a la potencia.', '78e5bf12-a4f5-4f92-b70c-e2e9df886302', 6, 30);
 
 
 
@@ -7965,7 +7964,7 @@ VALUES('7b28747c-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.criteria
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id, "min", "max")
 VALUES('434e2c24-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
-'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número', '2c4752e0-0281-48fb-9bb5-b110219f5236', 6, 30);
+'Potencial: Local (6), Regional (12), Nacional (18), Internacional (30). Escriba el número que corresponda a la potencia.', '2c4752e0-0281-48fb-9bb5-b110219f5236', 6, 30);
 
 --FE Criteria
 INSERT INTO public.criteria
@@ -7987,7 +7986,7 @@ VALUES('4a6b3914-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.criteria
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id, "min", "max")
 VALUES('3ff450b2-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
-'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número', '13355e70-f45b-4fcd-ba07-fb1a6e332676', 6, 30);
+'Potencial: Local (6), Regional (12), Nacional (18), Internacional (30). Escriba el número que corresponda a la potencia.', '13355e70-f45b-4fcd-ba07-fb1a6e332676', 6, 30);
 
 --GE Criteria
 
@@ -8029,7 +8028,7 @@ VALUES('5a2c7f66-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.criteria
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id, "min", "max")
 VALUES('3c6615f2-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
-'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número', 'd3da6192-53aa-416d-a6c9-2933a24978ef', 6, 30);
+'Potencial: Local (6), Regional (12), Nacional (18), Internacional (30). Escriba el número que corresponda a la potencia.', 'd3da6192-53aa-416d-a6c9-2933a24978ef', 6, 30);
 
 --SN Criteria
 
@@ -8071,4 +8070,4 @@ VALUES('703c1316-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.criteria
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id, "min", "max")
 VALUES('36ff6ac8-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
-'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número', '0fe5f0f3-c65a-4d5e-bd88-655da1682747', 6, 30);
+'Potencial: Local (6), Regional (12), Nacional (18), Internacional (30). Escriba el número que corresponda a la potencia.', '0fe5f0f3-c65a-4d5e-bd88-655da1682747', 6, 30);

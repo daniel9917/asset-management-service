@@ -34,7 +34,7 @@ public class AssetSportDetailUtil extends GenericDetailUtil<Sport, SportType, As
 
     public FormDataDTO getSportData(UUID assetID){
 
-        List<Object> values = assetSportRepository.findAllByAssetId(assetID).stream().map((av) -> {
+        List<Object> values = assetSportRepository.findAllByAssetId(assetID).stream().filter(assetSport -> assetSport.getScore() == 0).map((av) -> {
             return sportRepository.findById(av.getSportId()).orElseThrow(
                     () -> {
                         throw new NotFoundException(av.getSportId());

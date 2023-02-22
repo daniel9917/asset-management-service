@@ -48,7 +48,7 @@ public class CommunityDetailUtil extends GenericDetailUtil<Community, CommunityT
             ).getName();
         }).collect(Collectors.toList())));
 
-        return FormDataDTO.builder().objectName("Pueblos étnicos que lo comparten.")
+        return FormDataDTO.builder().objectName("Pueblos étnicos que lo comparten")
                 .values(values).build();
     }
 
@@ -66,7 +66,7 @@ public class CommunityDetailUtil extends GenericDetailUtil<Community, CommunityT
             ).getName();
         }).collect(Collectors.toList())));
 
-        return FormDataDTO.builder().objectName("Comunidades étnicas con las que se relaciona.")
+        return FormDataDTO.builder().objectName("Comunidades étnicas con las que se relaciona")
                 .values(values).build();
     }
 

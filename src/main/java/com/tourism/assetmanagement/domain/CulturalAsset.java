@@ -51,7 +51,7 @@ public class CulturalAsset extends BaseEntity {
     @Column(length = 2000)
     private String alternateNames;
 
-    @Column
+    @Column(length = 2000)
     private String description;
 
     //    MutuallyExclusive -- Should we manage this as an independent Object
