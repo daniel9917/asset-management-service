@@ -137,6 +137,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetCriteriaList(assetCriteriaUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetCommunicationList(assetCommunicationUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetPublicServiceList(assetPublicServiceUtil.findAllByAssetId(uuid));
+        retrievedAssetDTO.setAssetRecommendationList(assetRecommendationDetailUtil.findAllByAssetId(uuid));
 //        formatAssetDetail(retrievedAssetDTO);
         formatAssetDetailNew(retrievedAssetDTO);
         return Optional.of(retrievedAssetDTO);
@@ -155,25 +156,40 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
             validateNaturalReservation(update.getReservationId());
         }
         CulturalAssetDTO updatedAsset = super.update(uuid, update);
-        updatedAsset.setAssetClassification(saveAssetClassification(mapper.map(updatedAsset), mapper.map(update)));
-        updatedAsset.setImageList(imageUtil.updateImageList(uuid, update.getImageList()));
-        updatedAsset.setAssetManifestations(assetClassificationUtil.saveAllAssetManifestations(
-                updatedAsset.getAssetManifestations().stream().map(assetManifestation -> {
-                    assetManifestation.setAssetId(uuid);
-                    return assetManifestation;
-                }).collect(Collectors.toList())));
-        update.setId(uuid);
+        if(Objects.nonNull(update.getAssetClassification())) {
+            updatedAsset.setAssetClassification(saveAssetClassification(mapper.map(updatedAsset), mapper.map(update)));
+            updatedAsset.setAssetClassificationId(updatedAsset.getAssetClassification().getId());
+        }
+        if (!CollectionUtils.isEmpty(update.getImageList())) {
+            updatedAsset.setImageList(imageUtil.updateImageList(uuid, update.getImageList()));
+        }if(!CollectionUtils.isEmpty(update.getAssetManifestations())) {
+            updatedAsset.setAssetManifestations(assetClassificationUtil.saveAllAssetManifestations(
+                    updatedAsset.getAssetManifestations().stream().map(assetManifestation -> {
+                        assetManifestation.setAssetId(uuid);
+                        return assetManifestation;
+                    }).collect(Collectors.toList())));
+        }
+        updatedAsset.setId(uuid);
         CulturalAsset updated = mapper.map(update);
+        updated.setId(uuid);
+
+        updatedAsset.setAssetClassification(saveAssetClassification(updated, mapper.map(update)));
+        updatedAsset.setAssetClassificationId(updatedAsset.getAssetClassification().getId());
+        updatedAsset.setLocationObject(locationMapper.map(saveLocation(updated)));
+        updatedAsset.setLocationId(updatedAsset.getLocationObject().getId());
         updatedAsset.setAssetRouteList(saveAssetRoute(updated));
         updatedAsset.setAssetCommunities(saveAssetCommunities(updated));
         updatedAsset.setAssetAccessList(saveAssetAccess(updated));
         updatedAsset.setAssetSportList(saveAssetSport(updated));
+        updatedAsset.setAssetRecommendationList(saveAssetRecommendation(updated));
         updatedAsset.setAssetOfferList(saveAssetOffer(updated));
         updatedAsset.setAssetVulnerabilityList(saveAssetVulnerability(updated));
         updatedAsset.setAssetRecognitionList(saveAssetRecognition(updated));
         updatedAsset.setAssetNatureList(saveAssetNature(updated));
+        updatedAsset.setAssetCriteriaList(saveAssetCriteria(updated));
         updatedAsset.setAssetCommunicationList(saveAssetCommunication(updated));
         updatedAsset.setAssetPublicServiceList(saveAssetPublicService(updated));
+        repository.save(mapper.map(updatedAsset));
         return updatedAsset;
     }
 
@@ -390,10 +406,6 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     public FormDataDTO getGeneralitiesData (CulturalAssetDTO culturalAssetDTO) {
         ArrayList<Object> objects = new ArrayList<>(
                 List.of(
-                    FormDataDTO.builder()
-                            .objectName("Nombre")
-                            .values(List.of(culturalAssetDTO.getName()))
-                            .build(),
                     FormDataDTO.builder()
                             .objectName("Otros nombres")
                             .values(List.of(culturalAssetDTO.getAlternateNames()))

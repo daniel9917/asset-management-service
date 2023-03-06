@@ -137,11 +137,10 @@ public class CulturalAsset extends BaseEntity {
     @Column(length = 2000)
     private String reservationLink;
 
-    @Column(length = 2000)
     private String reservationName;
 
-    @Transient
-    private List<String> links;
+    @Column(length = 2000)
+    private String links;
 
     @Column
     private boolean onGoingRecognition;
@@ -157,6 +156,30 @@ public class CulturalAsset extends BaseEntity {
 
     @Column(length = 10000)
     private String recommendations;
+
+    @Column
+    private String assetCommunityType;
+
+    @Column
+    private String accesDetail;
+
+    public String getAccesDetail() {
+        return accesDetail;
+    }
+
+    public void setAccesDetail(String accesDetail) {
+        this.accesDetail = accesDetail;
+    }
+
+
+    public String getAssetCommunityType() {
+        return assetCommunityType;
+    }
+
+    public void setAssetCommunityType(String assetCommunityType) {
+        this.assetCommunityType = assetCommunityType;
+    }
+
 
     @Transient
     private List<AssetRecommendation> assetRecommendationList;
@@ -244,11 +267,11 @@ public class CulturalAsset extends BaseEntity {
         this.partOfNaturalReservation = partOfNaturalReservation;
     }
 
-    public List<String> getLinks() {
+    public String getLinks() {
         return links;
     }
 
-    public void setLinks(List<String> links) {
+    public void setLinks(String links) {
         this.links = links;
     }
 

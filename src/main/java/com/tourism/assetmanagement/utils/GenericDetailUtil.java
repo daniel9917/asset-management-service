@@ -21,8 +21,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.function.Predicate.not;
-
 public abstract class GenericDetailUtil<Object extends BaseEntity, ObjectType extends BaseEntity, AssetObject extends BaseEntity, ID extends Serializable,
         ObjectRepository extends BaseRepository, ObjectTypeRepository extends BaseRepository, AssetObjectRepository extends BaseAssetObjectRepository>{
 
@@ -41,7 +39,14 @@ public abstract class GenericDetailUtil<Object extends BaseEntity, ObjectType ex
         objectMapper.findAndRegisterModules();
     }
 
+    public void deletePrevObjects(ID assetId) {
+        List<AssetObject> previousAssetObjects = this.findAllByAssetId(assetId);
+        previousAssetObjects.stream().forEach(BaseEntity::setFieldsOnDeletion);
+        assetObjectRepository.saveAll(previousAssetObjects);
+    }
+
     public List<AssetObject> saveObjects(ID assetId, List<AssetObject> objects, Class<?> clazz, String fieldName){
+        deletePrevObjects(assetId);
         List<AssetObject> savedObjects = new ArrayList<>();
         List<AssetObject> previousAssetObjects = this.findAllByAssetId(assetId);
 
@@ -87,7 +92,8 @@ public abstract class GenericDetailUtil<Object extends BaseEntity, ObjectType ex
                         .flatMap(Collection::stream)
                         .collect(Collectors.toList());
                 assetObjectRepository.saveAll(assetObjectsPersist).forEach(assetObject -> savedObjects.add((AssetObject) assetObject));
-                return savedObjects.size() > 0 ? savedObjects.stream().filter(not(AssetObject::isDeleted)).collect(Collectors.toList()) : previousAssetObjects;
+//                return savedObjects.size() > 0 ? savedObjects.stream().filter(not(AssetObject::isDeleted)).collect(Collectors.toList()) : previousAssetObjects;
+                return assetObjectRepository.findAllByAssetId(assetId);
             }
         }
         return previousAssetObjects;

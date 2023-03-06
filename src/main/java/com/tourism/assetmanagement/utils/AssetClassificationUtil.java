@@ -103,6 +103,45 @@ public class AssetClassificationUtil {
                     .build());
     }
 
+    public void deletedAllAssetClassifications(UUID assetId) {
+         Optional<AssetClassification> assetClassificationList = assetClassificationRepository.findByAssetId(assetId);
+         if(assetClassificationList.isPresent()){
+             AssetClassification assetClassification = assetClassificationList.get();
+             assetClassification.setFieldsOnDeletion();
+             assetClassificationRepository.save(assetClassification);
+         }
+    }
+
+    public AssetClassification updateAssetClassification (UUID assetId, UUID subtypeId) {
+        deletedAllAssetClassifications(assetId);
+        Subtype existingSubtype = subtypeRepository.findById(subtypeId).orElseThrow(()-> {
+            throw new NotFoundException(subtypeId);
+        });
+        Type existingType = typeRepository.findById(existingSubtype.getTypeId()).orElseThrow(()-> {
+            throw new NotFoundException(existingSubtype.getTypeId());
+        });
+        Category existingCategory = categoryRepository.findById(existingType.getCategoryId()).orElseThrow(()-> {
+            throw new NotFoundException(existingType.getCategoryId());
+        });
+
+        Patrimony existingPatrimony = patrimonyRepository.findById(existingCategory.getPatrimonyId()).orElseThrow(()-> {
+            throw new NotFoundException(existingCategory.getPatrimonyId());
+        });
+
+        AssetGroup existingGroup =  assetGroupRepository.findById(existingPatrimony.getAssetGroupId()).orElseThrow(()-> {
+            throw new NotFoundException(existingPatrimony.getAssetGroupId());
+        });
+
+        return save(AssetClassification.builder()
+                .assetId(assetId)
+                .subtypeId(existingSubtype.getId())
+                .typeId(existingType.getId())
+                .categoryId(existingCategory.getId())
+                .assetGroupId(existingGroup.getId())
+                .patrimonyId(existingPatrimony.getId())
+                .build());
+    }
+
     public FormDataDTO getManifestationData (CulturalAssetDTO culturalAssetDTO) {
 
 //        List<Object> assetManifestationList = assetManifestationRepository.findAllByAssetId(culturalAssetDTO.getId()).stream().map(assetManifestation -> {
@@ -275,6 +314,7 @@ public class AssetClassificationUtil {
                     assetManifestationRepository.saveAll(assetManifestations).forEach(assetManifestation -> savedAssets.add(assetManifestation));
                     return savedAssets;
                 }else{
+                    // Case where there are previously existent manifestations and want to add or delete new ones.
                     List<AssetManifestation> manifestationsToAdd = assetManifestations.stream()
                             .filter(assetManifestation ->
                                 assetManifestationList.stream()
@@ -287,14 +327,9 @@ public class AssetClassificationUtil {
                     manifestationsToDelete.forEach(AssetManifestation::setFieldsOnDeletion);
                     manifestationsToAdd.forEach(AssetManifestation::setFieldsOnCreation);
                     manifestationsToAdd.addAll(manifestationsToDelete);
-                    List<AssetManifestation> assetManifestations1 = new ArrayList<>();
-                    assetManifestationRepository.saveAll(manifestationsToAdd).forEach(assetManifestation -> {
-                        assetManifestations1.add(assetManifestation);
-                    });
-                    return assetManifestations1.stream()
-                            .filter(
-                                    not(AssetManifestation::isDeleted))
-                            .collect(Collectors.toList());
+                    assetManifestationRepository.saveAll(manifestationsToAdd);
+                    assetManifestationRepository.saveAll(manifestationsToDelete);
+                    return assetManifestationRepository.findAllByAssetId(assetManifestations.get(0).getAssetId());
                 }
             }
             return assetManifestationList;

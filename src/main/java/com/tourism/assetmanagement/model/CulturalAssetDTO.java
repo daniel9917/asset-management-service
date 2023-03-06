@@ -102,7 +102,7 @@ public class CulturalAssetDTO extends PersistentDTO {
 
     private List<AssetPublicService> assetPublicServiceList;
 
-    private List<String> links;
+    private String links;
 
     private boolean inmaterialManifestation;
 
@@ -119,6 +119,26 @@ public class CulturalAssetDTO extends PersistentDTO {
     private LocationDTO locationObject;
 
     private String recommendations;
+
+    private String assetCommunityType;
+
+    private String accesDetail;
+
+    public String getAccesDetail() {
+        return accesDetail;
+    }
+
+    public void setAccesDetail(String accesDetail) {
+        this.accesDetail = accesDetail;
+    }
+
+    public String getAssetCommunityType() {
+        return assetCommunityType;
+    }
+
+    public void setAssetCommunityType(String assetCommunityType) {
+        this.assetCommunityType = assetCommunityType;
+    }
 
     public FormDataDTO getMaturityDTO() {
         return maturityDTO;
@@ -227,11 +247,11 @@ public class CulturalAssetDTO extends PersistentDTO {
         this.partOfNaturalReservation = partOfNaturalReservation;
     }
 
-    public List<String> getLinks() {
+    public String getLinks() {
         return links;
     }
 
-    public void setLinks(List<String> links) {
+    public void setLinks(String links) {
         this.links = links;
     }
 

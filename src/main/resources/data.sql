@@ -1962,10 +1962,6 @@ INSERT INTO public.communication
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
 VALUES('8ec1682c-66d9-11ed-9022-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','Volantes');
 
-INSERT INTO public.communication
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
-VALUES('9309535e-66d9-11ed-9022-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','Otro ¿Cual?');
-
 --INSERTION OF PUBLIC SERVICE
 
 INSERT INTO public."public_service"
@@ -2180,7 +2176,7 @@ INSERT INTO public."location"
 VALUES('fb674d2b-9be2-471e-b995-a5a436f63094', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
 'Dentro de este departamento se encuentra el parque nacional El Tuparro', 4.633, -69.233, 'Vichada', '6ae9c755-6185-4557-a2d7-90939de8af81','91b447ae-2ebf-4740-a116-59e24670e1e7');
 
---INSERTION OF LOCATIONS MUNICIPALITY 
+--INSERTION OF LOCATIONS MUNICIPALITY
 
 INSERT INTO public."location"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, detail, latitude, longitude, "name", ordering_id, parent_location_id)
