@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,7 +37,7 @@ public class AssetRecommendationDetailUtil extends GenericDetailUtil<Recommendat
         List items = new ArrayList();
         List <AssetRecommendation> assetRecommendations = assetRecommendationRepository.findAllByAssetId(assetId);
 
-        List <Recommendation> recommendations = assetRecommendations.stream()
+        List <Recommendation> recommendations = new ArrayList<>( new HashSet<>( assetRecommendations.stream()
             .map(
                 assetRecommendation -> {
                     return recommendationRepository.findById(assetRecommendation.getRecommendationId()).orElseThrow(
@@ -46,9 +47,9 @@ public class AssetRecommendationDetailUtil extends GenericDetailUtil<Recommendat
                     );
                 }
             )
-            .collect(Collectors.toList());
+            .collect(Collectors.toList())));
 
-        List <RecommendationType> recommendationTypes = recommendations.stream()
+        List <RecommendationType> recommendationTypes = new ArrayList<>( new HashSet<>( recommendations.stream()
                 .map(recommendation -> {
                     return recommendationTypeRepository.findById(recommendation.getRecommendationTypeId()).orElseThrow(
                             ()->{
@@ -56,7 +57,7 @@ public class AssetRecommendationDetailUtil extends GenericDetailUtil<Recommendat
                             }
                     );
 
-                }).distinct().collect(Collectors.toList());
+                }).distinct().collect(Collectors.toList())));
         recommendationTypes.stream().forEach(
                 recommendationType -> {
                     items.add(FormDataDTO.builder()

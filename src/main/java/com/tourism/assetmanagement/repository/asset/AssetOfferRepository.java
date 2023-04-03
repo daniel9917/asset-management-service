@@ -12,4 +12,7 @@ import java.util.UUID;
 public interface AssetOfferRepository extends BaseAssetObjectRepository<AssetOffer, UUID> {
     @Query("select offer from AssetOffer offer where offer.assetId = :assetId and offer.deleted = false")
     List<AssetOffer> findAllByAssetId(@NonNull UUID assetId);
+
+    @Query("select ar from AssetOffer ar where ar.assetId = :assetId and ar.offerId = :offerId and ar.deleted = false")
+    List<AssetOffer> findAllByAssetIdAndOfferId (@NonNull UUID assetId, @NonNull UUID offerId);
 }

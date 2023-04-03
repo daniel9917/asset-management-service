@@ -2,6 +2,7 @@ package com.tourism.assetmanagement.service;
 
 import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.domain.asset.*;
+import com.tourism.assetmanagement.domain.classification.Patrimony;
 import com.tourism.assetmanagement.mapper.LocationMapper;
 import com.tourism.assetmanagement.model.FormDataDTO;
 import com.tourism.assetmanagement.model.LocationDTO;
@@ -22,11 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -141,7 +138,9 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         retrievedAssetDTO.setAssetCriteriaList(assetCriteriaUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetCommunicationList(assetCommunicationUtil.findAllByAssetId(uuid));
         retrievedAssetDTO.setAssetPublicServiceList(assetPublicServiceUtil.findAllByAssetId(uuid));
-        formatAssetDetail(retrievedAssetDTO);
+        retrievedAssetDTO.setAssetRecommendationList(assetRecommendationDetailUtil.findAllByAssetId(uuid));
+//        formatAssetDetail(retrievedAssetDTO);
+        formatAssetDetailNew(retrievedAssetDTO);
         return Optional.of(retrievedAssetDTO);
     }
 
@@ -158,25 +157,40 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
             validateNaturalReservation(update.getReservationId());
         }
         CulturalAssetDTO updatedAsset = super.update(uuid, update);
-        updatedAsset.setAssetClassification(saveAssetClassification(mapper.map(updatedAsset), mapper.map(update)));
-        updatedAsset.setImageList(imageUtil.updateImageList(uuid, update.getImageList()));
-        updatedAsset.setAssetManifestations(assetClassificationUtil.saveAllAssetManifestations(
-                updatedAsset.getAssetManifestations().stream().map(assetManifestation -> {
-                    assetManifestation.setAssetId(uuid);
-                    return assetManifestation;
-                }).collect(Collectors.toList())));
-        update.setId(uuid);
+        if(Objects.nonNull(update.getAssetClassification())) {
+            updatedAsset.setAssetClassification(saveAssetClassification(mapper.map(updatedAsset), mapper.map(update)));
+            updatedAsset.setAssetClassificationId(updatedAsset.getAssetClassification().getId());
+        }
+        if (!CollectionUtils.isEmpty(update.getImageList())) {
+            updatedAsset.setImageList(imageUtil.updateImageList(uuid, update.getImageList()));
+        }if(!CollectionUtils.isEmpty(update.getAssetManifestations())) {
+            updatedAsset.setAssetManifestations(assetClassificationUtil.saveAllAssetManifestations(
+                    updatedAsset.getAssetManifestations().stream().map(assetManifestation -> {
+                        assetManifestation.setAssetId(uuid);
+                        return assetManifestation;
+                    }).collect(Collectors.toList())));
+        }
+        updatedAsset.setId(uuid);
         CulturalAsset updated = mapper.map(update);
+        updated.setId(uuid);
+
+        updatedAsset.setAssetClassification(saveAssetClassification(updated, mapper.map(update)));
+        updatedAsset.setAssetClassificationId(updatedAsset.getAssetClassification().getId());
+        updatedAsset.setLocationObject(locationMapper.map(saveLocation(updated)));
+        updatedAsset.setLocationId(updatedAsset.getLocationObject().getId());
         updatedAsset.setAssetRouteList(saveAssetRoute(updated));
         updatedAsset.setAssetCommunities(saveAssetCommunities(updated));
         updatedAsset.setAssetAccessList(saveAssetAccess(updated));
         updatedAsset.setAssetSportList(saveAssetSport(updated));
+        updatedAsset.setAssetRecommendationList(saveAssetRecommendation(updated));
         updatedAsset.setAssetOfferList(saveAssetOffer(updated));
         updatedAsset.setAssetVulnerabilityList(saveAssetVulnerability(updated));
         updatedAsset.setAssetRecognitionList(saveAssetRecognition(updated));
         updatedAsset.setAssetNatureList(saveAssetNature(updated));
+        updatedAsset.setAssetCriteriaList(saveAssetCriteria(updated));
         updatedAsset.setAssetCommunicationList(saveAssetCommunication(updated));
         updatedAsset.setAssetPublicServiceList(saveAssetPublicService(updated));
+        repository.save(mapper.map(updatedAsset));
         return updatedAsset;
     }
 
@@ -184,6 +198,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     public PageData<CulturalAssetDTO> list(PageDTO pageDTO) {
         List<CulturalAsset> filteredList = customCulturalAssetRepository.findByFilters(pageDTO).stream().map(culturalAsset -> {
             culturalAsset.setAssetCommunities(communityUtil.getAssetCommunities(culturalAsset.getId()));
+            culturalAsset.setImageList(imageUtil.getImageList(culturalAsset.getId()));
             return culturalAsset;
         }).collect(Collectors.toList());
         PageData<CulturalAssetDTO> page = super.list(pageDTO);
@@ -329,6 +344,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
                 FormDataDTO filter = customCulturalAssetRepository.findAllObject(tableName);
                 filter.setObjectName(name);
+                if(tableName.equals("Patrimony")){
+                    List <Patrimony> values = filter.getValues().stream().map(o -> (Patrimony) o).collect(Collectors.toList());
+                    filter.setValues(values.stream().filter(p -> (p.getName().equals("Cultural") || p.getName().equals("Natural") )).collect(Collectors.toList()));
+                }
                 if(!CollectionUtils.isEmpty(filter.getValues())){
                     sectionElements.add(filter);
                 }
@@ -348,23 +367,162 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         }
         items.add(assetClassificationUtil.getManifestationData(culturalAssetDTO));
         items.add(getStateData(culturalAssetDTO));
-        items.add(getCommunityData(culturalAssetDTO));
         items.add(getAccessData(culturalAssetDTO));
         items.add(getCosmogonyData(culturalAssetDTO));
-        items.add(assetRecommendationDetailUtil.getRecommendationData(culturalAssetDTO.getId()));
+        items.add(getCommunityData(culturalAssetDTO));
+
+        FormDataDTO recommendationDetail = assetRecommendationDetailUtil.getRecommendationData(culturalAssetDTO.getId());
+        if (CollectionUtils.isEmpty(recommendationDetail.getValues())) {
+            items.add(recommendationDetail);
+        }
         culturalAssetDTO.setDataDTOList(items);
         // Retrieve asset impact
-        culturalAssetDTO.setMaturityDTO(getAssetImpact(culturalAssetDTO.getAssetCommunities()));
+
+        List <UUID> idList = culturalAssetDTO.getAssetCommunities().stream()
+                .map(AssetCommunity::getCommunityId)
+                .collect(Collectors.toList());
+        idList.add(culturalAssetDTO.getDepartmentId());
+        idList.add(culturalAssetDTO.getMunicipalityId());
+        culturalAssetDTO.setMaturityDTO(getAssetImpact(idList));
     }
 
-    private FormDataDTO getAssetImpact (List <AssetCommunity> assetCommunities) {
+    public void formatAssetDetailNew (CulturalAssetDTO culturalAssetDTO){
+        List<FormDataDTO> items = new ArrayList<>();
+        items.add(getGeneralitiesData(culturalAssetDTO));
+        items.add(getCharacteristicsData(culturalAssetDTO));
+        items.add(getRecognitionsData(culturalAssetDTO));
+        items.add(getAccessData(culturalAssetDTO));
+        items.add(getStateData(culturalAssetDTO));
+        FormDataDTO recommendationDetail = assetRecommendationDetailUtil.getRecommendationData(culturalAssetDTO.getId());
+        if (CollectionUtils.isEmpty(recommendationDetail.getValues())) {
+            items.add(recommendationDetail);
+        }
+        culturalAssetDTO.setDataDTOList(items);
+        // Retrieve asset impact
+        List <UUID> idList = culturalAssetDTO.getAssetCommunities().stream()
+                .map(AssetCommunity::getCommunityId)
+                .collect(Collectors.toList());
+        idList.add(culturalAssetDTO.getDepartmentId());
+        idList.add(culturalAssetDTO.getMunicipalityId());
+        culturalAssetDTO.setMaturityDTO(getAssetImpact(idList));
+        culturalAssetDTO.setTypologyDTO(getAssetTypology(culturalAssetDTO.getId()));
+    }
+
+    public FormDataDTO getGeneralitiesData (CulturalAssetDTO culturalAssetDTO) {
+        ArrayList<Object> objects = new ArrayList<>(
+                List.of(
+                    FormDataDTO.builder()
+                            .objectName("Otros nombres")
+                            .values(List.of(culturalAssetDTO.getAlternateNames()))
+                            .build(),
+                    FormDataDTO.builder()
+                            .objectName("Descripcion")
+                            .values(List.of(culturalAssetDTO.getDescription()))
+                            .build()));
+        objects.addAll(getLocationData(culturalAssetDTO.getLocationObject()).getValues());
+
+        return FormDataDTO.builder()
+                .objectName("Generalidades")
+                .values(objects)
+                .build();
+    }
+
+    public FormDataDTO getCharacteristicsData (CulturalAssetDTO culturalAssetDTO) {
+        return FormDataDTO.builder()
+                .objectName("Caracteristicas")
+                .values(
+                    List.of(
+                        FormDataDTO.builder()
+                            .objectName("Nombre")
+                            .values(List.of(culturalAssetDTO.getName()))
+                            .build(),
+//                            communityUtil.getAssociatedCommunities(UUID.fromString(culturalAssetDTO.getAssetCommunityType())),
+                            communityUtil.getCommunityTypeData(culturalAssetDTO.getId()),
+                            communityUtil.geCommunityData(culturalAssetDTO.getId()),
+                        FormDataDTO.builder()
+                            .objectName("¿Es una manifestación cultural inmaterial?")
+                            .values(List.of(culturalAssetDTO.isInmaterialManifestation() ? "Sí" : "No"))
+                            .build(),
+                        FormDataDTO.builder()
+                            .objectName("¿A qué manifestaciones pertenece?")
+                            .values(assetClassificationUtil.getAssetManifestationsAsList(culturalAssetDTO))
+                            .build(),
+                        FormDataDTO.builder()
+                            .objectName("¿Es sagrado o tiene interpretación cosmogónica?")
+                            .values(List.of(culturalAssetDTO.isCosmogony() ? "Sí" : "No"))
+                            .build(),
+                        FormDataDTO.builder()
+                            .objectName("¿Por qué es sagrado?")
+                            .values(List.of(culturalAssetDTO.getCosmogonyDescription()))
+                            .build()
+                        )
+                )
+                .build();
+    }
+
+    public FormDataDTO getRecognitionsData (CulturalAssetDTO culturalAssetDTO) {
+        ArrayList<Object> list = new ArrayList<>(List.of(
+                FormDataDTO.builder()
+                        .objectName("Reconocimiento Salvaguardia ")
+                        .values(List.of(culturalAssetDTO.isSafeguardingRegistry() ? "Sí" : "No"))
+                        .build(),
+                FormDataDTO.builder()
+                        .objectName("Reconocimiento Unesco")
+                        .values(List.of(culturalAssetDTO.isUnescoRegistry() ? "Sí" : "No"))
+                        .build(),
+                FormDataDTO.builder()
+                        .objectName("¿Está permitido el turismo o participación en el actvio cultural?")
+                        .values(List.of(culturalAssetDTO.isTourismPermit() ? "Sí" : "No"))
+                        .build(),
+                FormDataDTO.builder()
+                        .objectName("¿Se está tramitando algún reconocimiento sobre el activo cultural?")
+                        .values(List.of(culturalAssetDTO.isOnGoingRecognition() ? "Sí" : "No"))
+                        .build(),
+                FormDataDTO.builder()
+                        .objectName("¿Se encuentra en una reserva natural?")
+                        .values(List.of(culturalAssetDTO.isPartOfNaturalReservation() ? "Sí" : "No"))
+                        .build(),
+                FormDataDTO.builder()
+                        .objectName("Link música, documentales, películas.")
+                        .values(List.of(culturalAssetDTO.getLinks()))
+                        .build()));
+        if(culturalAssetDTO.isPartOfNaturalReservation()){
+            list.add(
+                    FormDataDTO.builder()
+                            .objectName("Nombre de la reserva")
+                            .values(List.of(culturalAssetDTO.getReservationName()))
+                            .build()
+            );
+            list.add(
+                    FormDataDTO.builder()
+                            .objectName("Link de la reserva")
+                            .values(List.of(culturalAssetDTO.getReservationLink()))
+                            .build()
+            );
+        }
+        return FormDataDTO.builder()
+                .objectName("Reconocimientos")
+                .values(list)
+                .build();
+    }
+
+    private FormDataDTO getAssetImpact (List <UUID> assetCommunities) {
         FormDataDTO requestObject  = FormDataDTO.builder()
                 .objectName("communityIdList")
-                .values(assetCommunities.stream()
-                        .map(AssetCommunity::getCommunityId)
-                        .collect(Collectors.toList()))
+                .values(assetCommunities.stream().collect(Collectors.toList()))
                 .build();
         return externalService.getAssetImpact(requestObject);
+    }
+
+    private FormDataDTO getAssetTypology (UUID assetId) {
+        List <FormDataDTO> typologies = new ArrayList<>((List.of(assetNatureUtil.getNatureScores(assetId))));
+        typologies.addAll(assetSportUtil.getSportScores(assetId));
+        typologies.addAll(assetOfferUtil.getOfferScores(assetId));
+        return FormDataDTO.builder()
+                .objectName("Typology")
+                .values(Collections.singletonList(typologies))
+                .build();
+
     }
 
     public FormDataDTO getCommunityData(CulturalAssetDTO culturalAssetDTO){
@@ -445,19 +603,19 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         }else {
             department = locationMapper.map(locationObject);
         }
-        if (Objects.nonNull(municipality)) {
-            locations.add(
-                    FormDataDTO.builder()
-                        .objectName("Municipio")
-                        .values(List.of(municipality.getName()))
-                        .build());
-        }
         if (Objects.nonNull(department)) {
             locations.add(
                     FormDataDTO.builder()
                             .objectName("Departamento")
                             .values(List.of(department.getName()))
                             .build());
+        }
+        if (Objects.nonNull(municipality)) {
+            locations.add(
+                    FormDataDTO.builder()
+                        .objectName("Municipio")
+                        .values(List.of(municipality.getName()))
+                        .build());
         }
         location.setValues(locations);
         return location;

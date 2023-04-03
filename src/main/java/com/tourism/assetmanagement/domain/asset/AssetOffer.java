@@ -22,4 +22,6 @@ public class AssetOffer extends BaseEntity {
 
     @Column(nullable = false)
     private UUID offerId;
+
+    private Integer score;
 }

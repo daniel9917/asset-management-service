@@ -109,11 +109,11 @@ VALUES('09a44464-66b8-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0
 
 INSERT INTO public.sport_type
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
-VALUES('d9cb07fe-337d-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'futbol');
+VALUES('d9cb07fe-337d-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'ACUÁTICOS');
 
 INSERT INTO public.sport_type
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
-VALUES('e5db8797-dde1-4f0c-84f6-d4f098659c56', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'ajedrez');
+VALUES('e5db8797-dde1-4f0c-84f6-d4f098659c56', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'AVENTURA');
 
 -- INSERTION OF SPORTS
 
@@ -173,6 +173,40 @@ INSERT INTO public.sport
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
 VALUES('f1f5329c-69af-11ed-a1eb-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Senderismo', 'e5db8797-dde1-4f0c-84f6-d4f098659c56');
 
+------ACUATIC SPORTS
+
+INSERT INTO public.sport
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
+VALUES('4144f85c-adab-11ed-afa1-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Buceo', 'd9cb07fe-337d-11ed-a261-0242ac120002');
+
+INSERT INTO public.sport
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
+VALUES('3de724fa-adab-11ed-afa1-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Kayac', 'd9cb07fe-337d-11ed-a261-0242ac120002');
+
+INSERT INTO public.sport
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
+VALUES('396a2918-adab-11ed-afa1-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Natación', 'd9cb07fe-337d-11ed-a261-0242ac120002');
+
+INSERT INTO public.sport
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
+VALUES('2d9ebe00-adab-11ed-afa1-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Pesca', 'd9cb07fe-337d-11ed-a261-0242ac120002');
+
+INSERT INTO public.sport
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
+VALUES('2b37ea56-adab-11ed-afa1-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Remo', 'd9cb07fe-337d-11ed-a261-0242ac120002');
+
+INSERT INTO public.sport
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
+VALUES('2225226c-adab-11ed-afa1-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Vela (Windsurf)', 'd9cb07fe-337d-11ed-a261-0242ac120002');
+
+INSERT INTO public.sport
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
+VALUES('1f7963e8-adab-11ed-afa1-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Esquí acúatico', 'd9cb07fe-337d-11ed-a261-0242ac120002');
+
+INSERT INTO public.sport
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", sport_type_id)
+VALUES('1acaab86-adab-11ed-afa1-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Surf', 'd9cb07fe-337d-11ed-a261-0242ac120002');
+
 --INSERTION OF ACCESS TYPES
 
 INSERT INTO public.access_type
@@ -227,10 +261,6 @@ VALUES('0216ddfc-66d5-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0
 
 INSERT INTO public.access
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", access_type_id)
-VALUES('047ec316-66d5-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Otro, Cual?', '49e1fcf4-32df-11ed-a261-0242ac120002');
-
-INSERT INTO public.access
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", access_type_id)
 VALUES('096b362a-66d5-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Avión', '5076a15a-32df-11ed-a261-0242ac120002');
 
 INSERT INTO public.access
@@ -240,14 +270,6 @@ VALUES('071aaedc-66d5-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0
 INSERT INTO public.access
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", access_type_id)
 VALUES('0c61117e-66d5-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Helicoptero', '5076a15a-32df-11ed-a261-0242ac120002');
-
-INSERT INTO public.access
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", access_type_id)
-VALUES('0fd7a962-66d5-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Otro ¿Cual?', '5076a15a-32df-11ed-a261-0242ac120002');
-
-INSERT INTO public.access
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", access_type_id)
-VALUES('120fb0da-66d5-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0, now(), '52efa000-3003-11ed-a261-0242ac120002', 'Otro, ¿Cual?', '745aa48c-66d2-11ed-9022-0242ac120002');
 
 INSERT INTO public.access
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", access_type_id)
@@ -283,6 +305,9 @@ INSERT INTO public.route_type
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
 VALUES('6111d888-3003-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'Nacionales');
 
+INSERT INTO public.route_type
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
+VALUES('475c70e6-66dc-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'Departamentales');
 
 INSERT INTO public.route_type
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
@@ -291,10 +316,6 @@ VALUES('76e3d1d4-3003-11ed-a261-0242ac120002', now(), '52efa000-3003-11ed-a261-0
 INSERT INTO public.route_type
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
 VALUES('49c6bc4c-66dc-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'No aplica');
-
-INSERT INTO public.route_type
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
-VALUES('475c70e6-66dc-11ed-9022-0242ac120002', now(), '52efa000-3003-11ed-a261-0242ac120002', false, 0,  now(), '52efa000-3003-11ed-a261-0242ac120002', 'Departamentales');
 
 
 --INSERTION OF ROUTES
@@ -341,18 +362,23 @@ VALUES('c7658188-a877-11ed-afa1-0242ac120002', now(), '52efa000-3003-11ed-a261-0
 
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
-VALUES('191cfad2-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TAPE01FCM', 'Arquitectura popular espontánea folclore cultural material','49ba3a78-7a44-11ed-a1eb-0242ac120002');
+VALUES('308e24ea-c5af-11ed-afa1-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TAPE01FCM', 'Arquitectura popular espontánea','4fdb0aa6-c5b0-11ed-afa1-0242ac120002');
 
-INSERT INTO public."type"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
-VALUES('1dd41a10-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TAPE02FCI', 'Arquitectura popular espontánea folclore cultural inmaterial','4db96f68-7a44-11ed-a1eb-0242ac120002');
+--INSERT INTO public."type"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
+--VALUES('191cfad2-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TAPE01FCM', 'Arquitectura popular espontánea folclore cultural material','4fdb0aa6-c5b0-11ed-afa1-0242ac120002');
+--
+--INSERT INTO public."type"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
+--VALUES('1dd41a10-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TAPE02FCI', 'Arquitectura popular espontánea folclore cultural inmaterial','4fdb0aa6-c5b0-11ed-afa1-0242ac120002');
 
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
 VALUES('21c0a170-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TAA', 'Artesanías y artes','49ba3a78-7a44-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TAA', 'Artesanías y artes','69fc66ad-95cf-466d-a7c0-8c252c1afc26');
 
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
@@ -362,7 +388,7 @@ false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TA', 'Artisticos','470
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
 VALUES('26849a40-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TCBT', 'Comidas y bebidas típicas','4db96f68-7a44-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TCBT', 'Comidas y bebidas típicas','69fc66ad-95cf-466d-a7c0-8c252c1afc26');
 
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
@@ -412,12 +438,12 @@ false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TLOFF', 'Lugares de ob
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
 VALUES('40663d74-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TLHLA', 'Lugares históricos y lugares arqueológicos','4db96f68-7a44-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TLHLA', 'Lugares históricos y lugares arqueológicos','43e7f4b5-7c8c-4f7e-90fc-794534d3fdfb');
 
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
 VALUES('438acda8-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TMRCP', 'Manifestaciones religiosas y creencias populares','4db96f68-7a44-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TMRCP', 'Manifestaciones religiosas y creencias populares','69fc66ad-95cf-466d-a7c0-8c252c1afc26');
 
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
@@ -427,17 +453,17 @@ false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TM', 'Montañas','5942
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
 VALUES('48e8ff72-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TMU', 'Museos','50501704-7a44-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TMU', 'Museos','379d91f6-c5b1-11ed-afa1-0242ac120002');
 
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
 VALUES('4b75ae66-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TMD', 'Música y danzas','4db96f68-7a44-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TMD', 'Música y danzas','69fc66ad-95cf-466d-a7c0-8c252c1afc26');
 
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
 VALUES('4ef594f2-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TOATMM', 'Obras de arte y tecnica museos y manifestaciones ','50501704-7a44-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TOATMM', 'Obras de arte y tecnica museos y manifestaciones ','379d91f6-c5b1-11ed-afa1-0242ac120002');
 
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
@@ -462,7 +488,7 @@ false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TP', 'Planicies','5942
 INSERT INTO public."type"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", category_id)
 VALUES('5c8a934c-7a48-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TT', 'Textil','49ba3a78-7a44-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'TT', 'Textil','4fdb0aa6-c5b0-11ed-afa1-0242ac120002');
 
 
 --INSERTION OF CATEGORIES
@@ -478,23 +504,38 @@ false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'CEPFE', 'Eventos progr
 
 INSERT INTO public."category"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
-VALUES('49ba3a78-7a44-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+VALUES('4fdb0aa6-c5b0-11ed-afa1-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
 false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'CFCM', 'Folclore cultural material', 'ca17fde2-7a42-11ed-a1eb-0242ac120002');
 
+--INSERT INTO public."category"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
+--VALUES('4fdb0aa6-c5b0-11ed-afa1-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'CFCM', 'Folclore cultural material', 'ca17fde2-7a42-11ed-a1eb-0242ac120002');
+--
 INSERT INTO public."category"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
-VALUES('4db96f68-7a44-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+VALUES('69fc66ad-95cf-466d-a7c0-8c252c1afc26', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
 false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'CFCI', 'Folclore cultural inmaterial', 'cfed75c6-7a42-11ed-a1eb-0242ac120002');
 
 INSERT INTO public."category"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
-VALUES('50501704-7a44-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'CCM', 'Museos y Manifestaciones cultural material', 'ca17fde2-7a42-11ed-a1eb-0242ac120002');
+VALUES('379d91f6-c5b1-11ed-afa1-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'CCM', 'Museos y Manifestaciones Material', 'ca17fde2-7a42-11ed-a1eb-0242ac120002');
 
 INSERT INTO public."category"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
-VALUES('52f4b1e0-7a44-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'CCI', 'Museos y Manifestaciones cultural inmaterial', 'cfed75c6-7a42-11ed-a1eb-0242ac120002');
+VALUES('43e7f4b5-7c8c-4f7e-90fc-794534d3fdfb', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'CCM', 'Museos y Manifestaciones Inmaterial', 'cfed75c6-7a42-11ed-a1eb-0242ac120002');
+
+--INSERT INTO public."category"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
+--VALUES('379d91f6-c5b1-11ed-afa1-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'CCM', 'Museos y Manifestaciones cultural material', 'ca17fde2-7a42-11ed-a1eb-0242ac120002');
+--
+--INSERT INTO public."category"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
+--VALUES('379d91f6-c5b1-11ed-afa1-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'CCI', 'Museos y Manifestaciones cultural inmaterial', 'cfed75c6-7a42-11ed-a1eb-0242ac120002');
 
 INSERT INTO public."category"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", patrimony_id)
@@ -606,7 +647,7 @@ VALUES('26e42b04-676a-11ed-9022-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
 VALUES('16f4ec56-676a-11ed-9022-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-'SCASA', 'Casa', '191cfad2-7a48-11ed-a1eb-0242ac120002');
+'SCASA', 'Casa', '308e24ea-c5af-11ed-afa1-0242ac120002');
 
 
 INSERT INTO public."subtype"
@@ -617,18 +658,18 @@ VALUES('118db978-676a-11ed-9022-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
 VALUES('ff6dfadc-6769-11ed-9022-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-'SCATD', 'Catedral', '191cfad2-7a48-11ed-a1eb-0242ac120002');
+'SCATD', 'Catedral', '308e24ea-c5af-11ed-afa1-0242ac120002');
 
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
 VALUES('f152d4a4-6769-11ed-9022-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-'', 'Centro tecnológico', '2a9cefe2-7a48-11ed-a1eb-0242ac120002');
+'', 'Centro tecnológico', '308e24ea-c5af-11ed-afa1-0242ac120002');
 
 
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
 VALUES('ec215c26-6769-11ed-9022-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-'', 'Bahías', '28a87d5a-7a48-11ed-a1eb-0242ac120002');
+'', 'Bahías', '308e24ea-c5af-11ed-afa1-0242ac120002');
 
 
 INSERT INTO public."subtype"
@@ -639,7 +680,7 @@ false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'subtype01', 'subtype c
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
 VALUES('4b8a7e9c-7a78-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Convento', '191cfad2-7a48-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Convento', '308e24ea-c5af-11ed-afa1-0242ac120002');
 
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
@@ -649,27 +690,27 @@ false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Expresiones religi
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
 VALUES('51f8edd6-7a78-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Iglesia', '191cfad2-7a48-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Iglesia', '308e24ea-c5af-11ed-afa1-0242ac120002');
 
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
 VALUES('53b39dba-7a78-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Malokas', '191cfad2-7a48-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Malokas', '308e24ea-c5af-11ed-afa1-0242ac120002');
 
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
 VALUES('57324770-7a78-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Mezquita', '191cfad2-7a48-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Mezquita', '308e24ea-c5af-11ed-afa1-0242ac120002');
 
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
 VALUES('59007194-7a78-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Oratorio', '191cfad2-7a48-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Oratorio', '308e24ea-c5af-11ed-afa1-0242ac120002');
 
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
 VALUES('5ae72156-7a78-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Parroquia', '191cfad2-7a48-11ed-a1eb-0242ac120002');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Parroquia', '308e24ea-c5af-11ed-afa1-0242ac120002');
 
 INSERT INTO public."subtype"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", "type_id")
@@ -1134,60 +1175,47 @@ false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', '', 'Tejidos en paja', 
 --false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002', 'subtype02', 'subtype classificatio2', 'ffc9f3fc-2f31-11ed-a261-0242ac120002');
 
 --INSERTION OF PATRIMONY
+--INSERT INTO public."patrimony"
+--(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
+--VALUES('', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+--false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','', '', '');
+
+INSERT INTO public."patrimony"
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
+VALUES('7c9ea9be-c5b3-11ed-afa1-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','C', 'Cultural', '2c4752e0-0281-48fb-9bb5-b110219f5236');
+
 INSERT INTO public."patrimony"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
 VALUES('ca17fde2-7a42-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','PCPM', 'Cultural Material', '2c4752e0-0281-48fb-9bb5-b110219f5236');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','C', 'Material', '2c4752e0-0281-48fb-9bb5-b110219f5236');
 
---INSERTION OF PATRIMONY
 INSERT INTO public."patrimony"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
 VALUES('cfed75c6-7a42-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','PCPI', 'Cultural Inmaterial', '78e5bf12-a4f5-4f92-b70c-e2e9df886302');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','C', 'Inmaterial', '78e5bf12-a4f5-4f92-b70c-e2e9df886302');
 
---INSERTION OF PATRIMONY
 INSERT INTO public."patrimony"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
 VALUES('d33b01ee-7a42-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','PCFE', 'Cultural Festividades y eventos', '13355e70-f45b-4fcd-ba07-fb1a6e332676');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','C', 'Festividades y eventos', '13355e70-f45b-4fcd-ba07-fb1a6e332676');
 
---INSERTION OF PATRIMONY
 INSERT INTO public."patrimony"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
 VALUES('d6b134ec-7a42-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','PCGE', 'Cultural Grupos especiales', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','C', 'Grupos especiales', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
 
 --INSERTION OF PATRIMONY
-INSERT INTO public."patrimony"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
-VALUES('d9645534-7a42-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','PCSN', 'Cultural Sitios naturales', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
-
---INSERTION OF PATRIMONY
-INSERT INTO public."patrimony"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
-VALUES('dbbc5b1a-7a42-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','PNPM', 'Natural Material', '2c4752e0-0281-48fb-9bb5-b110219f5236');
 
 INSERT INTO public."patrimony"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
-VALUES('dde3bdfc-7a42-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','PNPI', 'Natural Inmaterial', '78e5bf12-a4f5-4f92-b70c-e2e9df886302');
-
-INSERT INTO public."patrimony"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
-VALUES('e3a36c7e-7a42-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','PNFE', 'Natural Festividades y eventos', '13355e70-f45b-4fcd-ba07-fb1a6e332676');
-
-INSERT INTO public."patrimony"
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
-VALUES('e5c4ec44-7a42-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','PNGE', 'Natural Grupos especiales', 'd3da6192-53aa-416d-a6c9-2933a24978ef');
+VALUES('76f64c24-c5b3-11ed-afa1-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','N', 'Natural', '2c4752e0-0281-48fb-9bb5-b110219f5236');
 
 INSERT INTO public."patrimony"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name", asset_group_id)
 VALUES('ead99176-7a42-11ed-a1eb-0242ac120002', now(), 'd10f5b66-2f26-11ed-a261-0242ac120002',
-false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','PNSN', 'Natural Sitios naturales', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
+false, 0, now(), 'd10f5b66-2f26-11ed-a261-0242ac120002','N', 'Natural Sitios naturales', '0fe5f0f3-c65a-4d5e-bd88-655da1682747');
 
 
 --INSERTION OF ASSET MANIFESTATIONS
@@ -1283,6 +1311,36 @@ VALUES('886f8fac-a29e-11ed-a8fc-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.community_type
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, code, "name")
 VALUES('c95378f8-795d-42b0-b349-8dc682d92952', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002', 'CT06', 'Ninguna');
+
+--- DEFAULT COMMUNITITES
+
+INSERT INTO public.community
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, community_type_id, "language", "name")
+VALUES('19b6a6a4-c4c7-11ed-afa1-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'b1809c52-3097-11ed-a261-0242ac120002', 'Sin Información', 'Afrocolombiano');
+
+INSERT INTO public.community
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, community_type_id, "language", "name")
+VALUES('22af3a3c-c4c7-11ed-afa1-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'ba780134-6814-4780-a11b-f3dd7ebbd7bf', 'Sin Información', 'Rrom');
+
+INSERT INTO public.community
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, community_type_id, "language", "name")
+VALUES('24d2dfb2-c4c7-11ed-afa1-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'737eab32-c87a-4624-a339-f0478e56ade1', 'Sin Información', 'Raizal');
+
+INSERT INTO public.community
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, community_type_id, "language", "name")
+VALUES('293e75c0-c4c7-11ed-afa1-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'886f8fac-a29e-11ed-a8fc-0242ac120002', 'Sin Información', 'Palenquero');
+
+
+------------------------ PALENQUERO
+INSERT INTO public.community
+(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, community_type_id, "language", "name")
+VALUES('97ddc8fa-c4cc-11ed-afa1-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
+'886f8fac-a29e-11ed-a8fc-0242ac120002', 'Sin Información', 'San Basilio');
+
 
 --INSERTION OF COMMUNITITES
 
@@ -1867,15 +1925,15 @@ VALUES('42435d42-363d-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 
 INSERT INTO public.vulnerability
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
-VALUES('68b671a4-3646-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','Adaptado a la vida nacional?');
+VALUES('68b671a4-3646-11ed-a261-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','¿Adaptado a la vida nacional?');
 
 INSERT INTO public.vulnerability
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
-VALUES('8b8b9e32-66db-11ed-9022-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','Comercializado?');
+VALUES('8b8b9e32-66db-11ed-9022-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','¿Comercializado?');
 
 INSERT INTO public.vulnerability
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
-VALUES('8dfa0bc2-66db-11ed-9022-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','En riesgo de desaparecer?');
+VALUES('8dfa0bc2-66db-11ed-9022-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','¿En riesgo de desaparecer?');
 
 
 --INSERTION OF RECOGNITIONS
@@ -1940,10 +1998,6 @@ VALUES('8b9d47b0-66d9-11ed-9022-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.communication
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
 VALUES('8ec1682c-66d9-11ed-9022-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','Volantes');
-
-INSERT INTO public.communication
-(id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name")
-VALUES('9309535e-66d9-11ed-9022-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002','Otro ¿Cual?');
 
 --INSERTION OF PUBLIC SERVICE
 
@@ -2159,7 +2213,7 @@ INSERT INTO public."location"
 VALUES('fb674d2b-9be2-471e-b995-a5a436f63094', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
 'Dentro de este departamento se encuentra el parque nacional El Tuparro', 4.633, -69.233, 'Vichada', '6ae9c755-6185-4557-a2d7-90939de8af81','91b447ae-2ebf-4740-a116-59e24670e1e7');
 
---INSERTION OF LOCATIONS MUNICIPALITY 
+--INSERTION OF LOCATIONS MUNICIPALITY
 
 INSERT INTO public."location"
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, detail, latitude, longitude, "name", ordering_id, parent_location_id)
@@ -7920,7 +7974,7 @@ VALUES('4016c816-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.criteria
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id, "min", "max")
 VALUES('49af292e-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
-'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número', '78e5bf12-a4f5-4f92-b70c-e2e9df886302', 0, 30);
+'Potencial: Local (6), Regional (12), Nacional (18), Internacional (30). Escriba el número que corresponda a la potencia.', '78e5bf12-a4f5-4f92-b70c-e2e9df886302', 6, 30);
 
 
 
@@ -7943,7 +7997,7 @@ VALUES('7b28747c-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.criteria
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id, "min", "max")
 VALUES('434e2c24-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
-'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número', '2c4752e0-0281-48fb-9bb5-b110219f5236', 0, 30);
+'Potencial: Local (6), Regional (12), Nacional (18), Internacional (30). Escriba el número que corresponda a la potencia.', '2c4752e0-0281-48fb-9bb5-b110219f5236', 6, 30);
 
 --FE Criteria
 INSERT INTO public.criteria
@@ -7965,7 +8019,7 @@ VALUES('4a6b3914-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.criteria
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id, "min", "max")
 VALUES('3ff450b2-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
-'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número', '13355e70-f45b-4fcd-ba07-fb1a6e332676', 0, 30);
+'Potencial: Local (6), Regional (12), Nacional (18), Internacional (30). Escriba el número que corresponda a la potencia.', '13355e70-f45b-4fcd-ba07-fb1a6e332676', 6, 30);
 
 --GE Criteria
 
@@ -8007,7 +8061,7 @@ VALUES('5a2c7f66-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.criteria
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id, "min", "max")
 VALUES('3c6615f2-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
-'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número', 'd3da6192-53aa-416d-a6c9-2933a24978ef', 0, 30);
+'Potencial: Local (6), Regional (12), Nacional (18), Internacional (30). Escriba el número que corresponda a la potencia.', 'd3da6192-53aa-416d-a6c9-2933a24978ef', 6, 30);
 
 --SN Criteria
 
@@ -8049,4 +8103,4 @@ VALUES('703c1316-80c4-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0
 INSERT INTO public.criteria
 (id, created_at, created_by, deleted, deleted_at, updated_at, updated_by, "name", group_id, "min", "max")
 VALUES('36ff6ac8-80c7-11ed-a1eb-0242ac120002', now(), 'dbf1e202-3097-11ed-a261-0242ac120002', false, 0, now(), 'dbf1e202-3097-11ed-a261-0242ac120002',
-'Potencial: Local (6), Departamental (12), Nacional (18), Continental (24), Global (30). Escriba el número', '0fe5f0f3-c65a-4d5e-bd88-655da1682747', 0, 30);
+'Potencial: Local (6), Regional (12), Nacional (18), Internacional (30). Escriba el número que corresponda a la potencia.', '0fe5f0f3-c65a-4d5e-bd88-655da1682747', 6, 30);

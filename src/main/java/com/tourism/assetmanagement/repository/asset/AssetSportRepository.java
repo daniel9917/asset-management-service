@@ -13,4 +13,7 @@ public interface AssetSportRepository extends BaseAssetObjectRepository<AssetSpo
 
     @Query("select sport from AssetSport sport where sport.assetId = :assetId and sport.deleted = false")
     List<AssetSport> findAllByAssetId(@NonNull UUID assetId);
+
+    @Query("select ar from AssetSport ar where ar.assetId = :assetId and ar.sportId = :sportId and ar.deleted = false")
+    List<AssetSport> findAllByAssetIdAndSportId (@NonNull UUID assetId, @NonNull UUID sportId);
 }

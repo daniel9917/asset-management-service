@@ -1,10 +1,7 @@
 package com.tourism.assetmanagement.repository.custom;
 
 import com.tourism.assetmanagement.domain.*;
-import com.tourism.assetmanagement.domain.classification.AssetGroup;
-import com.tourism.assetmanagement.domain.classification.Manifestation;
-import com.tourism.assetmanagement.domain.classification.Subtype;
-import com.tourism.assetmanagement.domain.classification.Type;
+import com.tourism.assetmanagement.domain.classification.*;
 import com.tourism.assetmanagement.domain.type.CommunityType;
 import com.tourism.assetmanagement.domain.type.RouteType;
 import com.tourism.assetmanagement.model.FilterDTO;
@@ -35,6 +32,8 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
     public String query;
 
     private boolean classifications = false;
+
+    private boolean manifestations = false;
 
     private boolean communities = false;
 
@@ -76,6 +75,16 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
         } else if (objectName.equals("Group")) {
             query = "select * from asset_group where deleted = false;";
             List values = entityManager.createNativeQuery(query, AssetGroup.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Patrimony")) {
+            query = "select * from patrimony where deleted = false;";
+//            query = "select * from patrimony p where p.deleted = false AND (p.\"name\" = 'Cultural' or p.\"name\"  = 'Natural');";
+
+            List values = entityManager.createNativeQuery(query, Patrimony.class).getResultList();
+            return FormDataDTO.builder().values(values).objectName(objectName).build();
+        } else if (objectName.equals("Category")) {
+            query = "select * from category where deleted = false;";
+            List values = entityManager.createNativeQuery(query, Category.class).getResultList();
             return FormDataDTO.builder().values(values).objectName(objectName).build();
         } else if (objectName.equals("Vulnerability")) {
             query = "select * from vulnerability where deleted = false;";
@@ -148,10 +157,12 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
 
     public List<CulturalAsset> findByFilters(PageDTO pageDTO){
         this.classifications = false;
+        this.manifestations = false;
         this.communities = false;
         this.locations = false;
         query = "SELECT * FROM cultural_asset WHERE ";
         List<String> classificationChunks = new ArrayList<>();
+        List<String> manifestationChunks = new ArrayList<>();
         Map<String, List<String>> communityItems = new HashMap<>();
         List<String> locationItems = new ArrayList<>();
         //Chunks for the query
@@ -175,6 +186,12 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
                 communities = true;
             }
 
+            else if (filter.fieldName.equals("manifestation")) {
+                String manifestationChunk = getQueryForManifestations(filter.fieldName, filter.getValues());
+                manifestations = true;
+                manifestationChunks.add(manifestationChunk);
+            }
+
             // if the filter name type, subtype, catefory, asset_group or patrimony
 
             else if (filter.fieldName.equals("type") ||
@@ -189,6 +206,9 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
         }
         if (classifications){
             queryChunks.add(mergeChunksForClassifications(classificationChunks));
+        }
+        if (manifestations){
+            queryChunks.add(mergeChunksForManifestations(manifestationChunks));
         }
         if (communities) {
             queryChunks.add(mergeChunksForCommunitites(communityItems));
@@ -256,6 +276,11 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
         if(CollectionUtils.isEmpty(values)){
             return chunkQuery;
         }
+        if (fieldName.equals("patrimony")){
+            String queryPatrimonies =  "SELECT * from patrimony p WHERE " + (values.get(0).equals("76f64c24-c5b3-11ed-afa1-0242ac120002") ? " p.\"code\" = 'N' " : " p.\"code\" = 'C' ");
+            List<Patrimony> patrimonyList = entityManager.createNativeQuery(queryPatrimonies, Patrimony.class).getResultList();
+            values = patrimonyList.stream().map(Patrimony::getId).map(Object::toString).collect(Collectors.toList());
+        }
         for (int i = 0; i < values.size(); i++) {
             if (i < values.size() - 1){
                 chunkQuery += " ac." + fieldName + "_id = '"+values.get(i)+"' OR ";
@@ -264,6 +289,31 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
             }
         }
         classifications = true;
+        return " (" + chunkQuery + ") ";
+    }
+
+    /**
+     * Entry
+     * fieldName "classification"
+     * values ( 'value1', 'value2', 'value3')
+     *
+     * Output
+     * chunkquery " (ac.classification = 'value1' OR ac.classification = 'value2' OR ac.classification = 'value3' OR ...)"
+     *
+     */
+    private String getQueryForManifestations(String fieldName, List <String> values){
+        String chunkQuery = "";
+        if(CollectionUtils.isEmpty(values)){
+            return chunkQuery;
+        }
+        for (int i = 0; i < values.size(); i++) {
+            if (i < values.size() - 1){
+                chunkQuery += " am." + fieldName + "_id = '"+values.get(i)+"' OR ";
+            }else {
+                chunkQuery += " am." + fieldName + "_id = '"+values.get(i)+"' ";
+            }
+        }
+        manifestations = true;
         return " (" + chunkQuery + ") ";
     }
 
@@ -285,22 +335,40 @@ public class CustomCulturalAssetRepositoryImpl implements CustomCulturalAssetRep
                 ")";
     }
 
+    /**
+     *
+     * Type of query expected here,
+     * (SELECT id FROM asset_classification ac
+     *      WHERE (ac.subtype_id = '' OR ac.subtype_id = '' OR ...))
+     *        AND (ac.type_id = '' OR ac.type_id = '' OR ...)
+     *        AND  ...
+     *  This should return a list of ids to which the asset will be compared
+     */
+    private String mergeChunksForManifestations(List<String> chunks){
+        return "cultural_asset.id IN (SELECT asset_id FROM asset_manifestation am WHERE " +
+                String.join(" AND ",
+                        chunks.stream()
+                                .filter(chunk -> !chunk.equals(""))
+                                .collect(Collectors.toList())) +
+                ")";
+    }
+
     private String mergeChunksForCommunitites(Map<String, List<String>> items) {
         String initialQuery = " cultural_asset.id IN (SELECT asset_id FROM asset_community aco WHERE aco.community_id IN ";
         if (items.size() == 1) {
             if (items.containsKey("community")){
                 String ids = "( " + items.get("community").stream().map(s -> "'"+ s + "'").collect(Collectors.joining(",")) + ")";
-                return initialQuery + ids +")";
+                return initialQuery + ids +" and aco.deleted = false)";
             }
             else if(items.containsKey("community_type")){
                 String ids = "( " + items.get("community_type").stream().map(s -> "'"+ s + "'").collect(Collectors.joining(",")) + ")";
-                return initialQuery + " ( SELECT id FROM community c where c.community_type_id IN" + ids +"))";
+                return initialQuery + " ( SELECT id FROM community c where c.community_type_id IN" + ids +") and aco.deleted = false)";
             }
         } else if (items.size() == 2 ) {
             return initialQuery + "( SELECT id FROM community c where c.community_type_id IN" +
-                    "( " + items.get("community_type").stream().map(s -> "'"+ s + "'").collect(Collectors.joining(",")) + ")"
+                    "( " + items.get("community_type").stream().map(s -> "'"+ s + "'").collect(Collectors.joining(",")) + " and aco.deleted = false)"
                     +" OR c.id IN " +
-                    "( " + items.get("community").stream().map(s -> "'"+ s + "'").collect(Collectors.joining(",")) + ")" + "))";
+                    "( " + items.get("community").stream().map(s -> "'"+ s + "'").collect(Collectors.joining(",")) + ")" + ") and aco.deleted = false)";
         }
         return "";
     }

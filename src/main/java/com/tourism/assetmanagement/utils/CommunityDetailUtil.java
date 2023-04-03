@@ -12,6 +12,8 @@ import com.tourism.errors.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -38,20 +40,20 @@ public class CommunityDetailUtil extends GenericDetailUtil<Community, CommunityT
     }
 
     public FormDataDTO geCommunityData (UUID assetID){
-        List<Object> values = assetCommunityRepositoty.findAllByAssetId(assetID).stream().map((av) -> {
+        List<Object> values = new ArrayList<>( new HashSet<>( assetCommunityRepositoty.findAllByAssetId(assetID).stream().map((av) -> {
             return communityRepository.findById(av.getCommunityId()).orElseThrow(
                     () -> {
                         throw new NotFoundException(av.getCommunityId());
                     }
             ).getName();
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList())));
 
-        return FormDataDTO.builder().objectName("Comunidades")
+        return FormDataDTO.builder().objectName("Pueblos étnicos que lo comparten")
                 .values(values).build();
     }
 
     public FormDataDTO getCommunityTypeData (UUID assetID){
-        List<Object> values = assetCommunityRepositoty.findAllByAssetId(assetID).stream().map((av) -> {
+        List<Object> values = new ArrayList<>( new HashSet<>( assetCommunityRepositoty.findAllByAssetId(assetID).stream().map((av) -> {
             Community access = communityRepository.findById(av.getCommunityId()).orElseThrow(
                     () -> {
                         throw new NotFoundException(av.getCommunityId());
@@ -62,9 +64,9 @@ public class CommunityDetailUtil extends GenericDetailUtil<Community, CommunityT
                         throw new NotFoundException(access.getCommunityTypeId());
                     }
             ).getName();
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList())));
 
-        return FormDataDTO.builder().objectName("Tipos de comunidades")
+        return FormDataDTO.builder().objectName("Comunidades étnicas con las que se relaciona")
                 .values(values).build();
     }
 

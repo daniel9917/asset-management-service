@@ -8,13 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.UUID;
 
+
+@Entity
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
 @Table(name = "sport")
 public class Sport extends BaseEntity {
     @Column
