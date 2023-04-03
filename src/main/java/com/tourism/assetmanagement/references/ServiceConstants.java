@@ -45,10 +45,11 @@ public class ServiceConstants {
                     "Grupo etnico", "Ethnicity",
                     "Comunidad", "EthnicGroup"),
             "Clasificacion", Map.of(
-                    "Tipo", "Type",
                     "Subtipo", "Subtype",
+                    "Tipo", "Type",
                     "Manifestacion", "Manifestation",
-                    "Patrimonio", "Patrimony"));
+                    "Patrimonio", "Patrimony",
+                    "Grupo", "Group"));
 
     static void addValues(){
 

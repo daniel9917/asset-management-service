@@ -27,7 +27,7 @@ public class AssetNatureUtil extends GenericDetailUtil<Nature, Nature, AssetNatu
 
     public FormDataDTO getNatureData(UUID assetID){
 
-        List<Object> values = assetNatureRepository.findAllByAssetId(assetID).stream().map((av) -> {
+        List<Object> values = assetNatureRepository.findAllByAssetId(assetID).stream().filter(assetNature -> assetNature.getScore() == 0).map((av) -> {
             return natureRepository.findById(av.getNatureId()).orElseThrow(
                     () -> {
                         throw new NotFoundException(av.getNatureId());

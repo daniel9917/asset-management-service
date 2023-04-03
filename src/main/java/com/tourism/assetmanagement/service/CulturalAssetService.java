@@ -2,6 +2,7 @@ package com.tourism.assetmanagement.service;
 
 import com.tourism.assetmanagement.domain.*;
 import com.tourism.assetmanagement.domain.asset.*;
+import com.tourism.assetmanagement.domain.classification.Patrimony;
 import com.tourism.assetmanagement.mapper.LocationMapper;
 import com.tourism.assetmanagement.model.FormDataDTO;
 import com.tourism.assetmanagement.model.LocationDTO;
@@ -343,6 +344,10 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
 
                 FormDataDTO filter = customCulturalAssetRepository.findAllObject(tableName);
                 filter.setObjectName(name);
+                if(tableName.equals("Patrimony")){
+                    List <Patrimony> values = filter.getValues().stream().map(o -> (Patrimony) o).collect(Collectors.toList());
+                    filter.setValues(values.stream().filter(p -> (p.getName().equals("Cultural") || p.getName().equals("Natural") )).collect(Collectors.toList()));
+                }
                 if(!CollectionUtils.isEmpty(filter.getValues())){
                     sectionElements.add(filter);
                 }
@@ -431,6 +436,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
                             .objectName("Nombre")
                             .values(List.of(culturalAssetDTO.getName()))
                             .build(),
+//                            communityUtil.getAssociatedCommunities(UUID.fromString(culturalAssetDTO.getAssetCommunityType())),
                             communityUtil.getCommunityTypeData(culturalAssetDTO.getId()),
                             communityUtil.geCommunityData(culturalAssetDTO.getId()),
                         FormDataDTO.builder()
@@ -455,28 +461,48 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
     }
 
     public FormDataDTO getRecognitionsData (CulturalAssetDTO culturalAssetDTO) {
+        ArrayList<Object> list = new ArrayList<>(List.of(
+                FormDataDTO.builder()
+                        .objectName("Reconocimiento Salvaguardia ")
+                        .values(List.of(culturalAssetDTO.isSafeguardingRegistry() ? "Sí" : "No"))
+                        .build(),
+                FormDataDTO.builder()
+                        .objectName("Reconocimiento Unesco")
+                        .values(List.of(culturalAssetDTO.isUnescoRegistry() ? "Sí" : "No"))
+                        .build(),
+                FormDataDTO.builder()
+                        .objectName("¿Está permitido el turismo o participación en el actvio cultural?")
+                        .values(List.of(culturalAssetDTO.isTourismPermit() ? "Sí" : "No"))
+                        .build(),
+                FormDataDTO.builder()
+                        .objectName("¿Se está tramitando algún reconocimiento sobre el activo cultural?")
+                        .values(List.of(culturalAssetDTO.isOnGoingRecognition() ? "Sí" : "No"))
+                        .build(),
+                FormDataDTO.builder()
+                        .objectName("¿Se encuentra en una reserva natural?")
+                        .values(List.of(culturalAssetDTO.isPartOfNaturalReservation() ? "Sí" : "No"))
+                        .build(),
+                FormDataDTO.builder()
+                        .objectName("Link música, documentales, películas.")
+                        .values(List.of(culturalAssetDTO.getLinks()))
+                        .build()));
+        if(culturalAssetDTO.isPartOfNaturalReservation()){
+            list.add(
+                    FormDataDTO.builder()
+                            .objectName("Nombre de la reserva")
+                            .values(List.of(culturalAssetDTO.getReservationName()))
+                            .build()
+            );
+            list.add(
+                    FormDataDTO.builder()
+                            .objectName("Link de la reserva")
+                            .values(List.of(culturalAssetDTO.getReservationLink()))
+                            .build()
+            );
+        }
         return FormDataDTO.builder()
                 .objectName("Reconocimientos")
-                .values(
-                        List.of(
-                        FormDataDTO.builder()
-                                .objectName("Reconocimiento Salvaguardia ")
-                                .values(List.of(culturalAssetDTO.isSafeguardingRegistry() ? "Sí" : "No"))
-                                .build(),
-                        FormDataDTO.builder()
-                                .objectName("Reconocimiento Unesco")
-                                .values(List.of(culturalAssetDTO.isUnescoRegistry() ? "Sí" : "No"))
-                                .build(),
-                        FormDataDTO.builder()
-                                .objectName("¿Se encuentra en una reserva natural?")
-                                .values(List.of(culturalAssetDTO.isPartOfNaturalReservation() ? "Sí" : "No"))
-                                .build(),
-
-                        FormDataDTO.builder()
-                                .objectName("¿Está permitido el turismo o participación en el actvio cultural?")
-                                .values(List.of(culturalAssetDTO.isTourismPermit() ? "Sí" : "No"))
-                                .build())
-                )
+                .values(list)
                 .build();
     }
 
@@ -540,7 +566,7 @@ public class CulturalAssetService extends BaseService<CulturalAsset, CulturalAss
         return FormDataDTO.builder().objectName("Estado").values(
                 List.of(
                         assetVulnerabilityUtil.getVulerabilityData(culturalAssetDTO.getId()),
-//                        assetNatureUtil.getNatureData(culturalAssetDTO.getId()),
+                        assetNatureUtil.getNatureData(culturalAssetDTO.getId()),
                         assetSportUtil.getSportData(culturalAssetDTO.getId()),
                         assetOfferUtil.getOfferData(culturalAssetDTO.getId()),
                         assetPublicServiceUtil.getPublicServiceData(culturalAssetDTO.getId()),
